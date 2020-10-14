@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Attack (78x58).png
 
+#begin Human/Attack Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Attack Left(78x58).png
+
 #begin Human/Dead (78x58).png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -36,6 +48,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Human/Dead (78x58).png
+
+#begin Human/Dead Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Dead Left(78x58).png
 
 #begin Human/Door In (78x58).png
 /importer:TextureImporter
@@ -49,6 +73,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Door In (78x58).png
 
+#begin Human/Door In Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Door In Left(78x58).png
+
 #begin Human/Door Out (78x58).png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -60,6 +96,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Human/Door Out (78x58).png
+
+#begin Human/Door Out Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Door Out Left(78x58).png
 
 #begin Human/Fall (78x58).png
 /importer:TextureImporter
@@ -73,6 +121,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Fall (78x58).png
 
+#begin Human/Fall Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Fall Left(78x58).png
+
 #begin Human/Ground (78x58).png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -84,6 +144,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Human/Ground (78x58).png
+
+#begin Human/Ground Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Ground Left(78x58).png
 
 #begin Human/Hit (78x58).png
 /importer:TextureImporter
@@ -97,6 +169,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Hit (78x58).png
 
+#begin Human/Hit Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Hit Left(78x58).png
+
 #begin Human/Idle (78x58).png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -108,6 +192,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Human/Idle (78x58).png
+
+#begin Human/Idle Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Idle Left(78x58).png
 
 #begin Human/Jump (78x58).png
 /importer:TextureImporter
@@ -121,6 +217,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Jump (78x58).png
 
+#begin Human/Jump Left(78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Jump Left(78x58).png
+
 #begin Human/Run (78x58).png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -132,6 +240,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Human/Run (78x58).png
+
+#begin Human/Run Left (78x58).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Human/Run Left (78x58).png
 
 #begin Objects/Bomb/Bomb Off.png
 /importer:TextureImporter
