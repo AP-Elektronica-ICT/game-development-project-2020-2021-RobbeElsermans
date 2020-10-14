@@ -22,6 +22,8 @@ namespace Pigit
         bool move;
         bool direction;
         bool attack;
+        bool jump;
+        bool hasJumped;
 
         public Game1()
         {
@@ -33,9 +35,12 @@ namespace Pigit
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            move = false;
+            move = false; //niet lopen
             direction = false; //dit is rechts
-            attack = false;
+            attack = false; //niet aanvallen
+            jump = false; //niet springen
+            hasJumped = false;
+
             base.Initialize();
         }
 
@@ -65,7 +70,6 @@ namespace Pigit
             spriteHuman.Add("attackL", Content.Load<Texture2D>(@"Human\Attack Left(78x58)"));
 
 
-
             InitializeGameObjects();
 
         }
@@ -74,6 +78,8 @@ namespace Pigit
         {
             HumanRun = new Human(spriteHuman.GetValueOrDefault("runR"), spriteHuman.GetValueOrDefault("runL"), new Vector2(78,58),8);
             HumanIdle = new Human(spriteHuman.GetValueOrDefault("idleR"), spriteHuman.GetValueOrDefault("idleL"), new Vector2(78, 58), 11);
+            HumanAttack = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3);
+            HumanJump = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 1);
         }
 
 
@@ -85,6 +91,7 @@ namespace Pigit
             Vector2 verplaatsing = new Vector2(0, 0);
             move = false;
             attack = false;
+            jump = false;
 
             if (keyboard.IsKeyDown(Keys.Down))
             {
@@ -110,8 +117,15 @@ namespace Pigit
             }
             if (keyboard.IsKeyDown(Keys.A))
             {
-                attack = true;
+                this.attack = true;
             }
+
+            if (keyboard.IsKeyDown(Keys.Space) && hasJumped == false)
+            {
+                jump = true;
+                hasJumped = true;
+            }
+
 
 
             if (move)
@@ -120,8 +134,17 @@ namespace Pigit
             }
             else
             {
-                HumanIdle.Positie = HumanRun.Positie;
                 HumanIdle.Update(gameTime);
+            }
+
+            if (attack)
+            {
+                HumanAttack.Update(gameTime);
+            }
+
+            if (jump)
+            {
+                HumanJump.Update(gameTime, new Vector2(0, -20));
             }
 
             Human.Direction = this.direction;
@@ -135,8 +158,11 @@ namespace Pigit
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-
-            if (move)
+            if (attack)
+            {
+                HumanAttack.Draw(_spriteBatch);
+            }
+            else if (move)
             {
                 HumanRun.Draw(_spriteBatch);
             }
@@ -144,6 +170,8 @@ namespace Pigit
             {
                 HumanIdle.Draw(_spriteBatch);
             }
+
+            
 
 
             _spriteBatch.End();

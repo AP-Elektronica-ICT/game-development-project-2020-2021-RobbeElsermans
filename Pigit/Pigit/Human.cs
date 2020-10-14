@@ -12,7 +12,7 @@ namespace Pigit
         private Texture2D heroTextureR;
         private Texture2D heroTextureL;
         Animatie animatie;
-        Vector2 positie;
+        static Vector2 positie;
         Vector2 snelheid;
         Vector2 versnelling;
         private Vector2 mouse;
@@ -20,7 +20,8 @@ namespace Pigit
 
         public static bool Direction { get; set; } = false; //rechts
 
-        public Vector2 Positie { get
+
+        static public Vector2 Positie { get
             {
                 return positie;
             }
