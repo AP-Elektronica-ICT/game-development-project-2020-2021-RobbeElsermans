@@ -9,13 +9,16 @@ namespace Pigit
 {
     public class Human : IGameObject
     {
-        private Texture2D heroTexture;
+        private Texture2D heroTextureR;
+        private Texture2D heroTextureL;
         Animatie animatie;
         Vector2 positie;
         Vector2 snelheid;
         Vector2 versnelling;
         private Vector2 mouse;
         KeyboardState keyboard;
+
+        public static bool Direction { get; set; } = false; //rechts
 
         public Vector2 Positie { get
             {
@@ -28,10 +31,11 @@ namespace Pigit
         }
 
 
-        public Human(Texture2D texture, Vector2 size, int amountFrames)
+        public Human(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames)
         {
             
-            this.heroTexture = texture;
+            this.heroTextureR = textureRight;
+            this.heroTextureL = textureLeft;
             animatie = new Animatie();
             Animatie.Speed = 8;
 
@@ -53,7 +57,14 @@ namespace Pigit
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(heroTexture, positie, animatie.CurrentFrame.SourceRect, Color.White);
+            if (Direction)
+            {
+                _spriteBatch.Draw(heroTextureL, positie, animatie.CurrentFrame.SourceRect, Color.White);
+            }
+            else
+            {
+                _spriteBatch.Draw(heroTextureR, positie, animatie.CurrentFrame.SourceRect, Color.White);
+            }
         }
 
         public void Update(GameTime gameTime, Vector2 verplaatsing)
