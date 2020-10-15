@@ -15,15 +15,11 @@ namespace Pigit
         private Human HumanIdle;
         private Human HumanAttack;
         private Human HumanJump;
+        private IInputReader inputReader;
+        KeyboardState keyboard;
 
         Dictionary<String, Texture2D> spriteHuman = new Dictionary<string, Texture2D>();
 
-        KeyboardState keyboard;
-        bool move;
-        bool direction;
-        bool attack;
-        bool jump;
-        bool hasJumped;
 
         public Game1()
         {
@@ -35,11 +31,7 @@ namespace Pigit
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            move = false; //niet lopen
-            direction = false; //dit is rechts
-            attack = false; //niet aanvallen
-            jump = false; //niet springen
-            hasJumped = false;
+            inputReader = new KeyBoardReader();
 
             base.Initialize();
         }
@@ -88,66 +80,19 @@ namespace Pigit
             keyboard = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            Vector2 verplaatsing = new Vector2(0, 0);
-            move = false;
-            attack = false;
-            jump = false;
 
-            if (keyboard.IsKeyDown(Keys.Down))
+            if (inputReader.Move)
             {
-                verplaatsing.Y += 1;
-                this.move = true;
-            }
-            if (keyboard.IsKeyDown(Keys.Up))
-            {
-                verplaatsing.Y -= 1;
-                this.move = true;
-            }
-            if (keyboard.IsKeyDown(Keys.Left))
-            {
-                verplaatsing.X -= 1;
-                move = true;
-                this.direction = true;
-            }
-            if (keyboard.IsKeyDown(Keys.Right))
-            {
-                verplaatsing.X += 1;
-                move = true;
-                this.direction = false;
-            }
-            if (keyboard.IsKeyDown(Keys.A))
-            {
-                this.attack = true;
-            }
-
-            if (keyboard.IsKeyDown(Keys.Space) && hasJumped == false)
-            {
-                jump = true;
-                hasJumped = true;
-            }
-
-
-
-            if (move)
-            {
-                HumanRun.Update(gameTime, verplaatsing);
+                HumanRun.Update(gameTime, inputReader.ReadInput());
             }
             else
             {
-                HumanIdle.Update(gameTime);
+                HumanIdle.Update(gameTime, inputReader.ReadInput());
             }
-
-            if (attack)
+            if (inputReader.Attack)
             {
-                HumanAttack.Update(gameTime);
+                HumanAttack.Update(gameTime, inputReader.ReadInput());
             }
-
-            if (jump)
-            {
-                HumanJump.Update(gameTime, new Vector2(0, -20));
-            }
-
-            Human.Direction = this.direction;
 
             base.Update(gameTime);
         }
@@ -157,12 +102,15 @@ namespace Pigit
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
             _spriteBatch.Begin();
-            if (attack)
+
+            Human.Direction = inputReader.Direction;
+            if (inputReader.Attack)
             {
                 HumanAttack.Draw(_spriteBatch);
             }
-            else if (move)
+            else if (inputReader.Move)
             {
                 HumanRun.Draw(_spriteBatch);
             }
@@ -170,6 +118,7 @@ namespace Pigit
             {
                 HumanIdle.Draw(_spriteBatch);
             }
+            
 
             
 

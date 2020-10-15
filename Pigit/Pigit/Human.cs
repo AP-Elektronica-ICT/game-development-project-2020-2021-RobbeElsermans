@@ -15,11 +15,7 @@ namespace Pigit
         static Vector2 positie;
         Vector2 snelheid;
         Vector2 versnelling;
-        private Vector2 mouse;
-        KeyboardState keyboard;
-
         public static bool Direction { get; set; } = false; //rechts
-
 
         static public Vector2 Positie { get
             {
@@ -27,7 +23,7 @@ namespace Pigit
             }
             set
             {
-                positie = value;
+                positie += value;
             }
         }
 
@@ -46,14 +42,6 @@ namespace Pigit
             }
 
             snelheid = new Vector2(1, 1);
-            
-        }
-
-        private Vector2 GetMouseState()
-        {
-            MouseState state = Mouse.GetState();
-            mouse = new Vector2(state.X, state.Y);
-            return mouse;
         }
 
         public void Draw(SpriteBatch _spriteBatch)
@@ -70,7 +58,6 @@ namespace Pigit
 
         public void Update(GameTime gameTime, Vector2 verplaatsing)
         {
-            
             this.Move(verplaatsing);
             animatie.Update(gameTime);
         }
@@ -82,9 +69,7 @@ namespace Pigit
         private void Move(Vector2 verplaatsing)
         {
             positie += verplaatsing;
-            Vector2.Add(snelheid, positie);
-            positie += versnelling;
-            Positie = positie;
+
         }
 
         private Vector2 limit(Vector2 v, float max)
