@@ -1,25 +1,26 @@
-﻿
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using SharpDX.MediaFoundation;
 using System;
-using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Pigit
+namespace Pigit.Objects
 {
-    public class Human : IGameObject
+    abstract class APlayerObject : IPlayerObject
     {
-        private Texture2D heroTextureR;
-        private Texture2D heroTextureL;
-        Animatie animatieR;
-        Animatie animatieL;
-        static Vector2 positie;
-        Vector2 snelheid;
-        Vector2 versnelling;
+        protected Texture2D heroTextureR;
+        protected Texture2D heroTextureL;
+        protected Animatie animatieR;
+        protected Animatie animatieL;
+        protected static Vector2 positie;
+        protected Vector2 snelheid;
+        protected Vector2 versnelling;
+
         public static bool Direction { get; set; } = false; //rechts
 
-        static public Vector2 Positie { get
+        static public Vector2 Positie
+        {
+            get
             {
                 return positie;
             }
@@ -29,21 +30,21 @@ namespace Pigit
             }
         }
 
-        public Human(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames)
+        public APlayerObject(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames)
         {
-            
             this.heroTextureR = textureRight;
             this.heroTextureL = textureLeft;
             animatieR = new Animatie();
             animatieL = new Animatie();
             Animatie.Speed = 8;
 
-            for (int i = 0; i <= size.X * amountFrames -1; i += (int)size.X)
+            for (int i = 0; i <= size.X * amountFrames - 1; i += (int)size.X)
             {
                 animatieR.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)size.X, (int)size.Y)));
             }
 
-            for (int i = Convert.ToInt32(size.X * (amountFrames-1)); i >= 0; i -= (int)size.X)
+
+            for (int i = Convert.ToInt32(size.X * (amountFrames - 1)); i >= 0; i -= (int)size.X)
             {
                 animatieL.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)size.X, (int)size.Y)));
             }
@@ -63,14 +64,15 @@ namespace Pigit
             }
         }
 
-        public void Update(GameTime gameTime, Vector2 verplaatsing)
+        public void Update(GameTime gameTime)
         {
-            this.Move(verplaatsing);
             animatieR.Update(gameTime);
             animatieL.Update(gameTime);
         }
-        public void Update(GameTime gameTime)
+
+        public void Update(GameTime gameTime, Vector2 verplaatsing)
         {
+            this.Move(verplaatsing);
             animatieR.Update(gameTime);
             animatieL.Update(gameTime);
         }
@@ -92,5 +94,4 @@ namespace Pigit
             return v;
         }
     }
-
 }

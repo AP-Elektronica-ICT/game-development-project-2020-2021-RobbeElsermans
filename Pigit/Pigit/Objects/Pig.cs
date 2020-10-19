@@ -2,11 +2,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Objects;
 using SharpDX.MediaFoundation;
 
 namespace Pigit
 {
-    public class Pig : IGameObject
+    public class Pig : INPCObject
     {
         private Texture2D heroTexture;
         Animatie animatie;
@@ -82,6 +83,11 @@ namespace Pigit
                 v.Y *= ratio;
             }
             return v;
+        }
+
+        public void Update(GameTime gameTime, Vector2 verplaatsing)
+        {
+            throw new System.NotImplementedException();
         }
     }
 
