@@ -16,7 +16,7 @@ namespace Pigit.Objects
         protected Vector2 snelheid;
         protected Vector2 versnelling;
 
-        public static bool Direction { get; set; } = false; //rechts
+        public bool Direction { get; set; } = false; //rechts
 
         static public Vector2 Positie
         {

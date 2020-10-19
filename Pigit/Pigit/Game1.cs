@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Objects;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +18,7 @@ namespace Pigit
         private Human HumanJump;
         private IInputReader inputReader;
         KeyboardState keyboard;
+        private List<IPlayerObject> player = new List<IPlayerObject>();
 
         Dictionary<String, Texture2D> spriteHuman = new Dictionary<string, Texture2D>();
 
@@ -72,26 +74,29 @@ namespace Pigit
             HumanIdle = new Human(spriteHuman.GetValueOrDefault("idleR"), spriteHuman.GetValueOrDefault("idleL"), new Vector2(78, 58), 11);
             HumanAttack = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3);
             HumanJump = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 1);
+
+            player.Add(HumanRun);
+            player.Add(HumanIdle);
+            player.Add(HumanAttack);
+            player.Add(HumanJump);
         }
 
 
         protected override void Update(GameTime gameTime)
         {
             keyboard = Keyboard.GetState();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
             if (inputReader.Move)
             {
-                HumanRun.Update(gameTime, inputReader.ReadInput());
+                player[0].Update(gameTime, inputReader.ReadInput());
             }
             else
             {
-                HumanIdle.Update(gameTime, inputReader.ReadInput());
+                player[1].Update(gameTime, inputReader.ReadInput());
             }
             if (inputReader.Attack)
             {
-                HumanAttack.Update(gameTime, inputReader.ReadInput());
+                player[2].Update(gameTime, inputReader.ReadInput());
             }
 
             base.Update(gameTime);
@@ -105,7 +110,12 @@ namespace Pigit
 
             _spriteBatch.Begin();
 
-            Human.Direction = inputReader.Direction;
+            foreach (var part in player)
+            {
+                part.Direction = inputReader.Direction;
+            }
+
+
             if (inputReader.Attack)
             {
                 HumanAttack.Draw(_spriteBatch);

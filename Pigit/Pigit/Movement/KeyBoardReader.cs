@@ -19,6 +19,8 @@ namespace Pigit
 
         public Vector2 ReadInput()
         {
+
+
             movement = new Vector2(0,0);
             Move = false;
             Attack = false;
