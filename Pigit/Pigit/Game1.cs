@@ -12,11 +12,14 @@ namespace Pigit
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        int aantal = 0;
+
         private Human HumanRun;
         private Human HumanIdle;
         private Human HumanAttack;
         private Human HumanJump;
         private IInputReader inputReader;
+        private bool hasAttack = false;
         KeyboardState keyboard;
         private List<IPlayerObject> player = new List<IPlayerObject>();
 
@@ -72,7 +75,7 @@ namespace Pigit
         {
             HumanRun = new Human(spriteHuman.GetValueOrDefault("runR"), spriteHuman.GetValueOrDefault("runL"), new Vector2(78,58),8);
             HumanIdle = new Human(spriteHuman.GetValueOrDefault("idleR"), spriteHuman.GetValueOrDefault("idleL"), new Vector2(78, 58), 11);
-            HumanAttack = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3);
+            HumanAttack = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3,4);
             HumanJump = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 1);
 
             player.Add(HumanRun);
@@ -85,18 +88,24 @@ namespace Pigit
         protected override void Update(GameTime gameTime)
         {
             keyboard = Keyboard.GetState();
-
-            if (inputReader.Move)
-            {
-                player[0].Update(gameTime, inputReader.ReadInput());
-            }
-            else
-            {
-                player[1].Update(gameTime, inputReader.ReadInput());
-            }
             if (inputReader.Attack)
             {
                 player[2].Update(gameTime, inputReader.ReadInput());
+                if (player[2].FrameCount == player[2].AmountFrames - 1)
+                {
+                    inputReader.HasAttacked = true;
+                }
+            }
+            else
+            {
+                if (inputReader.Move)
+                {
+                    player[0].Update(gameTime, inputReader.ReadInput());
+                }
+                else
+                {
+                    player[1].Update(gameTime, inputReader.ReadInput());
+                }
             }
 
             base.Update(gameTime);
@@ -106,7 +115,6 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
 
@@ -115,25 +123,34 @@ namespace Pigit
                 part.Direction = inputReader.Direction;
             }
 
-
-            if (inputReader.Attack)
+            if(hasAttack)
             {
-                HumanAttack.Draw(_spriteBatch);
+                hasAttack = false;
+                player[2].Draw(_spriteBatch);
             }
+            else if (inputReader.Attack && !inputReader.HasAttacked)
+            {
+                player[2].Draw(_spriteBatch);
+                hasAttack = true;
+            }
+            
             else if (inputReader.Move)
             {
-                HumanRun.Draw(_spriteBatch);
+                player[0].Draw(_spriteBatch);
             }
             else
             {
-                HumanIdle.Draw(_spriteBatch);
+                player[1].Draw(_spriteBatch);
             }
-            
 
-            
+            if (inputReader.Attack && inputReader.HasAttacked)
+            {
 
+                inputReader.Attack = false;
+                inputReader.HasAttacked = false;
+            }
 
-            _spriteBatch.End();
+                _spriteBatch.End();
 
             base.Draw(gameTime);
         }

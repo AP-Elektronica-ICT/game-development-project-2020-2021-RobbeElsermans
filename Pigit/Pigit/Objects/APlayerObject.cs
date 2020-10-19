@@ -15,7 +15,8 @@ namespace Pigit.Objects
         protected static Vector2 positie;
         protected Vector2 snelheid;
         protected Vector2 versnelling;
-
+        public int FrameCount { get; private set; }
+        public int AmountFrames { get; set; }
         public bool Direction { get; set; } = false; //rechts
 
         static public Vector2 Positie
@@ -30,13 +31,16 @@ namespace Pigit.Objects
             }
         }
 
-        public APlayerObject(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames)
+        public APlayerObject(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames, int speed)
         {
             this.heroTextureR = textureRight;
             this.heroTextureL = textureLeft;
             animatieR = new Animatie();
             animatieL = new Animatie();
-            Animatie.Speed = 8;
+            AmountFrames = amountFrames;
+            animatieL.Speed = speed;
+            animatieR.Speed = speed;
+            
 
             for (int i = 0; i <= size.X * amountFrames - 1; i += (int)size.X)
             {
@@ -75,6 +79,7 @@ namespace Pigit.Objects
             this.Move(verplaatsing);
             animatieR.Update(gameTime);
             animatieL.Update(gameTime);
+            FrameCount = (animatieL.Counter + animatieR.Counter) / 2;
         }
 
         private void Move(Vector2 verplaatsing)

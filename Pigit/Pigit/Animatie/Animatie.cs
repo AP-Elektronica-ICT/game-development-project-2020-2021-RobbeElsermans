@@ -9,11 +9,11 @@ namespace Pigit
 
         private List<AnimatieFrame> frames;
 
-        private int counter;
+        public int Counter { get; private set; }
 
         private double frameMovement = 0;
 
-        static public int Speed { get; set; }
+        public int Speed { get; set; }
 
         public Animatie()
         {
@@ -28,20 +28,20 @@ namespace Pigit
 
         public void Update(GameTime gameTime)
         {
-            CurrentFrame = frames[counter];
+            CurrentFrame = frames[Counter];
 
 
             frameMovement += CurrentFrame.SourceRect.Height * gameTime.ElapsedGameTime.TotalSeconds;
 
             if (frameMovement >= CurrentFrame.SourceRect.Height / Speed)
             {
-                counter++;
+                Counter++;
                 frameMovement = 0;
             }
 
-            if (counter >= frames.Count)
+            if (Counter >= frames.Count)
 
-                counter = 0;
+                Counter = 0;
 
         }
     }

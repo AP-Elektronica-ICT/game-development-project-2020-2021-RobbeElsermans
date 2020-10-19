@@ -13,6 +13,8 @@ namespace Pigit
         public bool Attack { get ; set; }= false;
         public bool jump { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool hasjumped { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool HasAttacked { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Hasjumped { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private Vector2 movement;
 
