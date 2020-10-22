@@ -66,6 +66,7 @@ namespace Pigit
             spriteHuman.Add("attackR", Content.Load<Texture2D>(@"Human\Attack (78x58)"));
             spriteHuman.Add("attackL", Content.Load<Texture2D>(@"Human\Attack Left(78x58)"));
 
+            //rr
 
             InitializeGameObjects();
 
