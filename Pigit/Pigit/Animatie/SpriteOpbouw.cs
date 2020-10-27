@@ -15,7 +15,6 @@ namespace Pigit.Animatie
         public SpriteOpbouw(ContentManager Content)
         {
             spriteHuman = new Dictionary<string, Texture2D>();
-
             spriteHuman.Add("runR", Content.Load<Texture2D>(@"Human\Run (78x58)"));
             spriteHuman.Add("runL", Content.Load<Texture2D>(@"Human\Run Left (78x58)"));
             spriteHuman.Add("idleR", Content.Load<Texture2D>(@"Human\Idle (78x58)"));
@@ -36,8 +35,9 @@ namespace Pigit.Animatie
             spriteHuman.Add("deadL", Content.Load<Texture2D>(@"Human\Dead Left(78x58)"));
             spriteHuman.Add("attackR", Content.Load<Texture2D>(@"Human\Attack (78x58)"));
             spriteHuman.Add("attackL", Content.Load<Texture2D>(@"Human\Attack Left(78x58)"));
-
             SpriteHuman = spriteHuman;
+
+
         }
         public Dictionary<String, Texture2D> SpriteHuman { get; private set; }
     }
