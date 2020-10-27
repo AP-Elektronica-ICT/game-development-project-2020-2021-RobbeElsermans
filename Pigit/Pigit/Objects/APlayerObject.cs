@@ -10,8 +10,8 @@ namespace Pigit.Objects
     {
         protected Texture2D heroTextureR;
         protected Texture2D heroTextureL;
-        protected Animatie animatieR;
-        protected Animatie animatieL;
+        protected AnimatieConst animatieR;
+        protected AnimatieConst animatieL;
         protected static Vector2 positie;
         protected Vector2 snelheid;
         protected Vector2 versnelling;
@@ -35,8 +35,8 @@ namespace Pigit.Objects
         {
             this.heroTextureR = textureRight;
             this.heroTextureL = textureLeft;
-            animatieR = new Animatie();
-            animatieL = new Animatie();
+            animatieR = new AnimatieConst();
+            animatieL = new AnimatieConst();
             AmountFrames = amountFrames;
             animatieL.Speed = speed;
             animatieR.Speed = speed;

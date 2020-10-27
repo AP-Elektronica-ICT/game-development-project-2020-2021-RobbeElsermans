@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Animatie;
 using Pigit.Objects;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Pigit
         private SpriteBatch _spriteBatch;
 
         int aantal = 0;
-
+        private Pigit.Animatie.SpriteOpbouw opbouw;
         private Human HumanRun;
         private Human HumanIdle;
         private Human HumanAttack;
@@ -44,7 +45,8 @@ namespace Pigit
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            opbouw = new Pigit.Animatie.SpriteOpbouw(Content);
+            /*
             spriteHuman.Add("runR", Content.Load<Texture2D>(@"Human\Run (78x58)"));
             spriteHuman.Add("runL", Content.Load<Texture2D>(@"Human\Run Left (78x58)"));
             spriteHuman.Add("idleR", Content.Load<Texture2D>(@"Human\Idle (78x58)"));
@@ -65,8 +67,8 @@ namespace Pigit
             spriteHuman.Add("deadL", Content.Load<Texture2D>(@"Human\Dead Left(78x58)"));
             spriteHuman.Add("attackR", Content.Load<Texture2D>(@"Human\Attack (78x58)"));
             spriteHuman.Add("attackL", Content.Load<Texture2D>(@"Human\Attack Left(78x58)"));
-
-            //rr
+            */
+           
 
             InitializeGameObjects();
 
@@ -74,10 +76,10 @@ namespace Pigit
 
         private void InitializeGameObjects()
         {
-            HumanRun = new Human(spriteHuman.GetValueOrDefault("runR"), spriteHuman.GetValueOrDefault("runL"), new Vector2(78,58),8);
-            HumanIdle = new Human(spriteHuman.GetValueOrDefault("idleR"), spriteHuman.GetValueOrDefault("idleL"), new Vector2(78, 58), 11);
-            HumanAttack = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3);
-            HumanJump = new Human(spriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 1);
+            HumanRun = new Human(opbouw.SpriteHuman.GetValueOrDefault("runR"), spriteHuman.GetValueOrDefault("runL"), new Vector2(78,58),8);
+            HumanIdle = new Human(opbouw.SpriteHuman.GetValueOrDefault("idleR"), spriteHuman.GetValueOrDefault("idleL"), new Vector2(78, 58), 11);
+            HumanAttack = new Human(opbouw.SpriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3);
+            HumanJump = new Human(opbouw.SpriteHuman.GetValueOrDefault("attackR"), spriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 1);
 
             player.Add(HumanRun);
             player.Add(HumanIdle);
