@@ -11,7 +11,7 @@ namespace Pigit
         public bool Move { get; set; } = false;
         public bool Direction { get; set; } = false;
         public bool Attack { get; set; } = false;
-        //public bool HasAttacked { get; set; } = false;
+        public bool HasAttacked { get; set; } = false;
         public bool jump { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool Hasjumped { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -23,6 +23,7 @@ namespace Pigit
         {
             movement = new Vector2(0,0);
             Move = false;
+            Attack = false;
 
             keyboard = Keyboard.GetState();
 
@@ -38,16 +39,10 @@ namespace Pigit
                 this.Move = true;
                 this.Direction = false;
             }
-            /*
             if (keyboard.IsKeyDown(Keys.A) && !HasAttacked)
             {
                 this.Attack = true;
-            }            
-            */
-            if (keyboard.IsKeyDown(Keys.A))
-            {
-                this.Attack = true;
-            }    
+            }
 
             return movement;
         }
