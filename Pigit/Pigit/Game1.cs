@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
+using Pigit.Movement;
 using Pigit.Objects;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,14 @@ namespace Pigit
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private MoveCommand move;
         private SpriteOpbouw opbouwSprites;
         private Human HumanRun;
         private Human HumanIdle;
         private Human HumanAttack;
         private Human HumanJump;
         private IInputReader inputReader;
-        private bool hasAttack = false;
-        KeyboardState keyboard;
+
         private List<IPlayerObject> player = new List<IPlayerObject>();
 
         Dictionary<String, Texture2D> spriteHuman = new Dictionary<string, Texture2D>();
@@ -37,6 +37,7 @@ namespace Pigit
         {
             // TODO: Add your initialization logic here
             inputReader = new KeyBoardReader();
+           
 
             base.Initialize();
         }
@@ -49,6 +50,7 @@ namespace Pigit
 
             InitializeGameObjects();
 
+            move = new MoveCommand(player, _spriteBatch);
         }
 
         private void InitializeGameObjects()
@@ -67,26 +69,8 @@ namespace Pigit
 
         protected override void Update(GameTime gameTime)
         {
-            keyboard = Keyboard.GetState();
-            if (inputReader.Attack)
-            {
-                player[2].Update(gameTime, inputReader.ReadInput());
-                if (player[2].FrameCount == player[2].AmountFrames - 1)
-                {
-                    inputReader.HasAttacked = true;
-                }
-            }
-            else
-            {
-                if (inputReader.Move)
-                {
-                    player[0].Update(gameTime, inputReader.ReadInput());
-                }
-                else
-                {
-                    player[1].Update(gameTime, inputReader.ReadInput());
-                }
-            }
+            move.CheckMovement(gameTime);
+            
 
             base.Update(gameTime);
         }
@@ -98,39 +82,9 @@ namespace Pigit
 
             _spriteBatch.Begin();
 
-            foreach (var part in player)
-            {
-                part.Direction = inputReader.Direction;
-            }
+            move.DrawMovement();
 
-            if(hasAttack)
-            {
-                hasAttack = false;
-                player[2].Draw(_spriteBatch);
-            }
-            else if (inputReader.Attack && !inputReader.HasAttacked)
-            {
-                player[2].Draw(_spriteBatch);
-                hasAttack = true;
-            }
-            
-            else if (inputReader.Move)
-            {
-                player[0].Draw(_spriteBatch);
-            }
-            else
-            {
-                player[1].Draw(_spriteBatch);
-            }
-
-            if (inputReader.Attack && inputReader.HasAttacked)
-            {
-
-                inputReader.Attack = false;
-                inputReader.HasAttacked = false;
-            }
-
-                _spriteBatch.End();
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
