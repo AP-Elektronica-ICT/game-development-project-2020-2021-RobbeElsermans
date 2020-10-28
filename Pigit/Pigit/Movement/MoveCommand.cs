@@ -25,9 +25,10 @@ namespace Pigit.Movement
             if (keyboard.Attack)
             {
                 player[2].Update(gameTime, keyboard.ReadInput());
-       
-                    //keyboard.Attack = true;
-                
+                //if (player[2].FrameCount == player[2].AmountFrames - 1)
+                //{
+                //    keyboard.HasAttacked = true;
+                //}
             }
 
             else
@@ -49,13 +50,8 @@ namespace Pigit.Movement
             {
                 part.Direction = keyboard.Direction;
             }
-
-            if (keyboard.HasAttacked)
-            {
-                //keyboard.HasAttacked = false;
-                player[2].Draw(_spriteBatch);
-            }
-            else if (keyboard.Attack && !keyboard.HasAttacked)
+            
+            if (keyboard.Attack && !keyboard.HasAttacked)
             {
                 player[2].Draw(_spriteBatch);
                 //keyboard.HasAttacked = true;
@@ -68,13 +64,6 @@ namespace Pigit.Movement
             else
             {
                 player[1].Draw(_spriteBatch);
-            }
-
-            if (keyboard.Attack && keyboard.HasAttacked)
-            {
-
-                keyboard.Attack = false;
-                keyboard.HasAttacked = false;
             }
         }
     }

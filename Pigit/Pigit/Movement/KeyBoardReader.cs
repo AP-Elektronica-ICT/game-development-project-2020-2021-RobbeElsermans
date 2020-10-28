@@ -44,6 +44,7 @@ namespace Pigit
                 this.Attack = true;
             }
 
+
             return movement;
         }
     }
