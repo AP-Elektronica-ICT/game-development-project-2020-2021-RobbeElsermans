@@ -47,6 +47,7 @@ namespace Pigit.Movement
                 IPlayerObject.Versnelling = new Vector2(0f, -5f);
                 hasJumped = true;
                 player[3].Update(gameTime, new Vector2(0f, -10f));
+                player[4].Update(gameTime, new Vector2(0f, -10f));
             }
 
             if (IPlayerObject.Positie.Y >= 400f)
@@ -57,7 +58,7 @@ namespace Pigit.Movement
             else
             {
                 float i = 1f;
-                IPlayerObject.Versnelling += new Vector2(0f, 0.15f * i);
+                IPlayerObject.Versnelling += new Vector2(0f, 0.20f * i);
             }
 
             if (keyboard.Move)
@@ -70,13 +71,11 @@ namespace Pigit.Movement
                 {
                     player[0].Update(gameTime, new Vector2(1, 0));
                 }
-
             }
             else
             {
                 player[1].Update(gameTime, Vector2.Zero);
             }
-
         }
 
         public void DrawMovement()
@@ -92,7 +91,15 @@ namespace Pigit.Movement
             }
             else if(hasJumped)
             {
-                player[3].Draw(_spriteBatch);
+                if (IPlayerObject.Versnelling.Y <=0)
+                {
+                    player[3].Draw(_spriteBatch);
+                }
+                else
+                {
+                    player[4].Draw(_spriteBatch);
+                }
+                
             }
             else if (keyboard.Move)
             {

@@ -65,6 +65,7 @@ namespace Pigit
             player.Add(HumanIdle);
             player.Add(HumanAttack);
             player.Add(HumanJump);
+            player.Add(HumanFall);
         }
 
 
