@@ -22,6 +22,11 @@ namespace Pigit.Movement
             hasJumped = true;
         }
 
+
+        /*
+         * TODO
+         * fall sprite implementeren
+         */
         public void CheckMovement(GameTime gameTime)
         {
             keyboard.ReadInput();
