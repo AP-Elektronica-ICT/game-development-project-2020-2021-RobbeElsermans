@@ -19,6 +19,7 @@ namespace Pigit
         private Human HumanIdle;
         private Human HumanAttack;
         private Human HumanJump;
+        private Human HumanFall;
         private IInputReader inputReader;
 
         private List<IPlayerObject> player = new List<IPlayerObject>();
@@ -58,8 +59,8 @@ namespace Pigit
             HumanRun = new Human(opbouwSprites.SpriteHuman.GetValueOrDefault("runR"), opbouwSprites.SpriteHuman.GetValueOrDefault("runL"), new Vector2(78,58),8);
             HumanIdle = new Human(opbouwSprites.SpriteHuman.GetValueOrDefault("idleR"), opbouwSprites.SpriteHuman.GetValueOrDefault("idleL"), new Vector2(78, 58), 11);
             HumanAttack = new Human(opbouwSprites.SpriteHuman.GetValueOrDefault("attackR"), opbouwSprites.SpriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 3);
-            HumanJump = new Human(opbouwSprites.SpriteHuman.GetValueOrDefault("attackR"), opbouwSprites.SpriteHuman.GetValueOrDefault("attackL"), new Vector2(78, 58), 1);
-
+            HumanJump = new Human(opbouwSprites.SpriteHuman.GetValueOrDefault("jumpR"), opbouwSprites.SpriteHuman.GetValueOrDefault("jumpL"), new Vector2(78, 58), 1);
+            HumanFall = new Human(opbouwSprites.SpriteHuman.GetValueOrDefault("fallR"), opbouwSprites.SpriteHuman.GetValueOrDefault("fallL"), new Vector2(78, 58), 1);
             player.Add(HumanRun);
             player.Add(HumanIdle);
             player.Add(HumanAttack);

@@ -8,7 +8,6 @@ namespace Pigit
 {
     interface IGameObject
     {
-        void Update(GameTime gameTime);
         void Update(GameTime gameTime, Vector2 verplaatsing);
         void Draw(SpriteBatch _spriteBatch);
     }

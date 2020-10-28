@@ -11,7 +11,7 @@ namespace Pigit
 {
     class Human : APlayerObject
     {
-        public Human(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames, int speed = 12):base(textureRight,textureLeft,size,amountFrames, speed)
+        public Human(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames, int speed = 14):base(textureRight,textureLeft,size,amountFrames, speed)
         {
 
         }

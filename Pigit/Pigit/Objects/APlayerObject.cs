@@ -14,17 +14,11 @@ namespace Pigit.Objects
         protected AnimatieConst animatieR;
         protected AnimatieConst animatieL;
 
-        public bool HasJumped { get; set; }
         public int FrameCount { get; private set; }
         public int AmountFrames { get; set; }
         public bool Direction { get; set; } = false; //rechts
 
-        public Vector2 Versnelling { get; set; }
-
         public Rectangle border;
-
-
-        static public Vector2 Positie { get; set; }
 
         public APlayerObject(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames, int speed)
         {
@@ -36,9 +30,7 @@ namespace Pigit.Objects
             animatieL.Speed = speed;
             animatieR.Speed = speed;
 
-            Positie = new Vector2(1, 300);
-
-            HasJumped = true;
+             IPlayerObject.Positie = new Vector2(1, 300);
 
             for (int i = 0; i <= size.X * amountFrames - 1; i += (int)size.X)
             {
@@ -51,62 +43,34 @@ namespace Pigit.Objects
                 animatieL.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)size.X, (int)size.Y)));
             }
 
-            border = new Rectangle((int)Positie.X, (int)Positie.Y, heroTextureL.Width, heroTextureL.Height);
+            border = new Rectangle((int)IPlayerObject.Positie.X, (int)IPlayerObject.Positie.Y, heroTextureL.Width, heroTextureL.Height);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
             if (Direction)
             {
-                _spriteBatch.Draw(heroTextureL, Positie, animatieL.CurrentFrame.SourceRect, Color.White);
+                _spriteBatch.Draw(heroTextureL, IPlayerObject.Positie, animatieL.CurrentFrame.SourceRect, Color.White);
             }
             else
             {
-                _spriteBatch.Draw(heroTextureR, Positie, animatieR.CurrentFrame.SourceRect, Color.White);
+                _spriteBatch.Draw(heroTextureR, IPlayerObject.Positie, animatieR.CurrentFrame.SourceRect, Color.White);
             }
         }
 
-        public void Update(GameTime gameTime)
-        {
-            Positie += Versnelling;
-
-            animatieR.Update(gameTime);
-            animatieL.Update(gameTime);
-        }
 
         public void Update(GameTime gameTime, Vector2 verplaatsing)
         {
-            Positie += Versnelling;
             this.Move(verplaatsing);
             animatieR.Update(gameTime);
             animatieL.Update(gameTime);
-
             FrameCount = (animatieL.Counter + animatieR.Counter) / 2;
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && HasJumped == false)
-            {
-                Positie -= new Vector2(0f,10f);
-                Versnelling = new Vector2(0f,-5f);
-                HasJumped = true;
-            }
-
-            if (Positie.Y >= 400f)
-            {
-                Versnelling = new Vector2(0f, 0f);
-                HasJumped = false;
-            }
-            else
-            {
-                float i = 1f;
-                Versnelling += new Vector2(0f,0.15f * i);
-            }
         }
 
         private void Move(Vector2 verplaatsing)
         {
-            Positie += verplaatsing;
-            
-
+            IPlayerObject.Positie += verplaatsing;
+            IPlayerObject.Positie += IPlayerObject.Versnelling;
         }
 
         private Vector2 limit(Vector2 v, float max)

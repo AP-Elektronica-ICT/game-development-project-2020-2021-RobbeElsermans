@@ -11,18 +11,15 @@ namespace Pigit
         public bool Move { get; set; } = false;
         public bool Direction { get ; set ; } = false;
         public bool Attack { get ; set; }= false;
-        public bool jump { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool hasjumped { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool HasAttacked { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Hasjumped { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Jump { get; set; }
 
         private Vector2 movement;
 
-        public Vector2 ReadInput()
+        public void ReadInput()
         {
                 MouseState state = Mouse.GetState();
                 movement = new Vector2(state.X, state.Y);
-                return movement;
+                
         }
     }
 }
