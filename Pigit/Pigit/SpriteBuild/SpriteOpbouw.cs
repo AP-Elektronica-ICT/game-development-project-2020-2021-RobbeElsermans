@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Animatie;
 using Pigit.Objects;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Pigit.Animatie
+namespace Pigit.SpriteBuild
 {
     class SpriteOpbouw
     {

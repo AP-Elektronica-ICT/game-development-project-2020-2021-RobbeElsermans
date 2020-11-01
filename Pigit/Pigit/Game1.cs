@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
 using Pigit.Movement;
 using Pigit.Objects;
+using Pigit.SpriteBuild;
 using System;
 using System.Collections.Generic;
 

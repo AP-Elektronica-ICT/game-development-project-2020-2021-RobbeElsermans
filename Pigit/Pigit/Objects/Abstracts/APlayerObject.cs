@@ -10,6 +10,7 @@ using Pigit.Movement;
 using Pigit.Objects;
 
 using Microsoft.Xna.Framework.Content;
+using Pigit.SpriteBuild;
 
 namespace Pigit.Objects
 {
