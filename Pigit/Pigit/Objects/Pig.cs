@@ -10,17 +10,9 @@ namespace Pigit
 {
     public class Pig : INPCObject
     {
+        public Vector2 Positie { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public void Draw(SpriteBatch _spriteBatch)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Draw(SpriteBatch _spriteBatch, ContentManager content)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(GameTime gameTime)
         {
             throw new System.NotImplementedException();
         }

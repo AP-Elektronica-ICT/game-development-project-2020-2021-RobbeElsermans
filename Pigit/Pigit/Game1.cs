@@ -63,7 +63,7 @@ namespace Pigit
 
             _spriteBatch.Begin();
 
-            player.Draw(_spriteBatch, Content);
+            player.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

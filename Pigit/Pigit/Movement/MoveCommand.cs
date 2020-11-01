@@ -58,6 +58,8 @@ namespace Pigit.Movement
                 player.Type = AnimatieTypes.Attack;
             }
 
+
+            //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
             if (keyboard.Jump && !hasJumped)
             {
                 //Human jumps sprite

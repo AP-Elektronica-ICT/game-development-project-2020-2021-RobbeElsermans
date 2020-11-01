@@ -8,6 +8,5 @@ namespace Pigit.Objects
     interface INPCObject : IGameObject
     {
 
-
     }
 }
