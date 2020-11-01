@@ -32,11 +32,6 @@ namespace Pigit.Movement
             keyboard.ReadInput();
             player.Direction = keyboard.Direction;
 
-            if (keyboard.Attack)
-            {
-                player.Type = AnimatieTypes.Attack;
-                player.Update(gameTime, Vector2.Zero);
-            }
             if (keyboard.Jump && !hasJumped)
             {
                 //Human jumps sprite
@@ -62,12 +57,26 @@ namespace Pigit.Movement
             {
                 //Human Run Sprite
                 player.Type = AnimatieTypes.Run;
-                player.Update(gameTime, new Vector2(-1, 0));
+
+                if (keyboard.Direction)
+                {
+                    player.Update(gameTime, new Vector2(-1, 0));
+                }
+                else
+                {
+                    player.Update(gameTime, new Vector2(1, 0));
+                }
             }
             else
             {
                 //Human Idle
                 player.Type = AnimatieTypes.Idle;
+                player.Update(gameTime, Vector2.Zero);
+            }
+
+            if (keyboard.Attack)
+            {
+                player.Type = AnimatieTypes.Attack;
                 player.Update(gameTime, Vector2.Zero);
             }
         }
