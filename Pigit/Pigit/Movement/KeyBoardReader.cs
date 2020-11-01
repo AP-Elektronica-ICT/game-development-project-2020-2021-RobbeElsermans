@@ -13,8 +13,6 @@ namespace Pigit
         public bool Attack { get; set; } = false;
         public bool Jump { get; set ; }
 
-
-        private Vector2 movement;
         KeyboardState keyboard;
 
         public void ReadInput()

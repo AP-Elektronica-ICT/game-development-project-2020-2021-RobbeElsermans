@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Animatie;
 using Pigit.Objects;
 using SharpDX.MediaFoundation;
 using System;
@@ -11,7 +12,7 @@ namespace Pigit
 {
     class Human : APlayerObject
     {
-        public Human(Texture2D textureRight, Texture2D textureLeft, Vector2 size, int amountFrames, int speed = 14):base(textureRight,textureLeft,size,amountFrames, speed)
+        public Human(SpriteOpbouw spriteOpbouw):base(spriteOpbouw)
         {
 
         }
