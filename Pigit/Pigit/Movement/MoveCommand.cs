@@ -29,8 +29,34 @@ namespace Pigit.Movement
          */
         public void CheckMovement(GameTime gameTime)
         {
+            Vector2 positie = Vector2.Zero;
             keyboard.ReadInput();
             player.Direction = keyboard.Direction;
+
+            if (keyboard.Move)
+            {
+                //Human Run Sprite
+                player.Type = AnimatieTypes.Run;
+
+                if (keyboard.Direction)
+                {
+                    positie = new Vector2(-1, 0);
+                }
+                else
+                {
+                    positie = new Vector2(1, 0);
+                }
+            }
+            else
+            {
+                //Human Idle
+                player.Type = AnimatieTypes.Idle;
+            }
+
+            if (keyboard.Attack)
+            {
+                player.Type = AnimatieTypes.Attack;
+            }
 
             if (keyboard.Jump && !hasJumped)
             {
@@ -39,9 +65,10 @@ namespace Pigit.Movement
                 player.Versnelling = new Vector2(0f, -5f);
                 hasJumped = true;
                 player.Type = AnimatieTypes.Jump;
-                player.Update(gameTime, new Vector2(0f, -10f));
+                positie = new Vector2(0, -10f);
             }
 
+            //Hit another object
             if (player.Positie.Y >= 400f)
             {
                 player.Versnelling = new Vector2(0f, 0f);
@@ -51,34 +78,17 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 player.Versnelling += new Vector2(0f, 0.20f * i);
-            }
-
-            if (keyboard.Move)
-            {
-                //Human Run Sprite
-                player.Type = AnimatieTypes.Run;
-
-                if (keyboard.Direction)
+                if (player.Versnelling.Y <=0)
                 {
-                    player.Update(gameTime, new Vector2(-1, 0));
+                    player.Type = AnimatieTypes.Jump;
                 }
                 else
                 {
-                    player.Update(gameTime, new Vector2(1, 0));
+                    player.Type = AnimatieTypes.Fall;
                 }
             }
-            else
-            {
-                //Human Idle
-                player.Type = AnimatieTypes.Idle;
-                player.Update(gameTime, Vector2.Zero);
-            }
 
-            if (keyboard.Attack)
-            {
-                player.Type = AnimatieTypes.Attack;
-                player.Update(gameTime, Vector2.Zero);
-            }
+            player.Update(gameTime, positie);
         }
     }
 }
