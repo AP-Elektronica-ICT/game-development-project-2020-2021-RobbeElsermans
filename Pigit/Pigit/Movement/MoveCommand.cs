@@ -47,7 +47,7 @@ namespace Pigit.Movement
                 IPlayerObject.Versnelling = new Vector2(0f, -5f);
                 hasJumped = true;
                 player[3].Update(gameTime, new Vector2(0f, -10f));
-                player[4].Update(gameTime, new Vector2(0f, -10f));
+                //player[4].Update(gameTime, new Vector2(0f, -10f));
             }
 
             if (IPlayerObject.Positie.Y >= 400f)

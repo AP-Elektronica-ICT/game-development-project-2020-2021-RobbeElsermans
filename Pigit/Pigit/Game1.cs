@@ -73,7 +73,6 @@ namespace Pigit
         {
             move.CheckMovement(gameTime);
             
-
             base.Update(gameTime);
         }
 
