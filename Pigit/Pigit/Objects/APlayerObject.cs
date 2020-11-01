@@ -6,6 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Pigit.Movement;
+using Pigit.Objects;
+
+using Microsoft.Xna.Framework.Content;
+
 namespace Pigit.Objects
 {
     abstract class APlayerObject : IPlayerObject
@@ -59,18 +64,21 @@ namespace Pigit.Objects
                 currentSprite.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch _spriteBatch)
+        public void Draw(SpriteBatch _spriteBatch, ContentManager Content)
         {
-                //if (!Direction)
-                //{
-                //    _spriteBatch.Draw(currentSprite.TextureR, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
-                //}
-                //else
-                //{
-                //    _spriteBatch.Draw(currentSprite.TextureL, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
-                //}
+            //if (!Direction)
+            //{
+            //    _spriteBatch.Draw(currentSprite.TextureR, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
+            //}
+            //else
+            //{
+            //    _spriteBatch.Draw(currentSprite.TextureL, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            //}
 
-                _spriteBatch.Draw(currentSprite.TextureR, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
+            //_spriteBatch.Draw(currentSprite.TextureR, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
+            
+            
+            _spriteBatch.Draw(Content.Load<Texture2D>(@"Human\Idle Left(78x58)"), new Vector2(20, 20), Color.White);    
         }
     }
 }

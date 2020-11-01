@@ -5,6 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Microsoft.Xna.Framework.Input;
+
+using Pigit.Movement;
+using Pigit.Objects;
+
+
+
 namespace Pigit.Objects
 {
     interface IPlayerObject : IGameObject

@@ -47,7 +47,18 @@ namespace Pigit.Animatie
         {
             AnimatieL.Update(gametime);
             AnimatieR.Update(gametime);
-
+        }
+        public void Draw(bool direction, SpriteBatch spriteBatch)
+        {
+            if (!direction)
+            {
+                //rechts
+                
+            }
+            else
+            {
+                //links
+            }
         }
     }
 }
