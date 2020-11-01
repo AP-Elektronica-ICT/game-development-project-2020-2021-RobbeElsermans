@@ -30,46 +30,46 @@ namespace Pigit.Movement
         public void CheckMovement(GameTime gameTime)
         {
             keyboard.ReadInput();
-            //if (keyboard.Attack)
-            //{
-            //    player.Type = AnimatieTypes.Attack;
-            //    player.Update(gameTime, Vector2.Zero);
-            //}
-            //if (keyboard.Jump && !hasJumped)
-            //{
-            //    //Human jumps sprite
+            player.Direction = keyboard.Direction;
 
-            //    player.Versnelling = new Vector2(0f, -5f);
-            //    hasJumped = true;
-            //    player.Type = AnimatieTypes.Jump;
-            //    player.Update(gameTime, new Vector2(0f, -10f));
-            //}
+            if (keyboard.Attack)
+            {
+                player.Type = AnimatieTypes.Attack;
+                player.Update(gameTime, Vector2.Zero);
+            }
+            if (keyboard.Jump && !hasJumped)
+            {
+                //Human jumps sprite
 
-            //if (player.Positie.Y >= 400f)
-            //{
-            //    player.Versnelling = new Vector2(0f, 0f);
-            //    hasJumped = false;
-            //}
-            //else
-            //{
-            //    float i = 1f;
-            //    player.Versnelling += new Vector2(0f, 0.20f * i);
-            //}
+                player.Versnelling = new Vector2(0f, -5f);
+                hasJumped = true;
+                player.Type = AnimatieTypes.Jump;
+                player.Update(gameTime, new Vector2(0f, -10f));
+            }
 
-            //if (keyboard.Move)
-            //{
-            //    //Human Run Sprite
-            //    player.Type = AnimatieTypes.Run;
-            //    player.Update(gameTime, new Vector2(-1, 0));
-            //}
-            //else
-            //{
-            //    //Human Idle
-            //    player.Type = AnimatieTypes.Idle;
-            //    player.Update(gameTime, Vector2.Zero);
-            //}
-            player.Type = AnimatieTypes.Idle;
-            player.Update(gameTime, Vector2.Zero);
+            if (player.Positie.Y >= 400f)
+            {
+                player.Versnelling = new Vector2(0f, 0f);
+                hasJumped = false;
+            }
+            else
+            {
+                float i = 1f;
+                player.Versnelling += new Vector2(0f, 0.20f * i);
+            }
+
+            if (keyboard.Move)
+            {
+                //Human Run Sprite
+                player.Type = AnimatieTypes.Run;
+                player.Update(gameTime, new Vector2(-1, 0));
+            }
+            else
+            {
+                //Human Idle
+                player.Type = AnimatieTypes.Idle;
+                player.Update(gameTime, Vector2.Zero);
+            }
         }
     }
 }

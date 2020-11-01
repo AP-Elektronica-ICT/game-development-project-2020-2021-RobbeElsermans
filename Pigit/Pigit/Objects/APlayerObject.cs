@@ -23,12 +23,13 @@ namespace Pigit.Objects
         protected SpriteOpbouw opbouwSprites;
         SpriteDefine currentSprite;
 
+        public AnimatieTypes Type { get; set; }
+
+
         public APlayerObject(SpriteOpbouw spriteOpbouw)
         {
             opbouwSprites = spriteOpbouw;
         }
-        public AnimatieTypes Type { get; set; } = AnimatieTypes.Idle;
-
 
         private void CheckType()
         {
@@ -59,26 +60,21 @@ namespace Pigit.Objects
 
         public void Update(GameTime gameTime, Vector2 verplaatsing)
         {
-                this.Move(verplaatsing);
-                CheckType();
-                currentSprite.Update(gameTime);
+            CheckType();
+            this.Move(verplaatsing);
+            currentSprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch _spriteBatch, ContentManager Content)
         {
-            //if (!Direction)
-            //{
-            //    _spriteBatch.Draw(currentSprite.TextureR, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
-            //}
-            //else
-            //{
-            //    _spriteBatch.Draw(currentSprite.TextureL, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
-            //}
-
-            //_spriteBatch.Draw(currentSprite.TextureR, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
-            
-            
-            _spriteBatch.Draw(Content.Load<Texture2D>(@"Human\Idle Left(78x58)"), new Vector2(20, 20), Color.White);    
+            if (!Direction)
+            {
+                _spriteBatch.Draw(currentSprite.TextureR,Positie, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
+            }
+            else
+            {
+                _spriteBatch.Draw(currentSprite.TextureL,Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            }
         }
     }
 }
