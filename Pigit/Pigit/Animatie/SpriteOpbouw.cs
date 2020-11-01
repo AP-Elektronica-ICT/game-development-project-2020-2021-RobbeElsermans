@@ -15,10 +15,10 @@ namespace Pigit.Animatie
         public SpriteOpbouw(ContentManager Content, int speed)
         {
             spriteHuman = new Dictionary<AnimatieTypes, SpriteDefine>();
-            //spriteHuman.Add(AnimatieTypes.Run, new SpriteDefine(Content.Load<Texture2D>(@"Human\Run (78x58)"), Content.Load<Texture2D>(@"Human\Run Left (78x58)"), 8,new Vector2(78,58)));
-            spriteHuman.Add(AnimatieTypes.Idle, new SpriteDefine(Content.Load<Texture2D>(@"Human\Idle (78x58)"), Content.Load<Texture2D>(@"Human\Idle Left(78x58)"), 11, new Vector2(78,58)));
-            //spriteHuman.Add(AnimatieTypes.Jump, new SpriteDefine(Content.Load<Texture2D>(@"Human\Jump (78x58)"), Content.Load<Texture2D>(@"Human\Jump Left(78x58)"), 1, new Vector2(78,58)));
-            //spriteHuman.Add(AnimatieTypes.Attack, new SpriteDefine(Content.Load<Texture2D>(@"Human\Attack (78x58)"), Content.Load<Texture2D>(@"Human\Attack Left(78x58)"), 3, new Vector2(78, 58)));
+            spriteHuman.Add(AnimatieTypes.Run, new SpriteDefine(Content.Load<Texture2D>(@"Human\Run (78x58)"), Content.Load<Texture2D>(@"Human\Run Left (78x58)"), 8, new Vector2(78, 58)));
+            spriteHuman.Add(AnimatieTypes.Idle, new SpriteDefine(Content.Load<Texture2D>(@"Human\Idle (78x58)"), Content.Load<Texture2D>(@"Human\Idle Left(78x58)"), 11, new Vector2(78, 58)));
+            spriteHuman.Add(AnimatieTypes.Jump, new SpriteDefine(Content.Load<Texture2D>(@"Human\Jump (78x58)"), Content.Load<Texture2D>(@"Human\Jump Left(78x58)"), 1, new Vector2(78, 58)));
+            spriteHuman.Add(AnimatieTypes.Attack, new SpriteDefine(Content.Load<Texture2D>(@"Human\Attack (78x58)"), Content.Load<Texture2D>(@"Human\Attack Left(78x58)"), 3, new Vector2(78, 58)));
 
             //spriteHuman.Add("hit", new SpriteDefine(Content.Load<Texture2D>(@"Human\Hit (78x58)"),Content.Load<Texture2D>(@"Human\Hit Left(78x58)"), );
             //spriteHuman.Add("ground", new SpriteDefine(Content.Load<Texture2D>(@"Human\Ground (78x58)"),Content.Load<Texture2D>(@"Human\Ground Left(78x58)"),);
