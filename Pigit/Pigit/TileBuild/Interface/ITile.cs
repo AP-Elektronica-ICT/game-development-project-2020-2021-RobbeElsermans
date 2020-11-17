@@ -9,7 +9,6 @@ namespace Pigit.TileBuild
     interface ITile
     {
         public Vector2 Position { get; set; }
-        public int Number { get; set; }
         public void Draw(SpriteBatch spriteBatch);
     }
 }

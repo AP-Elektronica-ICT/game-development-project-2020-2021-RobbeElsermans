@@ -10,12 +10,11 @@ namespace Pigit.TileBuild
     {
         protected Texture2D texture;
         public virtual Vector2 Position { get; set; }
-        public int Number { get; set; }
 
-        public TileDefine(Texture2D texture, int number)
+        public TileDefine(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
-            this.Number = number;
+            this.Position = position;
         }
 
         public void Draw(SpriteBatch spriteBatch)

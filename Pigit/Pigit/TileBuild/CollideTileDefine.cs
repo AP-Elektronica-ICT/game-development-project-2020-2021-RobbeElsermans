@@ -23,6 +23,6 @@ namespace Pigit.TileBuild
         }
         public Rectangle Border { get; set; }
 
-        public CollideTileDefine(Texture2D texture, int number) : base(texture, number) { }
+        public CollideTileDefine(Texture2D texture, Vector2 position) : base(texture, position) { }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
+using Pigit.Map;
 using Pigit.Movement;
 using Pigit.Objects;
 using Pigit.SpriteBuild;
@@ -19,8 +20,10 @@ namespace Pigit
 
         private MoveCommand move;
         private SpriteOpbouw opbouwSprites;
+        
 
-        private TileOpbouw blockOpbouw;
+        private Level beginWorld;
+
 
         IPlayerObject player;
 
@@ -42,8 +45,6 @@ namespace Pigit
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             opbouwSprites = new SpriteOpbouw(Content, 12);
 
-            blockOpbouw = new TileOpbouw(Content);
-
             InitializeGameObjects();
 
             move = new MoveCommand(player, _spriteBatch);
@@ -51,6 +52,9 @@ namespace Pigit
 
         private void InitializeGameObjects()
         {
+            beginWorld = new Level(Content, new World1Layout());
+            beginWorld.CreateWorld();
+
             player = new Human(opbouwSprites);
             player.Positie = new Vector2(20, 300);
         }
@@ -69,9 +73,9 @@ namespace Pigit
             _spriteBatch.Begin();
 
             //Draw Tiles
+            beginWorld.DrawWorld(_spriteBatch);
 
-
-
+            //Teken player
             player.Draw(_spriteBatch);
 
             _spriteBatch.End();

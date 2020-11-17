@@ -22,6 +22,10 @@
     <None Remove="NewFolder\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Map\Component1.cs" />
+    <Compile Remove="Map\Component1.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Content\ForegroundTile  %281%29.png" />
     <None Remove="Content\ForegroundTile  %2810%29.png" />
     <None Remove="Content\ForegroundTile  %2811%29.png" />
