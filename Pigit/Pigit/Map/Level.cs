@@ -43,21 +43,21 @@ namespace Pigit.Map
                         }
                     }
 
-                    //for (int i = 1; i <= blockOpbouw.CollideTiles.Count; i++)
-                    //{
-                    //    if (i == mapLayout.CollideTileLayout[x, y])
-                    //    {
-                    //        tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i], new Vector2(y * 32, x * 32)));
-                    //    }
-                    //}
+                    for (int i = 1; i <= blockOpbouw.CollideTiles.Count; i++)
+                    {
+                        if (i == mapLayout.CollideTileLayout[x, y])
+                        {
+                            tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i-1], new Vector2(y * 32, x * 32)));
+                        }
+                    }
 
-                    //for (int i = 1; i <= blockOpbouw.ForegroundTiles.Count; i++)
-                    //{
-                    //    if (i == mapLayout.ForegroundTiles[x, y])
-                    //    {
-                    //        tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i], new Vector2(y * 32, x * 32)));
-                    //    }
-                    //}
+                    for (int i = 1; i <= blockOpbouw.ForegroundTiles.Count; i++)
+                    {
+                        if (i == mapLayout.ForegroundTiles[x, y])
+                        {
+                            tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i-1], new Vector2(y * 32, x * 32)));
+                        }
+                    }
                 }
             }
 

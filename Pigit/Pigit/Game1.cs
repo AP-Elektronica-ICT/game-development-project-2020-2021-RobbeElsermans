@@ -56,7 +56,7 @@ namespace Pigit
             beginWorld.CreateWorld();
 
             player = new Human(opbouwSprites);
-            player.Positie = new Vector2(20, 300);
+            player.Positie = new Vector2(5*32, 4*32);
         }
 
         protected override void Update(GameTime gameTime)
