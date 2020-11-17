@@ -1,6 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Animatie;
+using Pigit.Movement;
+using Pigit.Objects;
+using Pigit.SpriteBuild;
+using System;
+using System.Collections.Generic;
 
 namespace Pigit
 {
@@ -8,6 +14,13 @@ namespace Pigit
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+
+        private MoveCommand move;
+        private SpriteOpbouw opbouwSprites;
+
+        IPlayerObject player;
+
 
         public Game1()
         {
@@ -18,25 +31,29 @@ namespace Pigit
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            opbouwSprites = new SpriteOpbouw(Content, 12);
 
-            // TODO: use this.Content to load your game content here
+            InitializeGameObjects();
+
+            move = new MoveCommand(player, _spriteBatch);
+        }
+
+        private void InitializeGameObjects()
+        {
+            player = new Human(opbouwSprites);
+            player.Positie = new Vector2(20, 300);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
+            move.CheckMovement(gameTime);
+            
             base.Update(gameTime);
         }
 
@@ -44,7 +61,11 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+            player.Draw(_spriteBatch);
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
