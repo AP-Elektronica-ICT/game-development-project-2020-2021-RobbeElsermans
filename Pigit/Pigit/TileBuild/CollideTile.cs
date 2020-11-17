@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pigit.TileBuild
 {
-    class CollideTile: ITile
+    class CollideTile: ICollideTile
     {
         private Texture2D texture;
         private Vector2 position;
@@ -34,7 +34,7 @@ namespace Pigit.TileBuild
 
         public void Draw(SpriteBatch sprite)
         {
-            sprite.Draw(texture, Border, Color.White);
+            sprite.Draw(texture, Position, Color.White);
         }
     }
 }

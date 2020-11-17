@@ -20,7 +20,7 @@ namespace Pigit
         private MoveCommand move;
         private SpriteOpbouw opbouwSprites;
 
-        private BlockOpbouw blockOpbouw;
+        private TileOpbouw blockOpbouw;
 
         IPlayerObject player;
 
@@ -42,7 +42,7 @@ namespace Pigit
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             opbouwSprites = new SpriteOpbouw(Content, 12);
 
-            blockOpbouw = new BlockOpbouw(Content);
+            blockOpbouw = new TileOpbouw(Content);
 
             InitializeGameObjects();
 

@@ -8,9 +8,9 @@ namespace Pigit.Map
     class World1Opbouw
     {
         private byte[,] mapLayout;
-        private List<ITile> collideItems;
+        private List<ICollideTile> collideItems;
 
-        World1Opbouw(List<ITile> collideItems)
+        World1Opbouw(List<ICollideTile> collideItems)
         {
             this.collideItems = collideItems;
         }

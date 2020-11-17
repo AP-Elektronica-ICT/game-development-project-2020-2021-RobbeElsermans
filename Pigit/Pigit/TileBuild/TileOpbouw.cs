@@ -7,18 +7,19 @@ using System.Text;
 
 namespace Pigit.TileBuild
 {
-    class BlockOpbouw
+    class TileOpbouw
     {
-        public List<ITile> Blocks { get; set; }
+        public List<ICollideTile> CollideTiles { get; set; }
+        public List< >BackgroundTiles { get; set; }
 
-        public BlockOpbouw(ContentManager Content)
+        public TileOpbouw(ContentManager Content)
         {
-            Blocks = new List<ITile>();
+            CollideTiles = new List<ICollideTile>();
             for (int i = 1; i <= 54; i++)
             {
                 string link = @"CollideTiles\CollideTile  (" + i + ")";
 
-                Blocks.Add(new CollideTile(Content.Load<Texture2D>(link), i));
+            CollideTiles.Add(new CollideTile(Content.Load<Texture2D>(link), i));
             }
         }
     }
