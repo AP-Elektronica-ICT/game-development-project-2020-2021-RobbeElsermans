@@ -6,16 +6,16 @@ using System.Text;
 
 namespace Pigit.TileBuild
 {
-    class BackGroundTileDefine
+    class TileDefine: ITile
     {
-        private Texture2D texture { get; set; }
+        protected Texture2D texture;
+        public virtual Vector2 Position { get; set; }
         public int Number { get; set; }
-        public Vector2 Position { get; set; }
 
-        public BackGroundTileDefine(Texture2D texture, Vector2 position)
+        public TileDefine(Texture2D texture, int number)
         {
             this.texture = texture;
-            Position = position;
+            this.Number = number;
         }
 
         public void Draw(SpriteBatch spriteBatch)
