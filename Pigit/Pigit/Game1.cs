@@ -5,6 +5,7 @@ using Pigit.Animatie;
 using Pigit.Movement;
 using Pigit.Objects;
 using Pigit.SpriteBuild;
+using Pigit.TileBuild;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,8 @@ namespace Pigit
 
         private MoveCommand move;
         private SpriteOpbouw opbouwSprites;
+
+        private BlockOpbouw blockOpbouw;
 
         IPlayerObject player;
 
@@ -38,6 +41,8 @@ namespace Pigit
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             opbouwSprites = new SpriteOpbouw(Content, 12);
+
+            blockOpbouw = new BlockOpbouw(Content);
 
             InitializeGameObjects();
 
@@ -62,6 +67,10 @@ namespace Pigit
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+
+            //Draw Tiles
+
+
 
             player.Draw(_spriteBatch);
 
