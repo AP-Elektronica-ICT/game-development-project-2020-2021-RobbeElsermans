@@ -7,7 +7,7 @@ namespace Pigit.Movement
 {
     static class RectangleCollision
     {
-        const int penetrationMargin = 5;
+        const int penetrationMargin = 2;
         public static bool isOnTopOf(this Rectangle r1, Rectangle r2)
         {
             return (r1.Bottom >= r2.Top - penetrationMargin &&

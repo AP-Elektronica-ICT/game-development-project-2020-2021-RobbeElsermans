@@ -47,7 +47,7 @@ namespace Pigit
 
             InitializeGameObjects();
 
-            move = new MoveCommand(player, _spriteBatch);
+            move = new MoveCommand(player, _spriteBatch, beginWorld);
         }
 
         private void InitializeGameObjects()

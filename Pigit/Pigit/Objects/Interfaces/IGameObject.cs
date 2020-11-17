@@ -12,5 +12,6 @@ namespace Pigit
         Vector2 Positie { get; set; }
         void Update(GameTime gameTime, Vector2 verplaatsing);
         void Draw(SpriteBatch _spriteBatch);
+        public Rectangle Border { get; set; }
     }
 }

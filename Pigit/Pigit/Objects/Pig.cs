@@ -11,6 +11,7 @@ namespace Pigit
     public class Pig : INPCObject
     {
         public Vector2 Positie { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public Rectangle Border { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public void Draw(SpriteBatch _spriteBatch)
         {

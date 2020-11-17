@@ -18,7 +18,7 @@ namespace Pigit.TileBuild
             set
             {
                 position = value;
-                Border = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+                Border = new Rectangle((int)position.X, (int)position.Y, texture.Width+2, texture.Height+2);
             }
         }
         public Rectangle Border { get; set; }

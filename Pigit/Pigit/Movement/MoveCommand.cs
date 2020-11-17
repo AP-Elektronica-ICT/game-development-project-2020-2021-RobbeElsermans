@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
+using Pigit.Map;
 using Pigit.Objects;
+using Pigit.TileBuild;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,13 +16,17 @@ namespace Pigit.Movement
         private IPlayerObject player;
         SpriteBatch _spriteBatch;
         private bool hasJumped;
+        private Level level;
+        private bool hitTile;
 
-        public MoveCommand(IPlayerObject player, SpriteBatch _spriteBatch)
+        public MoveCommand(IPlayerObject player, SpriteBatch _spriteBatch, Level level)
         {
+            this.level = level;
             keyboard = new KeyBoardReader();
             this.player = player;
             this._spriteBatch = _spriteBatch;
             hasJumped = true;
+            hitTile = false;
         }
 
         /*
@@ -71,7 +77,25 @@ namespace Pigit.Movement
             }
 
             //Hit another object
-            if (player.Positie.Y >= 400f)
+            foreach (var collideTile in level.Tiles)
+            {
+                if (collideTile is ICollideTile)
+                {
+                    ICollideTile temp = collideTile as ICollideTile;
+
+                    if (player.Border.isOnTopOf(temp.Border))
+                    {
+                        hitTile = true;
+                        break;
+                    }
+                    else
+                    {
+                        hitTile = false;
+                    }
+                }
+            }
+
+            if (hitTile)
             {
                 player.Versnelling = new Vector2(0f, 0f);
                 hasJumped = false;
@@ -80,7 +104,7 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 player.Versnelling += new Vector2(0f, 0.20f * i);
-                if (player.Versnelling.Y <=0)
+                if (player.Versnelling.Y <= 0)
                 {
                     player.Type = AnimatieTypes.Jump;
                 }

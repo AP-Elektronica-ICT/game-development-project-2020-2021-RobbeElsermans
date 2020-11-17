@@ -20,8 +20,10 @@ namespace Pigit.Objects
         public Vector2 Positie { get; set; }
         public Vector2 Versnelling { get; set; }
         protected SpriteOpbouw opbouwSprites;
-        SpriteDefine currentSprite;
         public AnimatieTypes Type { get; set; }
+        public Rectangle Border { get; set; }
+
+        private SpriteDefine currentSprite;
 
         public APlayerObject(SpriteOpbouw spriteOpbouw)
         {
@@ -41,6 +43,8 @@ namespace Pigit.Objects
         {
             Positie += verplaatsing;
             Positie += Versnelling;
+
+            Border = new Rectangle((int)Positie.X, (int)Positie.Y, currentSprite.TextureR.Width, currentSprite.TextureR.Height-13);
         }
         //private Vector2 limit(Vector2 v, float max)
         //{
@@ -55,6 +59,8 @@ namespace Pigit.Objects
         public void Update(GameTime gameTime, Vector2 verplaatsing)
         {
             CheckType();
+
+            
             this.Move(verplaatsing);
             currentSprite.Update(gameTime);
         }
