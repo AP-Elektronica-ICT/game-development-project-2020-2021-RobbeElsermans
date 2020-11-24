@@ -18,13 +18,17 @@ namespace Pigit
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        //DEBUG
         private Texture2D _rectBlock;
         private Texture2D _rectBlock2;
 
+        private CameraAnimatie _camera;
 
         private MoveCommand move;
         private SpriteOpbouw opbouwSprites;
-        
+        public static int ScreenWidth;
+        public static int ScreenHeight;
+
 
         private Level beginWorld;
 
