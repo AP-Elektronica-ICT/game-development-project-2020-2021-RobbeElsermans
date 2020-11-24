@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Pigit.Movement
 {
-    static class RectangleCollision
+    static class PlatformBlockCollision
     {
         const int penetrationMargin = 5;
-        public static bool isOnTopOf(this Rectangle r1, Rectangle r2)
+        public static bool isOnTopOf(this Rectangle r1, Rectangle r2, Vector2 velocity)
         {
-            return (r1.Bottom >= r2.Top - penetrationMargin &&
+            return (r1.Bottom >= r2.Top - velocity.Y &&
                     r1.Bottom <= r2.Top + 1 &&
                     r1.Right >= r2.Left + 5 &&
                     r1.Left <= r2.Right - 5);

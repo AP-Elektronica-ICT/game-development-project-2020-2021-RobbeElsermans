@@ -9,13 +9,15 @@ namespace Pigit.TileBuild
 {
     class TileOpbouw
     {
-        private int aantalCollideTiles = 54;
+        private int aantalCollideTiles = 46;
         private int aantalBackgroundTiles = 48;
         private int aantalForegroundTiles = 12;
+        private int aantalPlatformTiles = 8;
 
         public List<Texture2D> CollideTiles { get; set; }
         public List<Texture2D> BackgroundTiles { get; set; }
         public List<Texture2D> ForegroundTiles { get; set; }
+        public List<Texture2D> PLatformTiles { get; set; }
 
         public TileOpbouw(ContentManager Content)
         {
@@ -41,6 +43,14 @@ namespace Pigit.TileBuild
                 string link = @"ForegroundTiles\ForegroundTile  (" + i + ")";
 
                 ForegroundTiles.Add(Content.Load<Texture2D>(link));
+            }
+
+            PLatformTiles = new List<Texture2D>();
+            for (int i = 1; i <= aantalPlatformTiles; i++)
+            {
+                string link = @"PlatformTiles\PlatformTile  (" + i + ")";
+
+                PLatformTiles.Add(Content.Load<Texture2D>(link));
             }
         }
     }

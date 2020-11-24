@@ -58,6 +58,14 @@ namespace Pigit.Map
                             Tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i-1], new Vector2(y * 32, x * 32)));
                         }
                     }
+
+                    for (int i = 1; i <= blockOpbouw.PLatformTiles.Count; i++)
+                    {
+                        if (i == mapLayout.PlatformTile[x, y])
+                        {
+                            Tiles.Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
+                        }
+                    }
                 }
             }
 
