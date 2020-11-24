@@ -22,6 +22,9 @@ namespace Pigit.Movement
         bool isGround = false;
         bool isSide = false;
 
+        float jumpHeight = 6f;
+        float walkingSpeed = 2f;
+
         private bool hasJumped;
 
         public MoveCommand(IPlayerObject player,Level level)
@@ -55,11 +58,11 @@ namespace Pigit.Movement
 
                 if (keyboard.Direction)
                 {
-                    velocity.X -= 1f;
+                    velocity.X -= walkingSpeed;
                 }
                 else
                 {
-                    velocity.X += 1f;
+                    velocity.X += walkingSpeed;
                 }
             }
             else
@@ -79,10 +82,10 @@ namespace Pigit.Movement
             {
                 //Human jumps sprite
 
-                velocity.Y = -5f;
+                velocity.Y = -jumpHeight;
                 hasJumped = true;
                 player.Type = AnimatieTypes.Jump;
-                positie.Y -= 10f;
+                //positie.Y -= 2f;
                 isGround = false;
             }
 
@@ -97,19 +100,20 @@ namespace Pigit.Movement
 
                     if ((EndBlockCollision.isTouchingLeft(velocity, temp, rectangle)|| EndBlockCollision.isTouchingRight(velocity, temp, rectangle)) && !isSide)
                     {
-                        //Debug.Print($"Left or Right player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
+                        Debug.Print($"Left or Right player: {positie}  tile: {temp.Position}");
                         velocity.X = 0f;
                         isSide = true;
                     }
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
-                        //Debug.Print($"Bottom or Top player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
+                        Debug.Print($"Bottom player: {positie}  tile: {temp.Position}");
                         positie.Y = temp.Border.Y - (temp.Border.Height+13);
                         velocity.Y = 0f;
                         isGround = true;
                     }
                     if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
                     {
+                        Debug.Print($"Top player: {positie}  tile: {temp.Position}");
                         velocity.Y = 0f;
                     }
                 }
@@ -135,7 +139,6 @@ namespace Pigit.Movement
                     }
                 }
             }
-
 
             //Hit another object
             if (isGround)
