@@ -5,6 +5,7 @@ using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
 using Pigit.TileBuild;
+using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -96,13 +97,13 @@ namespace Pigit.Movement
 
                     if ((EndBlockCollision.isTouchingLeft(velocity, temp, rectangle)|| EndBlockCollision.isTouchingRight(velocity, temp, rectangle)) && !isSide)
                     {
-                        Debug.Print($"Left or Right player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
+                        //Debug.Print($"Left or Right player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
                         velocity.X = 0f;
                         isSide = true;
                     }
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
-                        Debug.Print($"Bottom or Top player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
+                        //Debug.Print($"Bottom or Top player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
                         positie.Y = temp.Border.Y - (temp.Border.Height+13);
                         velocity.Y = 0f;
                         isGround = true;
@@ -112,11 +113,32 @@ namespace Pigit.Movement
                         velocity.Y = 0f;
                     }
                 }
+
+                if (tile is IPlatformTile)
+                {
+                    var temp = tile as IPlatformTile;
+                    Rectangle rectangle = player.Rectangle;
+
+
+                    //if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border) && velocity.Y > 0)
+                    //{
+                    //    velocity.Y = 0f;
+                    //    isGround = true;
+                    //}
+
+                    if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
+                    {
+                        Debug.Print($"inTopOf {player.Versnelling}");
+                        positie.Y = temp.Border.Y - (temp.Border.Height + 13);
+                        velocity.Y = 0f;
+                        isGround = true;
+                    }
+                }
             }
 
 
             //Hit another object
-            if (player.Positie.Y >= 300 || isGround)
+            if (isGround)
             {
                 velocity.Y = 0f;
                 hasJumped = false;

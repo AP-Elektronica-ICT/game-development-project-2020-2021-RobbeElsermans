@@ -7,6 +7,7 @@ using Pigit.Movement;
 using Pigit.Objects;
 using Pigit.SpriteBuild;
 using Pigit.TileBuild;
+using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
 
@@ -92,9 +93,9 @@ namespace Pigit
 
             //foreach (var tile in beginWorld.Tiles)
             //{
-            //    if (tile is ICollideTile)
+            //    if (tile is IPlatformTile)
             //    {
-            //        var temp = tile as ICollideTile;
+            //        var temp = tile as IPlatformTile;
             //        _spriteBatch.Draw(_rectBlock2, temp.Border, Color.White);
             //    }
             //}

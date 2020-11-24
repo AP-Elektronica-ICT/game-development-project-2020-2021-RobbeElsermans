@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Pigit.TileBuild.Interface;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Pigit.TileBuild
 {
-    class CollideTileDefine : TileDefine, ICollideTile
+    class PlatformTileDefine: TileDefine, IPlatformTile
     {
         protected Vector2 position;
         public override Vector2 Position
@@ -23,6 +24,7 @@ namespace Pigit.TileBuild
         }
         public Rectangle Border { get; set; }
 
-        public CollideTileDefine(Texture2D texture, Vector2 position) : base(texture, position) { }
+        public PlatformTileDefine(Texture2D texture, Vector2 position) : base(texture, position) { }
+
     }
 }

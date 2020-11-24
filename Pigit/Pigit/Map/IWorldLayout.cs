@@ -9,5 +9,6 @@ namespace Pigit.Map
         public int[,] CollideTileLayout { get; }
         public int[,] BackgroundTiles { get; }
         public int[,] ForegroundTiles { get; }
+        public int[,] PlatformTile { get; }
     }
 }
