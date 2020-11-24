@@ -8,7 +8,7 @@ namespace Pigit.TileBuild
 {
     class CollideTileDefine : TileDefine, ICollideTile
     {
-        private Vector2 position;
+        protected Vector2 position;
         public override Vector2 Position
         {
             get
