@@ -116,7 +116,7 @@ namespace Pigit.Movement
 
 
             //Hit another object
-            if (player.Positie.Y >= 300 || isGround)
+            if (isGround)
             {
                 velocity.Y = 0f;
                 hasJumped = false;
