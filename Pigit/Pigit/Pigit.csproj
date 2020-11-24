@@ -13,13 +13,10 @@
   <ItemGroup>
     <Compile Remove="Content\Tiles\**" />
     <Compile Remove="NewFolder1\**" />
-    <Compile Remove="NewFolder\**" />
     <EmbeddedResource Remove="Content\Tiles\**" />
     <EmbeddedResource Remove="NewFolder1\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Content\Tiles\**" />
     <None Remove="NewFolder1\**" />
-    <None Remove="NewFolder\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Map\Component1.cs" />

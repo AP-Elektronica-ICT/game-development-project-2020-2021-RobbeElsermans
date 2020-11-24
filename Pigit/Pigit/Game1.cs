@@ -18,6 +18,7 @@ namespace Pigit
         private SpriteBatch _spriteBatch;
 
         private Texture2D _rectBlock;
+        private Texture2D _rectBlock2;
 
 
         private MoveCommand move;
@@ -49,6 +50,8 @@ namespace Pigit
             //DEBUG
             _rectBlock = new Texture2D(GraphicsDevice,1,1);
             _rectBlock.SetData(new Color[] { Color.Red });
+            _rectBlock2 = new Texture2D(GraphicsDevice, 1, 1);
+            _rectBlock2.SetData(new Color[] { Color.Blue });
 
 
             opbouwSprites = new SpriteOpbouw(Content, 12);
@@ -86,15 +89,25 @@ namespace Pigit
 
 
             //DEBUG
-            if (player.Direction)
-            {
-                _spriteBatch.Draw(_rectBlock, player.RectangleL, Color.White);
-            }
-            else
-            {
-                _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
-            }
 
+            //foreach (var tile in beginWorld.Tiles)
+            //{
+            //    if (tile is ICollideTile)
+            //    {
+            //        var temp = tile as ICollideTile;
+            //        _spriteBatch.Draw(_rectBlock2, temp.Border, Color.White);
+            //    }
+            //}
+
+            //if (player.Direction)
+            //{
+            //    _spriteBatch.Draw(_rectBlock, player.RectangleL, Color.White);
+            //}
+            //else
+            //{
+            //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
+            //}
+            _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
 
             //Teken player
             player.Draw(_spriteBatch);

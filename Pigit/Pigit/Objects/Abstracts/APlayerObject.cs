@@ -16,8 +16,7 @@ namespace Pigit.Objects
 {
     abstract class APlayerObject : IPlayerObject
     {
-        public Rectangle RectangleR { get; set; }
-        public Rectangle RectangleL { get; set; }
+        public Rectangle Rectangle { get; set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
         public Vector2 Versnelling { get; set; }
@@ -56,14 +55,17 @@ namespace Pigit.Objects
         //}
         public void Update(GameTime gameTime)
         {
-            if (Direction)
-            {
-                RectangleL = new Rectangle((int)Positie.X + 30, (int)Positie.Y + 14, 40, 34);
-            }
-            else
-            {
-                RectangleR = new Rectangle((int)Positie.X + 8, (int)Positie.Y + 14, 40, 34);
-            }
+            //if (Direction)
+            //{
+            //    RectangleL = new Rectangle((int)Positie.X + 30, (int)Positie.Y + 14, 40, 34);
+            //}
+            //else
+            //{
+            //    RectangleR = new Rectangle((int)Positie.X + 8, (int)Positie.Y + 14, 40, 34);
+            //}
+
+            Rectangle = new Rectangle((int)Positie.X + 18, (int)Positie.Y + 17, 40, 28);
+
             CheckType();
             currentSprite.Update(gameTime);
         }

@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
+using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.TileBuild;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Movement
@@ -15,6 +18,9 @@ namespace Pigit.Movement
         private IPlayerObject player;
         private Level level;
 
+        bool isGround = false;
+        bool isSide = false;
+
         private bool hasJumped;
 
         public MoveCommand(IPlayerObject player,Level level)
@@ -23,6 +29,8 @@ namespace Pigit.Movement
             this.player = player;
             this.level = level;
             hasJumped = true;
+            isGround = false;
+            isSide = false;
         }
 
         /*
@@ -32,7 +40,7 @@ namespace Pigit.Movement
         public void CheckMovement(GameTime gameTime)
         {
             Vector2 positie = new Vector2(player.Positie.X, player.Positie.Y);
-            Vector2 velocity = new Vector2(player.Versnelling.X, player.Versnelling.Y);
+            Vector2 velocity = new Vector2(0f, player.Versnelling.Y);
 
             keyboard.ReadInput();
             player.Direction = keyboard.Direction;
@@ -41,14 +49,16 @@ namespace Pigit.Movement
             {
                 //Human Run Sprite
                 player.Type = AnimatieTypes.Run;
+                isGround = false;
+                isSide = false;
 
                 if (keyboard.Direction)
                 {
-                    positie.X -= 1f;
+                    velocity.X -= 1f;
                 }
                 else
                 {
-                    positie.X += 1f;
+                    velocity.X += 1f;
                 }
             }
             else
@@ -72,10 +82,41 @@ namespace Pigit.Movement
                 hasJumped = true;
                 player.Type = AnimatieTypes.Jump;
                 positie.Y -= 10f;
+                isGround = false;
             }
 
+
+            foreach (var tile in level.Tiles)
+            {
+                if (tile is ICollideTile)
+                {
+                    var temp = tile as ICollideTile;
+                    Rectangle rectangle = player.Rectangle;
+
+
+                    if ((EndBlockCollision.isTouchingLeft(velocity, temp, rectangle)|| EndBlockCollision.isTouchingRight(velocity, temp, rectangle)) && !isSide)
+                    {
+                        Debug.Print($"Left or Right player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
+                        velocity.X = 0f;
+                        isSide = true;
+                    }
+                    if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
+                    {
+                        Debug.Print($"Bottom or Top player: {player.Positie.X}:{player.Positie.Y}  tile: {temp.Position.X}:{tile.Position.Y}");
+                        positie.Y = temp.Border.Y - (temp.Border.Height+13);
+                        velocity.Y = 0f;
+                        isGround = true;
+                    }
+                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
+                    {
+                        velocity.Y = 0f;
+                    }
+                }
+            }
+
+
             //Hit another object
-            if (player.Positie.Y >= 400f)
+            if (player.Positie.Y >= 300 || isGround)
             {
                 velocity.Y = 0f;
                 hasJumped = false;
@@ -84,11 +125,11 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 velocity.Y += 0.20f * i;
-                if (player.Versnelling.Y <=0)
+                if (player.Versnelling.Y < 0)
                 {
                     player.Type = AnimatieTypes.Jump;
                 }
-                else
+                else if (player.Versnelling.Y > 0)
                 {
                     player.Type = AnimatieTypes.Fall;
                 }
