@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pigit.Objects
 {
-    interface INPCObject : IGameObject
+    interface INPCObject
     {
 
     }

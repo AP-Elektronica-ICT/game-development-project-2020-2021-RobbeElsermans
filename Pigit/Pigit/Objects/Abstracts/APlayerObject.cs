@@ -16,6 +16,7 @@ namespace Pigit.Objects
 {
     abstract class APlayerObject : IPlayerObject
     {
+        public Rectangle Rectangle { get; set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
         public Vector2 Versnelling { get; set; }
@@ -37,11 +38,11 @@ namespace Pigit.Objects
                 }
             }
         }
-        private void Move(Vector2 verplaatsing)
-        {
-            Positie += verplaatsing;
-            Positie += Versnelling;
-        }
+        //private void Move(Vector2 verplaatsing)
+        //{
+        //    Positie += verplaatsing;
+        //    Positie += Versnelling;
+        //}
         //private Vector2 limit(Vector2 v, float max)
         //{
         //    if (v.Length() > max)
@@ -52,10 +53,20 @@ namespace Pigit.Objects
         //    }
         //    return v;
         //}
-        public void Update(GameTime gameTime, Vector2 verplaatsing)
+        public void Update(GameTime gameTime)
         {
+            //if (Direction)
+            //{
+            //    RectangleL = new Rectangle((int)Positie.X + 30, (int)Positie.Y + 14, 40, 34);
+            //}
+            //else
+            //{
+            //    RectangleR = new Rectangle((int)Positie.X + 8, (int)Positie.Y + 14, 40, 34);
+            //}
+
+            Rectangle = new Rectangle((int)Positie.X + 18, (int)Positie.Y + 17, 40, 28);
+
             CheckType();
-            this.Move(verplaatsing);
             currentSprite.Update(gameTime);
         }
         public void Draw(SpriteBatch _spriteBatch)

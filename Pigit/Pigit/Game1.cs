@@ -17,6 +17,9 @@ namespace Pigit
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Texture2D _rectBlock;
+        private Texture2D _rectBlock2;
+
 
         private MoveCommand move;
         private SpriteOpbouw opbouwSprites;
@@ -43,11 +46,17 @@ namespace Pigit
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //DEBUG
+            _rectBlock = new Texture2D(GraphicsDevice,1,1);
+            _rectBlock.SetData(new Color[] { Color.Red });
+            _rectBlock2 = new Texture2D(GraphicsDevice, 1, 1);
+            _rectBlock2.SetData(new Color[] { Color.Blue });
+
+
             opbouwSprites = new SpriteOpbouw(Content, 12);
 
             InitializeGameObjects();
-
-            move = new MoveCommand(player, _spriteBatch);
         }
 
         private void InitializeGameObjects()
@@ -57,12 +66,15 @@ namespace Pigit
 
             player = new Human(opbouwSprites);
             player.Positie = new Vector2(5*32, 4*32);
+
+
+            move = new MoveCommand(player, beginWorld);
         }
 
         protected override void Update(GameTime gameTime)
         {
             move.CheckMovement(gameTime);
-            
+
             base.Update(gameTime);
         }
 
@@ -75,8 +87,31 @@ namespace Pigit
             //Draw Tiles
             beginWorld.DrawWorld(_spriteBatch);
 
+
+            //DEBUG
+
+            //foreach (var tile in beginWorld.Tiles)
+            //{
+            //    if (tile is ICollideTile)
+            //    {
+            //        var temp = tile as ICollideTile;
+            //        _spriteBatch.Draw(_rectBlock2, temp.Border, Color.White);
+            //    }
+            //}
+
+            //if (player.Direction)
+            //{
+            //    _spriteBatch.Draw(_rectBlock, player.RectangleL, Color.White);
+            //}
+            //else
+            //{
+            //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
+            //}
+            _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
+
             //Teken player
             player.Draw(_spriteBatch);
+
 
             _spriteBatch.End();
 
