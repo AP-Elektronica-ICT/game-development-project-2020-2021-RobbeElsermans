@@ -4,12 +4,12 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Pigit.Objects;
 
 namespace Pigit
 {
-    interface IGameObject
+    interface IGameObject: IMoveable
     {
-        Vector2 Positie { get; set; }
         void Update(GameTime gameTime, Vector2 verplaatsing);
         void Draw(SpriteBatch _spriteBatch);
     }

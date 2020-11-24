@@ -13,12 +13,12 @@ namespace Pigit.Map
         private IWorldLayout mapLayout;
         private TileOpbouw blockOpbouw;
 
-        private List<ITile> tiles;
+        public List<ITile> Tiles;
 
         public Level(ContentManager content, IWorldLayout layout)
         {
             this.mapLayout = layout;
-            tiles = new List<ITile>();
+            Tiles = new List<ITile>();
 
             InitializeTiles(content);
         }
@@ -39,7 +39,7 @@ namespace Pigit.Map
                     {
                         if (i == mapLayout.BackgroundTiles[x, y])
                         {
-                            tiles.Add(new TileDefine(blockOpbouw.BackgroundTiles[i-1], new Vector2(y * 32, x * 32)));
+                            Tiles.Add(new TileDefine(blockOpbouw.BackgroundTiles[i-1], new Vector2(y * 32, x * 32)));
                         }
                     }
 
@@ -47,7 +47,7 @@ namespace Pigit.Map
                     {
                         if (i == mapLayout.CollideTileLayout[x, y])
                         {
-                            tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i-1], new Vector2(y * 32, x * 32)));
+                            Tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i-1], new Vector2(y * 32, x * 32)));
                         }
                     }
 
@@ -55,7 +55,7 @@ namespace Pigit.Map
                     {
                         if (i == mapLayout.ForegroundTiles[x, y])
                         {
-                            tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i-1], new Vector2(y * 32, x * 32)));
+                            Tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i-1], new Vector2(y * 32, x * 32)));
                         }
                     }
                 }
@@ -64,7 +64,7 @@ namespace Pigit.Map
         }
         public void DrawWorld(SpriteBatch spriteBatch)
         {
-            foreach (var texture in tiles)
+            foreach (var texture in Tiles)
             {
                 texture.Draw(spriteBatch);
             }

@@ -17,7 +17,6 @@ namespace Pigit.Objects
     interface IPlayerObject : IGameObject
     {
         bool Direction { get; set; }
-        Vector2 Versnelling { get; set; }
         AnimatieTypes Type { get; set; }
     }
 }

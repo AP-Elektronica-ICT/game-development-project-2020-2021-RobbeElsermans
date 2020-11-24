@@ -12,14 +12,13 @@ namespace Pigit.Movement
     {
         private IInputReader keyboard;
         private IPlayerObject player;
-        SpriteBatch _spriteBatch;
+
         private bool hasJumped;
 
-        public MoveCommand(IPlayerObject player, SpriteBatch _spriteBatch)
+        public MoveCommand(IPlayerObject player)
         {
             keyboard = new KeyBoardReader();
             this.player = player;
-            this._spriteBatch = _spriteBatch;
             hasJumped = true;
         }
 
