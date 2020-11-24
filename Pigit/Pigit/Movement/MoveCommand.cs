@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
+using Pigit.Map;
 using Pigit.Objects;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,15 @@ namespace Pigit.Movement
     {
         private IInputReader keyboard;
         private IPlayerObject player;
+        private Level level;
 
         private bool hasJumped;
 
-        public MoveCommand(IPlayerObject player)
+        public MoveCommand(IPlayerObject player,Level level)
         {
             keyboard = new KeyBoardReader();
             this.player = player;
+            this.level = level;
             hasJumped = true;
         }
 
@@ -28,7 +31,9 @@ namespace Pigit.Movement
          */
         public void CheckMovement(GameTime gameTime)
         {
-            Vector2 positie = Vector2.Zero;
+            Vector2 positie = new Vector2(player.Positie.X, player.Positie.Y);
+            Vector2 velocity = new Vector2(player.Versnelling.X, player.Versnelling.Y);
+
             keyboard.ReadInput();
             player.Direction = keyboard.Direction;
 
@@ -39,11 +44,11 @@ namespace Pigit.Movement
 
                 if (keyboard.Direction)
                 {
-                    positie = new Vector2(-1, 0);
+                    positie.X -= 1f;
                 }
                 else
                 {
-                    positie = new Vector2(1, 0);
+                    positie.X += 1f;
                 }
             }
             else
@@ -63,22 +68,22 @@ namespace Pigit.Movement
             {
                 //Human jumps sprite
 
-                player.Versnelling = new Vector2(0f, -5f);
+                velocity.Y = -5f;
                 hasJumped = true;
                 player.Type = AnimatieTypes.Jump;
-                positie = new Vector2(0, -10f);
+                positie.Y -= 10f;
             }
 
             //Hit another object
             if (player.Positie.Y >= 400f)
             {
-                player.Versnelling = new Vector2(0f, 0f);
+                velocity.Y = 0f;
                 hasJumped = false;
             }
             else
             {
                 float i = 1f;
-                player.Versnelling += new Vector2(0f, 0.20f * i);
+                velocity.Y += 0.20f * i;
                 if (player.Versnelling.Y <=0)
                 {
                     player.Type = AnimatieTypes.Jump;
@@ -89,7 +94,11 @@ namespace Pigit.Movement
                 }
             }
 
-            player.Update(gameTime, positie);
+            player.Positie = positie;
+            player.Versnelling = velocity;
+            player.Positie += player.Versnelling;
+
+            player.Update(gameTime);
         }
     }
 }
