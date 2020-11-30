@@ -14,14 +14,9 @@ using Pigit.Objects;
 
 namespace Pigit.Objects
 {
-    interface IPlayerObject
+    interface IPlayerObject: INPCObject
     {
-        bool Direction { get; set; }
-        AnimatieTypes Type { get; set; }
-        void Update(GameTime gameTime);
-        void Draw(SpriteBatch _spriteBatch);
-        Vector2 Positie { get; set; }
-        Vector2 Versnelling { get; set; }
-        public Rectangle Rectangle { get; set; }
+        public int Hearts { get; set; }
+        public int AttackDamage { get; set; }
     }
 }

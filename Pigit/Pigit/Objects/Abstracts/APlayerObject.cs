@@ -20,21 +20,23 @@ namespace Pigit.Objects
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
         public Vector2 Versnelling { get; set; }
-        protected SpriteOpbouw opbouwSprites;
-        SpriteDefine currentSprite;
         public AnimatieTypes Type { get; set; }
+        public int Hearts { get; set; }
+        public int AttackDamage { get; set; }
+        public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
+        public SpriteDefine CurrentSprite { get; set; }
 
-        public APlayerObject(SpriteOpbouw spriteOpbouw)
+        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw)
         {
-            opbouwSprites = spriteOpbouw;
+            Sprites = spriteOpbouw;
         }
         private void CheckType()
         {
-            foreach (var sprites in opbouwSprites.SpriteHuman)
+            foreach (var sprites in Sprites)
             {
                 if (sprites.Key == Type)
                 {
-                    currentSprite = sprites.Value;
+                    CurrentSprite = sprites.Value;
                 }
             }
         }
@@ -53,7 +55,7 @@ namespace Pigit.Objects
         //    }
         //    return v;
         //}
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             //if (Direction)
             //{
@@ -64,24 +66,30 @@ namespace Pigit.Objects
             //    RectangleR = new Rectangle((int)Positie.X + 8, (int)Positie.Y + 14, 40, 34);
             //}
 
-            Rectangle = new Rectangle((int)Positie.X + 18, (int)Positie.Y + 17, 40, 28);
+
+            RectBuild();
 
             CheckType();
-            currentSprite.Update(gameTime);
+            CurrentSprite.Update(gameTime);
+        }
+        protected virtual void RectBuild()
+        {
+            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
+
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
             Texture2D tempTexture = null;
             if (!Direction)
             {
-                tempTexture = currentSprite.TextureR;
+                tempTexture = CurrentSprite.TextureR;
             }
             else
             {
-                tempTexture = currentSprite.TextureL;
+                tempTexture = CurrentSprite.TextureL;
             }
 
-            _spriteBatch.Draw(tempTexture, Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
 
         }
     }

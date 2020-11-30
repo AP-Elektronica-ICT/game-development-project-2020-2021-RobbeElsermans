@@ -34,6 +34,7 @@ namespace Pigit
 
 
         IPlayerObject player;
+        IPlayerObject enemy;
 
 
         public Game1()
@@ -71,8 +72,13 @@ namespace Pigit
             beginWorld = new Level(Content, new World1Layout());
             beginWorld.CreateWorld();
 
-            player = new Human(opbouwSprites);
+            player = new Human(SpriteOpbouw.SpriteHuman);
             player.Positie = new Vector2(5*32, 4*32);
+
+            enemy = new Pig(SpriteOpbouw.Pig);
+
+
+            //Enemy opbouw
 
 
             move = new MoveCommand(player, beginWorld);

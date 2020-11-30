@@ -13,6 +13,8 @@ namespace Pigit.SpriteBuild
     class SpriteOpbouw
     {
         private Dictionary<AnimatieTypes, SpriteDefine> spriteHuman;
+        private Dictionary<AnimatieTypes, SpriteDefine> pig { get; set; }
+
         public SpriteOpbouw(ContentManager Content, int speed)
         {
             spriteHuman = new Dictionary<AnimatieTypes, SpriteDefine>();
@@ -33,7 +35,23 @@ namespace Pigit.SpriteBuild
                 spriteAnimatieFrame.Value.SetSpeed(speed);
             }
             SpriteHuman = spriteHuman;
+
+
+
+            pig = new Dictionary<AnimatieTypes, SpriteDefine>();
+            pig.Add(AnimatieTypes.Idle, new SpriteDefine(Content.Load<Texture2D>(@"pig\Idle (34x28)"), Content.Load<Texture2D>(@"pig\Idle (34x28)"), 11, new Vector2(34,28)));
+
+
+            foreach (var pig in pig)
+            {
+                pig.Value.SetSpeed(speed);
+            }
+
+            Pig = pig;
         }
-        public Dictionary<AnimatieTypes, SpriteDefine> SpriteHuman { get; private set; }
+        public static Dictionary<AnimatieTypes, SpriteDefine> SpriteHuman { get; private set; }
+
+        public static Dictionary<AnimatieTypes, SpriteDefine> Pig { get; private set; }
+
     }
 }
