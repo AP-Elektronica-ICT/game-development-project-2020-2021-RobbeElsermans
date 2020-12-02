@@ -65,17 +65,13 @@ namespace Pigit.Objects
             //{
             //    RectangleR = new Rectangle((int)Positie.X + 8, (int)Positie.Y + 14, 40, 34);
             //}
-
-
-            RectBuild();
-
             CheckType();
+            RectBuild();
             CurrentSprite.Update(gameTime);
         }
         protected virtual void RectBuild()
         {
             Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
-
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
