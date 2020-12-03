@@ -18,7 +18,7 @@ namespace Pigit.Map
         private TileOpbouw blockOpbouw;
         public List<INPCObject> Enemys { get; set; }
         public List<AMovement> moveEnemys;
-
+        private SpriteOpbouw opbouwSprites;
 
         public List<ITile> Tiles;
 
@@ -28,7 +28,7 @@ namespace Pigit.Map
             Tiles = new List<ITile>();
 
             InitializeTiles(content);
-            InitializeNPCs();
+            InitializeNPCs(content);
             InitializeMovement();
         }
 
@@ -42,15 +42,18 @@ namespace Pigit.Map
             }
         }
 
-        private void InitializeNPCs()
+        private void InitializeNPCs(ContentManager content)
         {
+            opbouwSprites = new SpriteOpbouw(content);
+
             Enemys = new List<INPCObject>();
-            Enemys.Add(new Pig(SpriteOpbouw.Pig) );
+            
+            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12)));
             Enemys[0].Positie = new Vector2(7 * 32, 4 * 32);
-            //Enemys.Add(new Pig(SpriteOpbouw.Pig));
-            //Enemys[1].Positie = new Vector2(9 * 32, 4 * 32);
-            //Enemys.Add(new Pig(SpriteOpbouw.Pig));
-            //Enemys[2].Positie = new Vector2(11 * 32, 4 * 32);
+            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12)));
+            Enemys[1].Positie = new Vector2(9 * 32, 4 * 32);
+            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12)));
+            Enemys[2].Positie = new Vector2(11 * 32, 4 * 32);
         }
 
         private void InitializeTiles(ContentManager content)

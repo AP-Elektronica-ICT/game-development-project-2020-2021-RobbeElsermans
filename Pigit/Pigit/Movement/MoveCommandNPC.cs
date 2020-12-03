@@ -38,7 +38,7 @@ namespace Pigit.Movement
 
             player.Direction = !righting;
 
-            //Human Run Sprite
+
 
 
             if (righting)

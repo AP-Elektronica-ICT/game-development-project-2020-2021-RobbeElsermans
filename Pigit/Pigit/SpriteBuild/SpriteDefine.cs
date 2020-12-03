@@ -16,8 +16,8 @@ namespace Pigit.Animatie
         public Texture2D TextureR { get; set; }
         public int AmountFrames { get; private set; }
         public Vector2 Size { get; private set; }
-        public AnimatieFrames AnimatieL { get; set; }
-        public AnimatieFrames AnimatieR { get; set; }
+        public AnimatieDraw AnimatieL { get; set; }
+        public AnimatieDraw AnimatieR { get; set; }
 
         public SpriteDefine(Texture2D texture2DR,Texture2D texture2DL, int amount, Vector2 size)
         {
@@ -26,8 +26,8 @@ namespace Pigit.Animatie
             this.TextureR = texture2DR;
             this.Size = size;
 
-            AnimatieR = new AnimatieFrames();
-            AnimatieL = new AnimatieFrames();
+            AnimatieR = new AnimatieDraw();
+            AnimatieL = new AnimatieDraw();
 
             for (int i = 0; i < Size.X * AmountFrames; i+= (int)Size.X)
             {

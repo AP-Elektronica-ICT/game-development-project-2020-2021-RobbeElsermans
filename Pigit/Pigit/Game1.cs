@@ -66,14 +66,13 @@ namespace Pigit
 
         private void InitializeGameObjects()
         {
-            opbouwSprites = new SpriteOpbouw(Content, 12);
+            opbouwSprites = new SpriteOpbouw(Content);
 
             beginWorld = new Level(Content, new World1Layout());
             beginWorld.CreateWorld();
 
-            player = new Human(SpriteOpbouw.SpriteHuman);
+            player = new Human(opbouwSprites.GetSpriteHuman(12));
             player.Positie = new Vector2(5*32, 4*32);
-
 
             moveHero = new MoveCommandHero(player, beginWorld);
 

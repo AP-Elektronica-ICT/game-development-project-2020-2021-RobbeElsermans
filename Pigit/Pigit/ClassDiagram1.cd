@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Pigit.AnimatieDraw" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CASAAAAAACAAAAAAAAAAAAABAQAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Animatie\AnimatieDraw.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.AnimatieFrame" Collapsed="true">
+    <Position X="10.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Animatie\AnimatieFrame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.CameraAnimatie" Collapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Animatie\CameraAnimatie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.KeyBoardReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAoAAAAAAACAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\KeyBoardReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pigit.MouseReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAoAEAAAAACAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\MouseReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pigit.Human">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Human.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Pig">
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Pig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Game1" Collapsed="true">
+    <Position X="14.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEABAwAAAAAAAACAAABAAAADAYABBCAQAAQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Program" Collapsed="true">
+    <Position X="14.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Collison.EndBlockCollision" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAgQAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Collison\EndBlockCollision.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Collison.NPCCollision" Collapsed="true">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Collison\NPCCollision.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Movement.PlatformBlockCollision" Collapsed="true">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Collison\PlatformBlockCollision.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Movement.AMovement" Collapsed="true">
+    <Position X="9.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAQIAAAAAAIAAAAAMAAAAIEAAAABAAQAAAIAAAA=</HashCode>
+      <FileName>Movement\AMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Movement.MoveCommandHero" Collapsed="true">
+    <Position X="7.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement\MoveCommandHero.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Movement.MoveCommandNPC" Collapsed="true">
+    <Position X="10.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAEAAAAAAAEAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement\MoveCommandNPC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Map.Level" Collapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEgAAAAAAAAAAIQAAAAEAEIAAAAIACAAACAAAAAA=</HashCode>
+      <FileName>Map\Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.Map.World1Layout" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAEABAAAAAQAQAAAAEAAAAAAAAQAAEAAAAAAAAA=</HashCode>
+      <FileName>Map\World1Layout.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pigit.Objects.APlayerObject">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BARBAAAAAggAAgAAACAAAAAAAAAgAAAAAYAAEAAAACA=</HashCode>
+      <FileName>Objects\Abstracts\APlayerObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pigit.Animatie.SpriteDefine" Collapsed="true">
+    <Position X="10.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAgAAAAAAAABAIAAAAAAIAAAAAIAAAAAA=</HashCode>
+      <FileName>SpriteBuild\SpriteDefine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.SpriteBuild.SpriteOpbouw" Collapsed="true">
+    <Position X="10.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAIAAAACAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SpriteBuild\SpriteOpbouw.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pigit.TileBuild.CollideTileDefine">
+    <Position X="3.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAEAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileBuild\CollideTileDefine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pigit.TileBuild.PlatformTileDefine">
+    <Position X="1" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAEAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileBuild\PlatformTileDefine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pigit.TileBuild.TileDefine">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAgAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileBuild\TileDefine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pigit.TileBuild.TileOpbouw" Collapsed="true">
+    <Position X="10.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACACAABAAAAAAAAAAAAAAAQAAkABAAAAAgA=</HashCode>
+      <FileName>TileBuild\TileOpbouw.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Pigit.IInputReader" Collapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAoAAAAAAACAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\Interfaces\IInputReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pigit.Map.IWorldLayout" Collapsed="true">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAEABAAAAAAAAAAAAEAAAAAAAAQAAEAAAAAAAAA=</HashCode>
+      <FileName>Map\IWorldLayout.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pigit.Objects.INPCObject">
+    <Position X="1" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAAAggAAgAAACAAAAAAAAAgAAAAAYAAAAAAAAA=</HashCode>
+      <FileName>Objects\Interfaces\INPCObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pigit.Objects.IPlayerObject">
+    <Position X="2.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACA=</HashCode>
+      <FileName>Objects\Interfaces\IPlayerObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pigit.TileBuild.ICollideTile" Collapsed="true">
+    <Position X="3.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileBuild\Interface\ICollideTile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pigit.TileBuild.ITile" Collapsed="true">
+    <Position X="5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileBuild\Interface\ITile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pigit.TileBuild.Interface.IPlatformTile" Collapsed="true">
+    <Position X="6" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileBuild\Interface\IPlatformTile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Pigit.Animatie.AnimatieTypes" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAgAAAAAAAAAAAAgAAIAAAAAAAAAAAAAAEAI=</HashCode>
+      <FileName>SpriteBuild\SpriteDefine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pigit
 {
-    internal class AnimatieFrames
+    class AnimatieDraw
     {
         public AnimatieFrame CurrentFrame { get; set; }
 
@@ -15,7 +15,7 @@ namespace Pigit
 
         public int Speed { get; set; }
 
-        public AnimatieFrames()
+        public AnimatieDraw()
         {
             frames = new List<AnimatieFrame>();
         }
