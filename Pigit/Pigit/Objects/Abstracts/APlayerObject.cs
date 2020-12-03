@@ -11,6 +11,7 @@ using Pigit.Objects;
 
 using Microsoft.Xna.Framework.Content;
 using Pigit.SpriteBuild;
+using Pigit.SpriteBuild.Enums;
 
 namespace Pigit.Objects
 {
@@ -26,9 +27,10 @@ namespace Pigit.Objects
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
         public SpriteDefine CurrentSprite { get; set; }
 
-        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw)
+        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition)
         {
             Sprites = spriteOpbouw;
+            Positie = beginPosition;
         }
         private void CheckType()
         {

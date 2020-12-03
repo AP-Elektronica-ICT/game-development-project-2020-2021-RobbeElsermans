@@ -19,6 +19,7 @@ namespace Pigit.Map
         public List<INPCObject> Enemys { get; set; }
         public List<AMovement> moveEnemys;
         private SpriteOpbouw opbouwSprites;
+        private ContentManager content;
 
         public List<ITile> Tiles;
 
@@ -26,13 +27,12 @@ namespace Pigit.Map
         {
             this.mapLayout = layout;
             Tiles = new List<ITile>();
-
-            InitializeTiles(content);
-            InitializeNPCs(content);
-            InitializeMovement();
+            this.content = content;
+            opbouwSprites = new SpriteOpbouw(content);
+            Enemys = new List<INPCObject>();
         }
 
-        private void InitializeMovement()
+        private void GenerateMovement()
         {
             moveEnemys = new List<AMovement>();
 
@@ -42,18 +42,10 @@ namespace Pigit.Map
             }
         }
 
-        private void InitializeNPCs(ContentManager content)
+        private void GenerateNPC(ContentManager content)
         {
-            opbouwSprites = new SpriteOpbouw(content);
-
             Enemys = new List<INPCObject>();
-            
-            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12)));
-            Enemys[0].Positie = new Vector2(7 * 32, 4 * 32);
-            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12)));
-            Enemys[1].Positie = new Vector2(9 * 32, 4 * 32);
-            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12)));
-            Enemys[2].Positie = new Vector2(11 * 32, 4 * 32);
+            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(7 * 32, 4 * 32)));
         }
 
         private void InitializeTiles(ContentManager content)
@@ -70,7 +62,15 @@ namespace Pigit.Map
 
         public void CreateWorld()
         {
+            InitializeTiles(content);
+            //GenerateNPC(content);
+            
+            GenerateMapContent(content);
+            GenerateMovement();
+        }
 
+        private void GenerateMapContent(ContentManager content)
+        {
             for (int x = 0; x < mapLayout.Width; x++)
             {
                 for (int y = 0; y < mapLayout.Height; y++)
@@ -79,7 +79,7 @@ namespace Pigit.Map
                     {
                         if (i == mapLayout.BackgroundTiles[x, y])
                         {
-                            Tiles.Add(new TileDefine(blockOpbouw.BackgroundTiles[i-1], new Vector2(y * 32, x * 32)));
+                            Tiles.Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * 32, x * 32)));
                         }
                     }
 
@@ -87,7 +87,7 @@ namespace Pigit.Map
                     {
                         if (i == mapLayout.CollideTileLayout[x, y])
                         {
-                            Tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i-1], new Vector2(y * 32, x * 32)));
+                            Tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * 32, x * 32)));
                         }
                     }
 
@@ -95,21 +95,27 @@ namespace Pigit.Map
                     {
                         if (i == mapLayout.ForegroundTiles[x, y])
                         {
-                            Tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i-1], new Vector2(y * 32, x * 32)));
+                            Tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * 32, x * 32)));
                         }
                     }
 
                     for (int i = 1; i <= blockOpbouw.PLatformTiles.Count; i++)
                     {
-                        if (i == mapLayout.PlatformTile[x, y])
+                        if (i == mapLayout.PlatformTiles[x, y])
                         {
                             Tiles.Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
                         }
                     }
+
+                    if(1 == mapLayout.Enemys[x,y])
+                    {
+                       Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32)));
+                    }
+                    
                 }
             }
-
         }
+
         public void DrawWorld(SpriteBatch spriteBatch)
         {
             foreach (var texture in Tiles)

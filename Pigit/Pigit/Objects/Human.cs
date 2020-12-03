@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
 using Pigit.Objects;
 using Pigit.SpriteBuild;
+using Pigit.SpriteBuild.Enums;
 using SharpDX.MediaFoundation;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Pigit
 {
     class Human : APlayerObject
     {
-        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw):base(spriteOpbouw)
+        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition) :base(spriteOpbouw, beginPosition)
         {
 
         }

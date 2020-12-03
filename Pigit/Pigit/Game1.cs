@@ -6,6 +6,7 @@ using Pigit.Map;
 using Pigit.Movement;
 using Pigit.Objects;
 using Pigit.SpriteBuild;
+using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
@@ -71,8 +72,7 @@ namespace Pigit
             beginWorld = new Level(Content, new World1Layout());
             beginWorld.CreateWorld();
 
-            player = new Human(opbouwSprites.GetSpriteHuman(12));
-            player.Positie = new Vector2(5*32, 4*32);
+            player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
 
             moveHero = new MoveCommandHero(player, beginWorld);
 
@@ -91,7 +91,7 @@ namespace Pigit
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
 

@@ -7,9 +7,6 @@ using System.Text;
 
 namespace Pigit.Animatie
 {
-    public enum AnimatieTypes { Idle, Run, Jump, Fall, Attack,
-        Ground
-    }
     class SpriteDefine
     {
         public Texture2D TextureL { get; private set; }
@@ -29,7 +26,7 @@ namespace Pigit.Animatie
             AnimatieR = new AnimatieDraw();
             AnimatieL = new AnimatieDraw();
 
-            for (int i = 0; i < Size.X * AmountFrames; i+= (int)Size.X)
+            for (int i = 0; i < Size.X * AmountFrames; i += (int)Size.X)
             {
                 AnimatieR.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)size.X, (int)Size.Y)));
             }
@@ -37,6 +34,15 @@ namespace Pigit.Animatie
             {
                 AnimatieL.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)Size.X, (int)Size.Y)));
             }
+
+            //for (int i = 0; i < Size.X * AmountFrames; i+= (int)Size.X)
+            //{
+            //    AnimatieR.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)size.X, (int)Size.Y)));
+            //}
+            //for (int i = Convert.ToInt32(size.X * (AmountFrames - 1)); i >= 0; i -= (int)size.X)
+            //{
+            //    AnimatieL.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)Size.X, (int)Size.Y)));
+            //}
         }
 
         public void SetSpeed(int speed)

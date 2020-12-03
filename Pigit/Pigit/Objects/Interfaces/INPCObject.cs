@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
 using Pigit.SpriteBuild;
+using Pigit.SpriteBuild.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;

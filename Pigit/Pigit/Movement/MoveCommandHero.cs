@@ -4,6 +4,7 @@ using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
