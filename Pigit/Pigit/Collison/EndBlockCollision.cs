@@ -9,7 +9,6 @@ namespace Pigit.Collison
 {
     static class EndBlockCollision
     {
-
         //bron: https://www.youtube.com/watch?v=CV8P9aq2gQo 
         #region Collision 
         public static bool isTouchingLeft(Vector2 velocity, ICollideTile tiles, Rectangle rectangle)

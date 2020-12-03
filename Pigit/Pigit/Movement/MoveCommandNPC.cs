@@ -16,13 +16,23 @@ namespace Pigit.Movement
     class MoveCommandNPC : AMovement
     {
         private bool righting = false;
-        public MoveCommandNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
+        private double timer;
+        private bool isSetTimer = false;
+
+        public MoveCommandNPC(INPCObject player, Level level) : base(player, level, 4, 2)
         {
 
         }
         public override void CheckMovement(GameTime gameTime)
         {
             base.CheckMovement(gameTime);
+
+            if(!isSetTimer)
+            {
+                timer = gameTime.TotalGameTime.TotalSeconds;
+                isSetTimer = true;
+            }
+            
 
             player.Type = AnimatieTypes.Idle;
 
@@ -46,9 +56,15 @@ namespace Pigit.Movement
                 isSide = false;
             }
 
-            double timer = gameTime.TotalGameTime.TotalSeconds;
-
-            Debug.Print(timer.ToString());
+            //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
+            if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) &&  !hasJumped)
+            {
+                isSetTimer = false;
+                velocity.Y = -jumpHeight;
+                hasJumped = true;
+                player.Type = AnimatieTypes.Jump;
+                isGround = false;
+            }
 
             if (righting)
             {
@@ -59,9 +75,7 @@ namespace Pigit.Movement
                 velocity.X = -1;
             }
 
-
             isGround = false;
-
 
             foreach (var tile in level.Tiles)
             {
@@ -72,29 +86,24 @@ namespace Pigit.Movement
 
                     if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle))
                     {
-                        Debug.Print($"Left or Right player: {positie}  tile: {temp.Position}");
                         righting = true;
                         velocity.X = 0f;
-
                     }
 
                     if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
                     {
-                        Debug.Print($"Left or Right player: {positie}  tile: {temp.Position}");
                         righting = false;
                         velocity.X = 0f;
 
                     }
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
-                        Debug.Print($"Bottom player: {positie}  tile: {temp.Position}");
                         positie.Y = temp.Border.Y - (temp.Border.Height - 4);
                         velocity.Y = 0f;
                         isGround = true;
                     }
                     if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
                     {
-                        Debug.Print($"Top player: {positie}  tile: {temp.Position}");
                         velocity.Y = 0f;
                     }
                 }
@@ -113,7 +122,6 @@ namespace Pigit.Movement
 
                     if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
                     {
-                        Debug.Print($"inTopOf {player.Versnelling}");
                         positie.Y = temp.Border.Y - (temp.Border.Height - 5);
                         velocity.Y = 0f;
                         isGround = true;
@@ -131,16 +139,15 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 velocity.Y += 0.20f * i;
-                //if (player.Versnelling.Y < 0)
-                //{
-                //    player.Type = AnimatieTypes.Jump;
-                //}
-                //else if (player.Versnelling.Y > 0)
-                //{
-                //    player.Type = AnimatieTypes.Fall;
-                //}
+                if (player.Versnelling.Y < 0)
+                {
+                    player.Type = AnimatieTypes.Jump;
+                }
+                else if (player.Versnelling.Y > 0)
+                {
+                    player.Type = AnimatieTypes.Fall;
+                }
             }
-
 
             player.Positie = positie;
             player.Versnelling = velocity;

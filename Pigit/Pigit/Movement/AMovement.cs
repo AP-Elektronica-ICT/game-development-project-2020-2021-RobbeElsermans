@@ -10,7 +10,7 @@ namespace Pigit.Movement
     abstract class AMovement
     {
         protected IInputReader keyboard;
-        protected IPlayerObject player;
+        protected INPCObject player;
         protected Level level;
         protected bool isGround = false;
         protected bool isSide = false;
@@ -22,7 +22,7 @@ namespace Pigit.Movement
 
         protected bool hasJumped;
 
-        public AMovement(IPlayerObject player, Level level, float jumpHeight = 6f, float walkSpeed = 2f)
+        public AMovement(INPCObject player, Level level, float jumpHeight = 6f, float walkSpeed = 2f)
         {
             keyboard = new KeyBoardReader();
             this.player = player;

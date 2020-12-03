@@ -25,7 +25,6 @@ namespace Pigit
         private CameraAnimatie _camera;
 
         private AMovement moveHero;
-        private AMovement moveNPC;
         private SpriteOpbouw opbouwSprites;
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -34,8 +33,7 @@ namespace Pigit
         private Level beginWorld;
 
 
-        IPlayerObject player;
-        IPlayerObject enemy;
+        INPCObject player;
 
 
         public Game1()
@@ -76,12 +74,8 @@ namespace Pigit
             player = new Human(SpriteOpbouw.SpriteHuman);
             player.Positie = new Vector2(5*32, 4*32);
 
-            enemy = new Pig(SpriteOpbouw.Pig);
-            enemy.Positie = new Vector2(7 * 32, 4 * 32);
-
 
             moveHero = new MoveCommandHero(player, beginWorld);
-            moveNPC = new MoveCommandNPC(enemy, beginWorld);
 
             _camera = new CameraAnimatie();
         }
@@ -91,7 +85,7 @@ namespace Pigit
             _camera.Follow(player);
 
             moveHero.CheckMovement(gameTime);
-            moveNPC.CheckMovement(gameTime);
+            beginWorld.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -126,11 +120,9 @@ namespace Pigit
             //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
             //}
             _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
-            _spriteBatch.Draw(_rectBlock, enemy.Rectangle, Color.White);
 
             //Teken player
             player.Draw(_spriteBatch);
-            enemy.Draw(_spriteBatch);
 
 
             _spriteBatch.End();

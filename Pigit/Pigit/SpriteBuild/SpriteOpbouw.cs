@@ -13,7 +13,7 @@ namespace Pigit.SpriteBuild
     class SpriteOpbouw
     {
         private Dictionary<AnimatieTypes, SpriteDefine> spriteHuman;
-        private Dictionary<AnimatieTypes, SpriteDefine> pig { get; set; }
+        private Dictionary<AnimatieTypes, SpriteDefine> pig;
 
         public SpriteOpbouw(ContentManager Content, int speed)
         {

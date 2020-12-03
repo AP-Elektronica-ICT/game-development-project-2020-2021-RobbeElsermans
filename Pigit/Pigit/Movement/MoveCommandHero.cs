@@ -15,7 +15,7 @@ namespace Pigit.Movement
 {
     class MoveCommandHero : AMovement
     {
-        public MoveCommandHero(IPlayerObject player, Level level) : base(player, level)
+        public MoveCommandHero(INPCObject player, Level level) : base(player, level)
         {
 
         }
@@ -76,20 +76,17 @@ namespace Pigit.Movement
 
                     if ((EndBlockCollision.isTouchingLeft(velocity, temp, rectangle) || EndBlockCollision.isTouchingRight(velocity, temp, rectangle)) && !isSide)
                     {
-                        Debug.Print($"Left or Right player: {positie}  tile: {temp.Position}");
                         velocity.X = 0f;
                         isSide = true;
                     }
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
-                        Debug.Print($"Bottom player: {positie}  tile: {temp.Position}");
                         positie.Y = temp.Border.Y - (temp.Border.Height + 13);
                         velocity.Y = 0f;
                         isGround = true;
                     }
                     if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
                     {
-                        Debug.Print($"Top player: {positie}  tile: {temp.Position}");
                         velocity.Y = 0f;
                     }
                 }
@@ -108,13 +105,22 @@ namespace Pigit.Movement
 
                     if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
                     {
-                        Debug.Print($"inTopOf {player.Versnelling}");
                         positie.Y = temp.Border.Y - (temp.Border.Height + 13);
                         velocity.Y = 0f;
                         isGround = true;
                     }
                 }
             }
+
+            foreach (var enemy in level.Enemys)
+            {
+                if(NPCCollision.isTouchingNPC(player.Rectangle, enemy.Rectangle))
+                {
+                    Debug.Print("NPC aanraken");
+                }
+            }
+
+
 
             //Hit another object
             if (isGround)

@@ -8,7 +8,7 @@ namespace Pigit
     {
         public Matrix Transform { get; private set; }
 
-        public void Follow(IPlayerObject target)
+        public void Follow(INPCObject target)
         {
             Matrix offset = Matrix.CreateTranslation(
                     Game1.ScreenWidth / 2,
