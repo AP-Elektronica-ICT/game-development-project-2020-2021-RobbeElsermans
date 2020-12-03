@@ -25,8 +25,6 @@ namespace Pigit.SpriteBuild
             spriteHuman.Add(AnimatieTypes.Fall, new SpriteDefine(Content.Load<Texture2D>(@"Human\Fall (78x58)"), Content.Load<Texture2D>(@"Human\Fall Left(78x58)"), 1, new Vector2(78, 58)));
             spriteHuman.Add(AnimatieTypes.Ground, new SpriteDefine(Content.Load<Texture2D>(@"Human\Ground (78x58)"), Content.Load<Texture2D>(@"Human\Ground Left(78x58)"), 1, new Vector2(78, 58)));
             //spriteHuman.Add("hit", new SpriteDefine(Content.Load<Texture2D>(@"Human\Hit (78x58)"),Content.Load<Texture2D>(@"Human\Hit Left(78x58)"), );
-            //spriteHuman.Add("ground", new SpriteDefine(Content.Load<Texture2D>(@"Human\Ground (78x58)"),Content.Load<Texture2D>(@"Human\Ground Left(78x58)"),);
-
             //spriteHuman.Add("doorout", new SpriteDefine(Content.Load<Texture2D>(@"Human\Door Out (78x58)"),Content.Load<Texture2D>(@"Human\Door Out Left(78x58)"),);
             //spriteHuman.Add("doorin", new SpriteDefine(Content.Load<Texture2D>(@"Human\Door In (78x58)"),Content.Load<Texture2D>(@"Human\Door In Left(78x58)"),);
             //spriteHuman.Add("dead", new SpriteDefine(Content.Load<Texture2D>(@"Human\Dead (78x58)"),Content.Load<Texture2D>(@"Human\Dead Left(78x58)"),);
