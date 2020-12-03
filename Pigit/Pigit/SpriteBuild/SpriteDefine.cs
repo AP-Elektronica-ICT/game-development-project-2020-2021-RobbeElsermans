@@ -7,7 +7,9 @@ using System.Text;
 
 namespace Pigit.Animatie
 {
-    public enum AnimatieTypes { Idle, Run, Jump, Fall, Attack}
+    public enum AnimatieTypes { Idle, Run, Jump, Fall, Attack,
+        Ground
+    }
     class SpriteDefine
     {
         public Texture2D TextureL { get; private set; }
