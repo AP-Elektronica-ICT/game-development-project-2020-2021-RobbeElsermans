@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pigit.Movement;
 using Pigit.SpriteBuild;
 using Pigit.TileBuild;
 using System;
@@ -9,6 +8,8 @@ using System.Collections.Generic;
 using System.Text;
 using Pigit.Objects;
 using Pigit.SpriteBuild.Enums;
+using Pigit.Movement.NPCMoveCommands;
+using Pigit.Movement;
 
 namespace Pigit.Map
 {
@@ -20,11 +21,13 @@ namespace Pigit.Map
         public List<AMovement> moveEnemys;
         private SpriteOpbouw opbouwSprites;
         private ContentManager content;
+        private IMoveable heroPlayer;
 
         public List<ITile> Tiles;
 
-        public Level(ContentManager content, IWorldLayout layout)
+        public Level(ContentManager content, IWorldLayout layout, IMoveable hero)
         {
+            heroPlayer = hero;
             this.mapLayout = layout;
             Tiles = new List<ITile>();
             this.content = content;
@@ -42,7 +45,7 @@ namespace Pigit.Map
                 switch (temp.MovementType)
                 {
                     case MoveTypes.Static:
-                        //nog maken
+                        moveEnemys.Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
                         break;
                     case MoveTypes.Walk:
                         moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
@@ -54,6 +57,7 @@ namespace Pigit.Map
                         moveEnemys.Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
                         break;
                     case MoveTypes.Follow:
+                        moveEnemys.Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this,heroPlayer));
                         break;
                     default:
                         break;

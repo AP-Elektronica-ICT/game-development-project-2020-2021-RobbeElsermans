@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pigit.Movement
+namespace Pigit.Movement.NPCMoveCommands
 {
     class MoveCommandGuardNPC: AMovement
     {
@@ -27,7 +27,7 @@ namespace Pigit.Movement
         private bool time = false;
         private bool position = false;
 
-        public MoveCommandGuardNPC(IPlayerObject player, Level level,double walkTime = 2.0, double stopTime = 3.0) : base(player, level, 4, 2)
+        public MoveCommandGuardNPC(IPlayerObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
             this.walkTime = walkTime;
             this.stopTime = stopTime;
@@ -44,15 +44,15 @@ namespace Pigit.Movement
         {
             base.CheckMovement(gameTime);
 
-            if (!isSetTimer1)
-            {
-                timer1 = gameTime.TotalGameTime.TotalSeconds;
-                isSetTimer1 = true;
-            }
-
             #region met Tijd Guard
             if (time)
             {
+                if (!isSetTimer1)
+                {
+                    timer1 = gameTime.TotalGameTime.TotalSeconds;
+                    isSetTimer1 = true;
+                }
+
                 player.Direction = righting;
 
                 if (player.Direction)
@@ -131,7 +131,18 @@ namespace Pigit.Movement
                 }
             }
             #endregion
+            this.CheckCollide();
 
+            CheckGravity();
+
+            player.Positie = positie;
+            player.Velocity = velocity;
+            //player.Positie += player.Versnelling;
+
+            player.Update(gameTime);
+        }
+        protected override void CheckCollide()
+        {
             isGround = false;
 
             foreach (var tile in level.Tiles)
@@ -141,15 +152,28 @@ namespace Pigit.Movement
                     var temp = tile as ICollideTile;
                     Rectangle rectangle = player.Rectangle;
 
-                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle)) velocity.X = 0f;
-                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle)) velocity.X = 0f;
+                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle))
+                    {
+                        righting = false;
+                        velocity.X = 0f;
+                    }
+
+                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
+                    {
+                        righting = true;
+                        velocity.X = 0f;
+
+                    }
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - 4);
                         velocity.Y = 0f;
                         isGround = true;
                     }
-                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle)) velocity.Y = 0f;
+                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
+                    {
+                        velocity.Y = 0f;
+                    }
                 }
 
                 if (tile is IPlatformTile)
@@ -165,24 +189,6 @@ namespace Pigit.Movement
                     }
                 }
             }
-
-            //Hit another object
-            if (isGround)
-            {
-                velocity.Y = 0f;
-                hasJumped = false;
-            }
-            else
-            {
-                float i = 1f;
-                velocity.Y += 0.20f * i;
-            }
-
-            player.Positie = positie;
-            player.Velocity = velocity;
-            //player.Positie += player.Versnelling;
-
-            player.Update(gameTime);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Pigit.Movement
+namespace Pigit.Movement.NPCMoveCommands
 {
     class MoveCommandWalkNPC : AMovement
     {
@@ -20,7 +20,7 @@ namespace Pigit.Movement
         private double timer;
         private bool isSetTimer = false;
 
-        public MoveCommandWalkNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
+        public MoveCommandWalkNPC(IPlayerObject player, Level level,int jumpHeight = 4,int walkspeed= 2) : base(player, level, jumpHeight, walkspeed)
         {
 
         }
@@ -57,8 +57,15 @@ namespace Pigit.Movement
                 isGround = false;
             }
 
+            this.CheckCollide();
 
+            CheckGravity();
 
+            player.Update(gameTime);
+        }
+
+        protected override void CheckCollide()
+        {
             isGround = false;
 
             foreach (var tile in level.Tiles)
@@ -105,24 +112,6 @@ namespace Pigit.Movement
                     }
                 }
             }
-
-            //Hit another object
-            if (isGround)
-            {
-                velocity.Y = 0f;
-                hasJumped = false;
-            }
-            else
-            {
-                float i = 1f;
-                velocity.Y += 0.20f * i;
-            }
-
-            player.Positie = positie;
-            player.Velocity = velocity;
-            //player.Positie += player.Versnelling;
-
-            player.Update(gameTime);
         }
     }
 }

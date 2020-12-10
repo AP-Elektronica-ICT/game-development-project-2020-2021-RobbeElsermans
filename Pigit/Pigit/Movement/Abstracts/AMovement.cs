@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.TileBuild;
+using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +41,70 @@ namespace Pigit.Movement
         {
             positie = new Vector2(player.Positie.X, player.Positie.Y);
             velocity = new Vector2(0f, player.Velocity.Y);
+        }
+        protected virtual void CheckCollide()
+        {
+            isGround = false;
+
+            foreach (var tile in level.Tiles)
+            {
+                if (tile is ICollideTile)
+                {
+                    var temp = tile as ICollideTile;
+                    Rectangle rectangle = player.Rectangle;
+
+                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle))
+                    {
+                        velocity.X = 0f;
+                    }
+
+                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
+                    {
+                        velocity.X = 0f;
+
+                    }
+                    if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
+                    {
+                        positie.Y = temp.Border.Y - (temp.Border.Height - 4);
+                        velocity.Y = 0f;
+                        isGround = true;
+                    }
+                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
+                    {
+                        velocity.Y = 0f;
+                    }
+                }
+
+                if (tile is IPlatformTile)
+                {
+                    var temp = tile as IPlatformTile;
+                    Rectangle rectangle = player.Rectangle;
+
+                    if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
+                    {
+                        positie.Y = temp.Border.Y - (temp.Border.Height - 5);
+                        velocity.Y = 0f;
+                        isGround = true;
+                    }
+                }
+            }
+        }
+        protected virtual void CheckGravity()
+        {
+            //Hit another object
+            if (isGround)
+            {
+                velocity.Y = 0f;
+                hasJumped = false;
+            }
+            else
+            {
+                float i = 1f;
+                velocity.Y += 0.20f * i;
+            }
+
+            player.Positie = positie;
+            player.Velocity = velocity;
         }
     }
 }

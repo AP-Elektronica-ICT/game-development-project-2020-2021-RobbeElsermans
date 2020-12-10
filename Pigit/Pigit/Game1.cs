@@ -69,12 +69,13 @@ namespace Pigit
         {
             opbouwSprites = new SpriteOpbouw(Content);
 
-            beginWorld = new Level(Content, new World1Layout());
+            player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
+            
+            beginWorld = new Level(Content, new World1Layout(), player);
             beginWorld.CreateWorld();
 
-            player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
-
             moveHero = new MoveCommandHero((IPlayerObject)player, beginWorld);
+
 
             _camera = new CameraAnimatie();
         }
