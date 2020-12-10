@@ -12,6 +12,7 @@ using Pigit.Objects;
 using Microsoft.Xna.Framework.Content;
 using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
+using System.Diagnostics;
 
 namespace Pigit.Objects
 {
@@ -25,10 +26,13 @@ namespace Pigit.Objects
         public int Hearts { get; set; }
         public int AttackDamage { get; set; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
-        public SpriteDefine CurrentSprite { get; set; }
+        public SpriteDefine CurrentSprite { get; private set; }
+        public bool Dead { get; private set; }
 
-        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition)
+        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, int levens = 10, int attackDamage = 1)
         {
+            Hearts = levens;
+            AttackDamage = attackDamage;
             Sprites = spriteOpbouw;
             Positie = beginPosition;
         }
@@ -59,36 +63,58 @@ namespace Pigit.Objects
         //}
         public virtual void Update(GameTime gameTime)
         {
-            //if (Direction)
-            //{
-            //    RectangleL = new Rectangle((int)Positie.X + 30, (int)Positie.Y + 14, 40, 34);
-            //}
-            //else
-            //{
-            //    RectangleR = new Rectangle((int)Positie.X + 8, (int)Positie.Y + 14, 40, 34);
-            //}
+            CheckDead();
             CheckType();
-            RectBuild();
-            CurrentSprite.Update(gameTime);
+
+            if (Type != AnimatieTypes.Dead)
+            {
+                Positie += Versnelling;
+                RectBuild();
+                CurrentSprite.Update(gameTime);
+            }
+            else
+            {
+                if(CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames - 1)
+                {
+                    //Debug.Print($"counter sprites {CurrentSprite.AnimatieL.Counter}");
+                    Dead = true;
+                }
+                else
+                {
+                    CurrentSprite.Update(gameTime);
+                }
+            }
         }
+
+        private void CheckDead()
+        {
+            if (Hearts <=0)
+            {
+                Type = AnimatieTypes.Dead;
+            }
+        }
+
         protected virtual void RectBuild()
         {
             Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-            Texture2D tempTexture = null;
-            if (!Direction)
+            if (!Dead)
             {
-                tempTexture = CurrentSprite.TextureR;
-            }
-            else
-            {
-                tempTexture = CurrentSprite.TextureL;
-            }
+                Texture2D tempTexture = null;
 
-            _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+                if (!Direction)
+                {
+                    tempTexture = CurrentSprite.TextureR;
+                }
+                else
+                {
+                    tempTexture = CurrentSprite.TextureL;
+                }
 
+                _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            }
         }
     }
 }

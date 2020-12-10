@@ -16,6 +16,9 @@ namespace Pigit.Movement
 {
     class MoveCommandHero : AMovement
     {
+        private double timer;
+        private bool isSetTimer = false;
+
         public MoveCommandHero(INPCObject player, Level level) : base(player, level)
         {
 
@@ -25,6 +28,7 @@ namespace Pigit.Movement
         {
             base.CheckMovement(gameTime);
 
+            bool attack = false;
             keyboard.ReadInput();
             player.Direction = keyboard.Direction;
 
@@ -48,11 +52,13 @@ namespace Pigit.Movement
             {
                 //Human Idle
                 player.Type = AnimatieTypes.Idle;
+                //hasAttacked = false;
             }
 
             if (keyboard.Attack)
             {
                 player.Type = AnimatieTypes.Attack;
+                attack = true;
             }
 
             //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
@@ -113,15 +119,6 @@ namespace Pigit.Movement
                 }
             }
 
-            foreach (var enemy in level.Enemys)
-            {
-                if(NPCCollision.isTouchingNPC(player.Rectangle, enemy.Rectangle))
-                {
-                    Debug.Print("NPC aanraken");
-                }
-            }
-
-
 
             //Hit another object
             if (isGround)
@@ -143,9 +140,38 @@ namespace Pigit.Movement
                 }
             }
 
+
+
+            //Attack an enemy
+            if (!isSetTimer)
+            {
+                timer = gameTime.TotalGameTime.TotalSeconds;
+                isSetTimer = true;
+            }
+
+            foreach (var enemy in level.Enemys)
+            {
+                if (NPCCollision.isTouchingNPC(player.Rectangle, enemy.Rectangle) && attack)
+                {
+                    var tempEnemy = enemy as IPlayerObject;
+                    var tempPlayer = player as IPlayerObject;
+                    if (gameTime.TotalGameTime.TotalSeconds - timer > 0.5)
+                    {
+                        isSetTimer = false;
+                        tempEnemy.Hearts -= tempPlayer.AttackDamage;
+                        tempPlayer.Type = AnimatieTypes.Hit;
+                        Debug.Print($"{tempEnemy.Hearts}");
+                    }
+                }
+            }
+
+
+
+
+
             player.Positie = positie;
             player.Versnelling = velocity;
-            player.Positie += player.Versnelling;
+            //player.Positie += player.Versnelling;
 
             player.Update(gameTime);
         }

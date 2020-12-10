@@ -33,14 +33,10 @@ namespace Pigit.Movement
                 timer = gameTime.TotalGameTime.TotalSeconds;
                 isSetTimer = true;
             }
-            
 
             player.Type = AnimatieTypes.Idle;
 
             player.Direction = !righting;
-
-
-
 
             if (righting)
             {
@@ -57,7 +53,6 @@ namespace Pigit.Movement
                 isSide = false;
             }
 
-            //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
             if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) &&  !hasJumped)
             {
                 isSetTimer = false;
@@ -114,13 +109,6 @@ namespace Pigit.Movement
                     var temp = tile as IPlatformTile;
                     Rectangle rectangle = player.Rectangle;
 
-
-                    //if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border) && velocity.Y > 0)
-                    //{
-                    //    velocity.Y = 0f;
-                    //    isGround = true;
-                    //}
-
                     if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - 5);
@@ -152,7 +140,7 @@ namespace Pigit.Movement
 
             player.Positie = positie;
             player.Versnelling = velocity;
-            player.Positie += player.Versnelling;
+            //player.Positie += player.Versnelling;
 
             player.Update(gameTime);
         }

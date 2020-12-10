@@ -118,7 +118,7 @@ namespace Pigit
             //{
             //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
             //}
-            _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
+            //_spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
 
             //Teken player
             player.Draw(_spriteBatch);

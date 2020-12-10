@@ -18,7 +18,7 @@ namespace Pigit.Objects
         Vector2 Positie { get; set; }
         Vector2 Versnelling { get; set; }
         public Rectangle Rectangle { get; set; }
-        public SpriteDefine CurrentSprite { get; set; }
+        public SpriteDefine CurrentSprite { get; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
     }
 }

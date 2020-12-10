@@ -21,6 +21,7 @@ namespace Pigit
             Attack = false;
             Jump = false;
 
+
             keyboard = Keyboard.GetState();
 
             if (keyboard.IsKeyDown(Keys.Left))
