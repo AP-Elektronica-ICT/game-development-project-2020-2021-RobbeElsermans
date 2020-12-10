@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
+using Pigit.Movement;
 using Pigit.Objects;
 using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
@@ -12,11 +13,12 @@ using System.Collections.Generic;
 
 namespace Pigit
 {
-    class Pig : APlayerObject
+    class Pig : APlayerObject, IMovementEnemy
     {
-        public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition): base (spriteOpbouw, beginPosition)
+        public MoveTypes MovementType { get; private set; }
+        public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, MoveTypes moveTypes): base (spriteOpbouw, beginPosition)
         {
-
+            this.MovementType = moveTypes;
         }
     }
 

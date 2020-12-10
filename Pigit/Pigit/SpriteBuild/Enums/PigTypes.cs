@@ -7,7 +7,6 @@ namespace Pigit.SpriteBuild.Enums
 enum PigTypes
     {
         Standard = 1,
-        Guard,
         Match,
         HideBox,
         TrowBox,

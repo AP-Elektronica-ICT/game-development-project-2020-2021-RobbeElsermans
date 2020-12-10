@@ -38,9 +38,28 @@ namespace Pigit.Map
 
             foreach (var enemy in Enemys)
             {
-                moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
+                var temp = enemy as IMovementEnemy;
+                switch (temp.MovementType)
+                {
+                    case MoveTypes.Static:
+                        //nog maken
+                        break;
+                    case MoveTypes.Walk:
+                        moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
+                        break;
+                    case MoveTypes.GuardTime:
+                        moveEnemys.Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, 5.0,3.0));
+                        break;
+                    case MoveTypes.GuardPosition:
+                        moveEnemys.Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
+                        break;
+                    case MoveTypes.Follow:
+                        break;
+                    default:
+                        break;
+                }
+                //moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
             }
-            moveEnemys[0] = (new MoveCommandGuardNPC((IPlayerObject)Enemys[0], this));
         }
 
         private void InitializeTiles(ContentManager content)
@@ -101,12 +120,10 @@ namespace Pigit.Map
                             Tiles.Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
                         }
                     }
-                    switch ((PigTypes)mapLayout.Enemys[x, y])
+                    switch ((PigTypes)(mapLayout.Enemys[x, y]/10))
                     {
                         case PigTypes.Standard:
-                            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32)));
-                            break;
-                        case PigTypes.Guard:
+                            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32), (MoveTypes)(mapLayout.Enemys[x, y] % 10)));
                             break;
                         case PigTypes.Match:
                             break;
