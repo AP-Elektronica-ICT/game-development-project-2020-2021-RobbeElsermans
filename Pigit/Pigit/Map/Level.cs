@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Pigit.Objects;
-
+using Pigit.SpriteBuild.Enums;
 
 namespace Pigit.Map
 {
@@ -38,14 +38,9 @@ namespace Pigit.Map
 
             foreach (var enemy in Enemys)
             {
-                moveEnemys.Add(new MoveCommandNPC((IPlayerObject)enemy, this));
+                moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
             }
-        }
-
-        private void GenerateNPC(ContentManager content)
-        {
-            Enemys = new List<INPCObject>();
-            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(7 * 32, 4 * 32)));
+            moveEnemys[0] = (new MoveCommandGuardNPC((IPlayerObject)Enemys[0], this));
         }
 
         private void InitializeTiles(ContentManager content)
@@ -64,7 +59,7 @@ namespace Pigit.Map
         {
             InitializeTiles(content);
             //GenerateNPC(content);
-            
+
             GenerateMapContent(content);
             GenerateMovement();
         }
@@ -106,12 +101,24 @@ namespace Pigit.Map
                             Tiles.Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
                         }
                     }
-
-                    if(1 == mapLayout.Enemys[x,y])
+                    switch ((PigTypes)mapLayout.Enemys[x, y])
                     {
-                       Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32)));
+                        case PigTypes.Standard:
+                            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32)));
+                            break;
+                        case PigTypes.Guard:
+                            break;
+                        case PigTypes.Match:
+                            break;
+                        case PigTypes.HideBox:
+                            break;
+                        case PigTypes.TrowBox:
+                            break;
+                        case PigTypes.TrowBomb:
+                            break;
+                        default:
+                            break;
                     }
-                    
                 }
             }
         }

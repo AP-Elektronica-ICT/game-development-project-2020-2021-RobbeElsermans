@@ -1,26 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
-using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Movement
 {
-    class MoveCommandNPC : AMovement
+    class MoveCommandGuardNPC: AMovement
     {
         private bool righting = false;
-        private double timer;
-        private bool isSetTimer = false;
+        private double timer1;
+        private double timer2;
+        private bool isSetTimer1 = false;
+        private bool isSetTimer2 = false;
 
-        public MoveCommandNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
+        private int walkTime = 1;
+        private int stopTime = 3;
+        public MoveCommandGuardNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
         {
 
         }
@@ -28,48 +28,44 @@ namespace Pigit.Movement
         {
             base.CheckMovement(gameTime);
 
-            if(!isSetTimer)
+            if (!isSetTimer1)
             {
-                timer = gameTime.TotalGameTime.TotalSeconds;
-                isSetTimer = true;
+                timer1 = gameTime.TotalGameTime.TotalSeconds;
+                isSetTimer1 = true;
             }
 
-            player.Type = AnimatieTypes.Idle;
+            player.Direction = righting;
 
-            player.Direction = !righting;
-
-            if (righting)
-            {
-                velocity.X -= walkingSpeed;
-                player.Type = AnimatieTypes.Run;
-                isGround = false;
-                isSide = false;
-            }
-            else
-            {
-                velocity.X += walkingSpeed;
-                player.Type = AnimatieTypes.Run;
-                isGround = false;
-                isSide = false;
-            }
-
-            if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
-            {
-                isSetTimer = false;
-                velocity.Y = -jumpHeight;
-                hasJumped = true;
-                player.Type = AnimatieTypes.Jump;
-                isGround = false;
-            }
-
-            if (righting)
-            {
-                velocity.X = 1;
-            }
-            else
+            if (player.Direction)
             {
                 velocity.X = -1;
+                isSide = false;
             }
+            else
+            {
+                velocity.X = 1;
+                isSide = false;
+            }
+
+            #region met Tijd Guard
+            if ((gameTime.TotalGameTime.TotalSeconds - timer1 > walkTime))
+            {
+                velocity.X = 0;
+
+                if (!isSetTimer2)
+                {
+                    timer2 = gameTime.TotalGameTime.TotalSeconds;
+                    isSetTimer2 = true;
+                }
+
+                if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
+                {
+                    isSetTimer2 = false;
+                    isSetTimer1 = false;
+                    righting = !righting;
+                }
+            }
+            #endregion
 
             isGround = false;
 
@@ -80,28 +76,15 @@ namespace Pigit.Movement
                     var temp = tile as ICollideTile;
                     Rectangle rectangle = player.Rectangle;
 
-                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle))
-                    {
-                        righting = true;
-                        velocity.X = 0f;
-                    }
-
-                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
-                    {
-                        righting = false;
-                        velocity.X = 0f;
-
-                    }
+                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle)) velocity.X = 0f;
+                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle)) velocity.X = 0f;
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - 4);
                         velocity.Y = 0f;
                         isGround = true;
                     }
-                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
-                    {
-                        velocity.Y = 0f;
-                    }
+                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle)) velocity.Y = 0f;
                 }
 
                 if (tile is IPlatformTile)
@@ -128,14 +111,6 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 velocity.Y += 0.20f * i;
-                if (player.Velocity.Y < 0)
-                {
-                    player.Type = AnimatieTypes.Jump;
-                }
-                else if (player.Velocity.Y > 0)
-                {
-                    player.Type = AnimatieTypes.Fall;
-                }
             }
 
             player.Positie = positie;
