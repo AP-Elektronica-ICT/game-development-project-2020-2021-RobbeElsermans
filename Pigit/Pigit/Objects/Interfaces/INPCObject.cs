@@ -16,7 +16,7 @@ namespace Pigit.Objects
         void Update(GameTime gameTime);
         void Draw(SpriteBatch _spriteBatch);
         Vector2 Positie { get; set; }
-        Vector2 Versnelling { get; set; }
+        Vector2 Velocity { get; set; }
         public Rectangle Rectangle { get; set; }
         public SpriteDefine CurrentSprite { get; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }

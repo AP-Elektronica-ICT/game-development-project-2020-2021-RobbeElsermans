@@ -74,7 +74,7 @@ namespace Pigit
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
 
-            moveHero = new MoveCommandHero(player, beginWorld);
+            moveHero = new MoveCommandHero((IPlayerObject)player, beginWorld);
 
             _camera = new CameraAnimatie();
         }

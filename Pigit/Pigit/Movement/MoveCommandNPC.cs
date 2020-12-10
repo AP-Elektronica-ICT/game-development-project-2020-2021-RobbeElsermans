@@ -20,7 +20,7 @@ namespace Pigit.Movement
         private double timer;
         private bool isSetTimer = false;
 
-        public MoveCommandNPC(INPCObject player, Level level) : base(player, level, 4, 2)
+        public MoveCommandNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
         {
 
         }
@@ -53,7 +53,7 @@ namespace Pigit.Movement
                 isSide = false;
             }
 
-            if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) &&  !hasJumped)
+            if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
             {
                 isSetTimer = false;
                 velocity.Y = -jumpHeight;
@@ -128,18 +128,18 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 velocity.Y += 0.20f * i;
-                if (player.Versnelling.Y < 0)
+                if (player.Velocity.Y < 0)
                 {
                     player.Type = AnimatieTypes.Jump;
                 }
-                else if (player.Versnelling.Y > 0)
+                else if (player.Velocity.Y > 0)
                 {
                     player.Type = AnimatieTypes.Fall;
                 }
             }
 
             player.Positie = positie;
-            player.Versnelling = velocity;
+            player.Velocity = velocity;
             //player.Positie += player.Versnelling;
 
             player.Update(gameTime);

@@ -19,7 +19,7 @@ namespace Pigit.Movement
         private double timer;
         private bool isSetTimer = false;
 
-        public MoveCommandHero(INPCObject player, Level level) : base(player, level)
+        public MoveCommandHero(IPlayerObject player, Level level) : base(player, level)
         {
 
         }
@@ -29,13 +29,12 @@ namespace Pigit.Movement
             base.CheckMovement(gameTime);
 
             bool attack = false;
+            player.IsAttacking = false;
             keyboard.ReadInput();
             player.Direction = keyboard.Direction;
 
             if (keyboard.Move)
             {
-                //Human Run Sprite
-                player.Type = AnimatieTypes.Run;
                 isGround = false;
                 isSide = false;
 
@@ -50,26 +49,20 @@ namespace Pigit.Movement
             }
             else
             {
-                //Human Idle
-                player.Type = AnimatieTypes.Idle;
-                //hasAttacked = false;
+                
             }
 
             if (keyboard.Attack)
             {
-                player.Type = AnimatieTypes.Attack;
+                player.IsAttacking = true;
                 attack = true;
             }
 
             //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
             if (keyboard.Jump && !hasJumped)
             {
-                //Human jumps sprite
-
                 velocity.Y = -jumpHeight;
                 hasJumped = true;
-                player.Type = AnimatieTypes.Jump;
-                //positie.Y -= 2f;
                 isGround = false;
             }
 
@@ -130,17 +123,15 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 velocity.Y += 0.20f * i;
-                if (player.Versnelling.Y < 0)
-                {
-                    player.Type = AnimatieTypes.Jump;
-                }
-                else if (player.Versnelling.Y > 0)
-                {
-                    player.Type = AnimatieTypes.Fall;
-                }
+                //if (player.Velocity.Y < 0)
+                //{
+                //    player.Type = AnimatieTypes.Jump;
+                //}
+                //else if (player.Velocity.Y > 0)
+                //{
+                //    player.Type = AnimatieTypes.Fall;
+                //}
             }
-
-
 
             //Attack an enemy
             if (!isSetTimer)
@@ -154,23 +145,21 @@ namespace Pigit.Movement
                 if (NPCCollision.isTouchingNPC(player.Rectangle, enemy.Rectangle) && attack)
                 {
                     var tempEnemy = enemy as IPlayerObject;
-                    var tempPlayer = player as IPlayerObject;
                     if (gameTime.TotalGameTime.TotalSeconds - timer > 0.5)
                     {
                         isSetTimer = false;
-                        tempEnemy.Hearts -= tempPlayer.AttackDamage;
-                        tempPlayer.Type = AnimatieTypes.Hit;
-                        Debug.Print($"{tempEnemy.Hearts}");
+                        tempEnemy.Hearts -= player.AttackDamage;
+                        if (!tempEnemy.IsHit)
+                        {
+                            tempEnemy.IsHit = true;
+                        }
+                        //Debug.Print($"{tempEnemy.Hearts}");
                     }
                 }
             }
 
-
-
-
-
             player.Positie = positie;
-            player.Versnelling = velocity;
+            player.Velocity = velocity;
             //player.Positie += player.Versnelling;
 
             player.Update(gameTime);

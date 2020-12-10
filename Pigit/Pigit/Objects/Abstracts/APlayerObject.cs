@@ -18,16 +18,21 @@ namespace Pigit.Objects
 {
     abstract class APlayerObject : IPlayerObject
     {
+        private double timer;
+        private bool isSetTimer;
+
         public Rectangle Rectangle { get; set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
-        public Vector2 Versnelling { get; set; }
+        public Vector2 Velocity { get; set; }
         public AnimatieTypes Type { get; set; }
         public int Hearts { get; set; }
         public int AttackDamage { get; set; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
         public SpriteDefine CurrentSprite { get; private set; }
         public bool Dead { get; private set; }
+        public bool IsHit { get; set; }
+        public bool IsAttacking { get; set; }
 
         public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, int levens = 10, int attackDamage = 1)
         {
@@ -63,20 +68,33 @@ namespace Pigit.Objects
         //}
         public virtual void Update(GameTime gameTime)
         {
-            CheckDead();
-            CheckType();
+            CheckSprites();
+
+            if (Type == AnimatieTypes.Hit)
+            {
+                if (!isSetTimer)
+                {
+                    timer = gameTime.TotalGameTime.TotalSeconds;
+                    isSetTimer = true;
+                }
+
+                if ((gameTime.TotalGameTime.TotalSeconds - timer > 0.5))
+                {
+                    isSetTimer = false;
+                    IsHit = false;
+                }
+            }
 
             if (Type != AnimatieTypes.Dead)
             {
-                Positie += Versnelling;
+                Positie += Velocity;
                 RectBuild();
                 CurrentSprite.Update(gameTime);
             }
             else
             {
-                if(CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames - 1)
+                if (CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames - 1)
                 {
-                    //Debug.Print($"counter sprites {CurrentSprite.AnimatieL.Counter}");
                     Dead = true;
                 }
                 else
@@ -86,9 +104,40 @@ namespace Pigit.Objects
             }
         }
 
-        private void CheckDead()
+        private void CheckSprites()
         {
-            if (Hearts <=0)
+            if (Velocity.X < 0 || Velocity.X > 0)
+            {
+                Type = AnimatieTypes.Run;
+            }
+            else
+            {
+                Type = AnimatieTypes.Idle;
+            }
+            if (IsAttacking)
+            {
+                Type = AnimatieTypes.Attack;
+            }
+
+            if (Velocity.Y + 0.2f < 0)
+            {
+                Type = AnimatieTypes.Jump;
+            }
+            if (Velocity.Y - 0.2f > 0)
+            {
+                Type = AnimatieTypes.Fall;
+            }
+            CheckAttack();
+            CheckType();
+        }
+
+        private void CheckAttack()
+        {
+            if (IsHit)
+            {
+                Type = AnimatieTypes.Hit;
+            }
+            if (Hearts <= 0)
             {
                 Type = AnimatieTypes.Dead;
             }

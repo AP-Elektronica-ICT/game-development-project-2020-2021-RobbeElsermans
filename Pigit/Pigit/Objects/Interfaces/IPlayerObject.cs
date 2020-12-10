@@ -19,5 +19,7 @@ namespace Pigit.Objects
         public int Hearts { get; set; }
         public int AttackDamage { get; set; }
         public bool Dead { get; }
+        public bool IsHit { get; set; }
+        public bool IsAttacking { get; set; }
     }
 }

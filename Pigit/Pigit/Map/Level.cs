@@ -38,7 +38,7 @@ namespace Pigit.Map
 
             foreach (var enemy in Enemys)
             {
-                moveEnemys.Add(new MoveCommandNPC(enemy, this));
+                moveEnemys.Add(new MoveCommandNPC((IPlayerObject)enemy, this));
             }
         }
 
