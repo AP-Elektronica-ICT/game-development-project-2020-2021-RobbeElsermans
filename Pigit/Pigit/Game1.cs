@@ -71,7 +71,7 @@ namespace Pigit
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
             
-            beginWorld = new Level(Content, new World1Layout(), player);
+            beginWorld = new Level(Content, new World2Layout(), player);
             beginWorld.CreateWorld();
 
             moveHero = new MoveCommandHero((IPlayerObject)player, beginWorld);
