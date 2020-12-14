@@ -66,7 +66,7 @@ namespace Pigit.Movement
                 isGround = false;
             }
 
-            foreach (var tile in level.Tiles)
+            foreach (var tile in level.CurrTiles)
             {
                 if (tile is ICollideTile)
                 {
@@ -140,7 +140,7 @@ namespace Pigit.Movement
                 isSetTimer = true;
             }
 
-            foreach (var enemy in level.Enemys)
+            foreach (var enemy in level.CurrEnemys)
             {
                 if (NPCCollision.isTouchingNPC(player.Rectangle, enemy.Rectangle) && attack)
                 {

@@ -21,7 +21,7 @@ namespace Pigit
         }
         protected override void RectBuild()
         {
-            Rectangle = new Rectangle((int)Positie.X + 32, (int)Positie.Y + 10, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width - 41, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height - 23);
+            Rectangle = new Rectangle((int)Positie.X + 36, (int)Positie.Y + 20, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width - 45, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height - 33);
         }
     }
 }

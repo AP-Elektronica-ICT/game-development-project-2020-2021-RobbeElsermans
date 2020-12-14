@@ -46,7 +46,7 @@ namespace Pigit.Movement
         {
             isGround = false;
 
-            foreach (var tile in level.Tiles)
+            foreach (var tile in level.CurrTiles)
             {
                 if (tile is ICollideTile)
                 {

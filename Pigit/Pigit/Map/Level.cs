@@ -15,54 +15,94 @@ namespace Pigit.Map
 {
     class Level
     {
-        private IWorldLayout mapLayout;
+        private List<IWorldLayout> worlds;
+        //private IWorldLayout currentWorld;
         private TileOpbouw blockOpbouw;
-        public List<INPCObject> Enemys { get; set; }
-        public List<AMovement> moveEnemys;
+        private List<List<INPCObject>> worldEnemys;
+        private List<List<AMovement>> worldsMoveEnemys;
         private SpriteOpbouw opbouwSprites;
         private ContentManager content;
         private IMoveable heroPlayer;
+        private List<List<ITile>> worldsTiles;
 
-        public List<ITile> Tiles;
+        public List<ITile> CurrTiles { get; set; }
+        public List<INPCObject> CurrEnemys { get; set; }
 
-        public Level(ContentManager content, IWorldLayout layout, IMoveable hero)
+        public List<AMovement> CurrMovementEnemy { get; set; }
+        public int CurrMap { get; set; } = 1;
+
+        public Level(ContentManager content, List<IWorldLayout> worlds, IMoveable hero)
         {
             heroPlayer = hero;
-            this.mapLayout = layout;
-            Tiles = new List<ITile>();
+            this.worlds = worlds;
             this.content = content;
             opbouwSprites = new SpriteOpbouw(content);
-            Enemys = new List<INPCObject>();
+
+            worldsTiles = new List<List<ITile>>();
+            worldEnemys = new List<List<INPCObject>>();
+            worldsMoveEnemys = new List<List<AMovement>>();
+            CurrMovementEnemy = new List<AMovement>();
+            CurrEnemys = new List<INPCObject>();
+            CurrTiles = new List<ITile>();
         }
 
         private void GenerateMovement()
         {
-            moveEnemys = new List<AMovement>();
+            //foreach (var enemys in worldEnemys)
+            //{
+            //    foreach (var enemy in enemys)
+            //    {
+            //        var temp = enemy as IMovementEnemy;
+            //        switch (temp.MovementType)
+            //        {
+            //            case MoveTypes.Static:
+            //                worldsMoveEnemys[0].Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
+            //                break;
+            //            case MoveTypes.Walk:
+            //                worldsMoveEnemys[0].Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
+            //                break;
+            //            case MoveTypes.GuardTime:
+            //                worldsMoveEnemys[0].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, 5.0, 3.0));
+            //                break;
+            //            case MoveTypes.GuardPosition:
+            //                worldsMoveEnemys[0].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
+            //                break;
+            //            case MoveTypes.Follow:
+            //                worldsMoveEnemys[0].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this, heroPlayer));
+            //                break;
+            //            default:
+            //                break;
+            //        }
+            //    }
+            //    //moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
+            //}
 
-            foreach (var enemy in Enemys)
+            for (int i = 0; i < worldEnemys.Count; i++)
             {
-                var temp = enemy as IMovementEnemy;
-                switch (temp.MovementType)
+                foreach (var enemy in worldEnemys[i])
                 {
-                    case MoveTypes.Static:
-                        moveEnemys.Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
-                        break;
-                    case MoveTypes.Walk:
-                        moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
-                        break;
-                    case MoveTypes.GuardTime:
-                        moveEnemys.Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, 5.0,3.0));
-                        break;
-                    case MoveTypes.GuardPosition:
-                        moveEnemys.Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
-                        break;
-                    case MoveTypes.Follow:
-                        moveEnemys.Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this,heroPlayer));
-                        break;
-                    default:
-                        break;
+                    var temp = enemy as IMovementEnemy;
+                    switch (temp.MovementType)
+                    {
+                        case MoveTypes.Static:
+                            worldsMoveEnemys[i].Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
+                            break;
+                        case MoveTypes.Walk:
+                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
+                            break;
+                        case MoveTypes.GuardTime:
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, 5.0, 3.0));
+                            break;
+                        case MoveTypes.GuardPosition:
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
+                            break;
+                        case MoveTypes.Follow:
+                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this, heroPlayer));
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                //moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
             }
         }
 
@@ -72,73 +112,91 @@ namespace Pigit.Map
         }
         public void Update(GameTime gameTime)
         {
-            foreach (var moveCommand in moveEnemys)
+            foreach (var moveCommand in worldsMoveEnemys[0])
             {
                 moveCommand.CheckMovement(gameTime);
             }
         }
 
-        public void CreateWorld()
+        public void CreateWorlds()
         {
             InitializeTiles(content);
             //GenerateNPC(content);
 
             GenerateMapContent(content);
             GenerateMovement();
+            CheckCurrMap();
+        }
+
+        private void CheckCurrMap()
+        {
+            CurrEnemys = worldEnemys[CurrMap];
+            CurrTiles = worldsTiles[CurrMap];
+            CurrMovementEnemy = worldsMoveEnemys[CurrMap];
         }
 
         private void GenerateMapContent(ContentManager content)
         {
-            for (int x = 0; x < mapLayout.Width; x++)
+            foreach (var map in worlds)
             {
-                for (int y = 0; y < mapLayout.Height; y++)
+                worldsTiles.Add(new List<ITile>());
+                worldEnemys.Add(new List<INPCObject>());
+                worldsMoveEnemys.Add(new List<AMovement>());
+            }
+
+            for (int a = 0; a < worlds.Count; a++)
+            {
+                for (int x = 0; x < worlds[a].Width; x++)
                 {
-                    for (int i = 1; i <= blockOpbouw.BackgroundTiles.Count; i++)
+                    for (int y = 0; y < worlds[a].Height; y++)
                     {
-                        if (i == mapLayout.BackgroundTiles[x, y])
+                        for (int i = 1; i <= blockOpbouw.BackgroundTiles.Count; i++)
                         {
-                            Tiles.Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            if (i == worlds[a].BackgroundTiles[x, y])
+                            {
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            }
                         }
-                    }
 
-                    for (int i = 1; i <= blockOpbouw.CollideTiles.Count; i++)
-                    {
-                        if (i == mapLayout.CollideTileLayout[x, y])
+                        for (int i = 1; i <= blockOpbouw.CollideTiles.Count; i++)
                         {
-                            Tiles.Add(new CollideTileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            if (i == worlds[a].CollideTileLayout[x, y])
+                            {
+                                worldsTiles[a].Add(new CollideTileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            }
                         }
-                    }
 
-                    for (int i = 1; i <= blockOpbouw.ForegroundTiles.Count; i++)
-                    {
-                        if (i == mapLayout.ForegroundTiles[x, y])
+                        for (int i = 1; i <= blockOpbouw.ForegroundTiles.Count; i++)
                         {
-                            Tiles.Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            if (i == worlds[a].ForegroundTiles[x, y])
+                            {
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            }
                         }
-                    }
 
-                    for (int i = 1; i <= blockOpbouw.PLatformTiles.Count; i++)
-                    {
-                        if (i == mapLayout.PlatformTiles[x, y])
+                        for (int i = 1; i <= blockOpbouw.PLatformTiles.Count; i++)
                         {
-                            Tiles.Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            if (i == worlds[a].PlatformTiles[x, y])
+                            {
+                                worldsTiles[a].Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
+                            }
                         }
-                    }
-                    switch ((PigTypes)(mapLayout.Enemys[x, y]/10))
-                    {
-                        case PigTypes.Standard:
-                            Enemys.Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32), (MoveTypes)(mapLayout.Enemys[x, y] % 10)));
-                            break;
-                        case PigTypes.Match:
-                            break;
-                        case PigTypes.HideBox:
-                            break;
-                        case PigTypes.TrowBox:
-                            break;
-                        case PigTypes.TrowBomb:
-                            break;
-                        default:
-                            break;
+                        switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))
+                        {
+                            case PigTypes.Standard:
+                                worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32), (MoveTypes)(worlds[a].Enemys[x, y] % 10)));
+                                break;
+                            case PigTypes.Match:
+                                break;
+                            case PigTypes.HideBox:
+                                break;
+                            case PigTypes.TrowBox:
+                                break;
+                            case PigTypes.TrowBomb:
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
@@ -146,12 +204,12 @@ namespace Pigit.Map
 
         public void DrawWorld(SpriteBatch spriteBatch)
         {
-            foreach (var texture in Tiles)
+            foreach (var texture in CurrTiles)
             {
                 texture.Draw(spriteBatch);
             }
 
-            foreach (var enemy in Enemys)
+            foreach (var enemy in CurrEnemys)
             {
                 enemy.Draw(spriteBatch);
             }

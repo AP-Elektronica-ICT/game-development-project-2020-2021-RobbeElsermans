@@ -145,7 +145,7 @@ namespace Pigit.Movement.NPCMoveCommands
         {
             isGround = false;
 
-            foreach (var tile in level.Tiles)
+            foreach (var tile in level.CurrTiles)
             {
                 if (tile is ICollideTile)
                 {

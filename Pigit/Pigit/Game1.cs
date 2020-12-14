@@ -29,9 +29,10 @@ namespace Pigit
         private SpriteOpbouw opbouwSprites;
         public static int ScreenWidth;
         public static int ScreenHeight;
+        private List<IWorldLayout> worldsLevel1;
 
 
-        private Level beginWorld;
+        private Level level;
 
 
         INPCObject player;
@@ -54,6 +55,10 @@ namespace Pigit
 
         protected override void LoadContent()
         {
+            worldsLevel1 = new List<IWorldLayout>();
+            worldsLevel1.Add(new World1Layout());
+            worldsLevel1.Add(new World2Layout());
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //DEBUG
@@ -70,11 +75,11 @@ namespace Pigit
             opbouwSprites = new SpriteOpbouw(Content);
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
-            
-            beginWorld = new Level(Content, new World2Layout(), player);
-            beginWorld.CreateWorld();
 
-            moveHero = new MoveCommandHero((IPlayerObject)player, beginWorld);
+            level = new Level(Content, worldsLevel1, player);
+            level.CreateWorlds();
+
+            moveHero = new MoveCommandHero((IPlayerObject)player, level);
 
 
             _camera = new CameraAnimatie();
@@ -85,7 +90,7 @@ namespace Pigit
             _camera.Follow(player);
 
             moveHero.CheckMovement(gameTime);
-            beginWorld.Update(gameTime);
+            level.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -97,7 +102,7 @@ namespace Pigit
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
 
             //Draw Tiles
-            beginWorld.DrawWorld(_spriteBatch);
+            level.DrawWorld(_spriteBatch);
 
 
             //DEBUG
@@ -119,7 +124,7 @@ namespace Pigit
             //{
             //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
             //}
-            //_spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
+            _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
 
             //Teken player
             player.Draw(_spriteBatch);
