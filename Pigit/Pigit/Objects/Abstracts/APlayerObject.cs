@@ -40,6 +40,7 @@ namespace Pigit.Objects
             AttackDamage = attackDamage;
             Sprites = spriteOpbouw;
             Positie = beginPosition;
+            CheckSprites();
         }
         private void CheckType()
         {

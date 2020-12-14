@@ -17,13 +17,15 @@ namespace Pigit.Movement.NPCMoveCommands
         public override void CheckMovement(GameTime gameTime)
         {
             base.CheckMovement(gameTime);
-
-            if (heroPlayer.Positie.X < positie.X)
+            
+            if (heroPlayer.Positie.X + 32 < positie.X)
             {
+                player.Direction = true;
                 velocity.X = -1;
             }
-            else if (heroPlayer.Positie.X < positie.X)
+            else if (heroPlayer.Positie.X + 32 > positie.X)
             {
+                player.Direction = false;
                 velocity.X = 1;
             }
             else
@@ -31,8 +33,18 @@ namespace Pigit.Movement.NPCMoveCommands
                 velocity.X = 0;
             }
 
+            if (heroPlayer.Positie.Y + 20 < positie.Y && !hasJumped)
+            {
+                //Jump
+                velocity.Y = -jumpHeight;
+                hasJumped = true;
+                isGround = false;
+            }
+
             CheckCollide();
             CheckGravity();
+
+            player.Update(gameTime);
         }
     }
 }
