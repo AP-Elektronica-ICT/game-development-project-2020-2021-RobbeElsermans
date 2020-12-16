@@ -164,9 +164,5 @@ namespace Pigit.Movement
 
             player.Update(gameTime);
         }
-        protected override void CheckDistance()
-        {
-            
-        }
     }
 }

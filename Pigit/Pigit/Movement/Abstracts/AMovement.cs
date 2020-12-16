@@ -41,9 +41,15 @@ namespace Pigit.Movement
 
         public virtual void CheckMovement(GameTime gameTime)
         {
+            RecastPositions();
+        }
+        protected void RecastPositions()
+        {
             positie = new Vector2(player.Positie.X, player.Positie.Y);
             velocity = new Vector2(0f, player.Velocity.Y);
         }
+
+
         protected virtual void CheckCollide()
         {
             isGround = false;
@@ -90,8 +96,6 @@ namespace Pigit.Movement
                     }
                 }
             }
-            CheckDistance();
-
         }
         protected virtual void CheckGravity()
         {
@@ -109,22 +113,6 @@ namespace Pigit.Movement
 
             player.Positie = positie;
             player.Velocity = velocity;
-        }
-
-        protected virtual void CheckDistance()
-        {
-            if (player is IMovementEnemy)
-            {
-                var temp = player as IMovementEnemy;
-                if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
-                {
-                    temp.MovementType = MoveTypes.Follow;
-                }
-                else
-                {
-                    temp.MovementType = MoveTypes.Static;
-                }
-            }
         }
     }
 }

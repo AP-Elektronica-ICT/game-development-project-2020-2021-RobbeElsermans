@@ -14,7 +14,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandWalkNPC : AMovement
+    class MoveCommandWalkNPC : MoveCommandFollowWhenNearby
     {
         private bool righting = false;
         private double timer;
@@ -26,42 +26,54 @@ namespace Pigit.Movement.NPCMoveCommands
         }
         public override void CheckMovement(GameTime gameTime)
         {
-            base.CheckMovement(gameTime);
+            RecastPositions();
 
-            if(!isSetTimer)
+
+            if (player is IMovementEnemy)
             {
-                timer = gameTime.TotalGameTime.TotalSeconds;
-                isSetTimer = true;
+                var temp = player as IMovementEnemy;
+                if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
+                {
+                    base.CheckMovement(gameTime);
+                }
+                else
+                {
+                    if (!isSetTimer)
+                    {
+                        timer = gameTime.TotalGameTime.TotalSeconds;
+                        isSetTimer = true;
+                    }
+
+                    player.Direction = righting;
+
+                    if (player.Direction)
+                    {
+                        velocity.X = -1;
+                        isGround = false;
+                        isSide = false;
+                    }
+                    else
+                    {
+                        velocity.X = 1;
+                        isGround = false;
+                        isSide = false;
+                    }
+
+                    if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
+                    {
+                        isSetTimer = false;
+                        velocity.Y = -jumpHeight;
+                        hasJumped = true;
+                        isGround = false;
+                    }
+
+                    this.CheckCollide();
+
+                    CheckGravity();
+
+                    player.Update(gameTime);
+                }
             }
-
-            player.Direction = righting;
-
-            if (player.Direction)
-            {
-                velocity.X = -1;
-                isGround = false;
-                isSide = false;
-            }
-            else
-            {
-                velocity.X = 1;
-                isGround = false;
-                isSide = false;
-            }
-
-            if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
-            {
-                isSetTimer = false;
-                velocity.Y = -jumpHeight;
-                hasJumped = true;
-                isGround = false;
-            }
-
-            this.CheckCollide();
-
-            CheckGravity();
-
-            player.Update(gameTime);
         }
 
         protected override void CheckCollide()

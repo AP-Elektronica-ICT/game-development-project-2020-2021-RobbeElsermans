@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandGuardNPC: AMovement
+    class MoveCommandGuardNPC: MoveCommandFollowWhenNearby
     {
         private bool righting = false;
         private double timer1;
@@ -42,104 +42,115 @@ namespace Pigit.Movement.NPCMoveCommands
         }
         public override void CheckMovement(GameTime gameTime)
         {
-            base.CheckMovement(gameTime);
-
-            #region met Tijd Guard
-            if (time)
+            RecastPositions();
+            if (player is IMovementEnemy)
             {
-                if (!isSetTimer1)
+                var temp = player as IMovementEnemy;
+                if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
                 {
-                    timer1 = gameTime.TotalGameTime.TotalSeconds;
-                    isSetTimer1 = true;
-                }
-
-                player.Direction = righting;
-
-                if (player.Direction)
-                {
-                    velocity.X = -1;
-                    isSide = false;
+                    base.CheckMovement(gameTime);
                 }
                 else
                 {
-                    velocity.X = 1;
-                    isSide = false;
-                }
-                if ((gameTime.TotalGameTime.TotalSeconds - timer1 > walkTime))
-                {
-                    velocity.X = 0;
-
-                    if (!isSetTimer2)
+                    #region met Tijd Guard
+                    if (time)
                     {
-                        timer2 = gameTime.TotalGameTime.TotalSeconds;
-                        isSetTimer2 = true;
-                    }
+                        if (!isSetTimer1)
+                        {
+                            timer1 = gameTime.TotalGameTime.TotalSeconds;
+                            isSetTimer1 = true;
+                        }
 
-                    if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
-                    {
-                        isSetTimer2 = false;
-                        isSetTimer1 = false;
-                        righting = !righting;
-                    }
-                }
-            }
-            #endregion
+                        player.Direction = righting;
 
-            #region Met Plaats Guard
-            if (position)
-            {
-                if (positie.X <= minX || positie.X >= maxX)
-                {
-                    velocity.X = 0;
-
-                    if (!isSetTimer2)
-                    {
-                        timer2 = gameTime.TotalGameTime.TotalSeconds;
-                        isSetTimer2 = true;
-                    }
-
-                    if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
-                    {
-                        isSetTimer2 = false;
-                        isSetTimer1 = false;
-                        righting = !righting;
-                        if (righting)
+                        if (player.Direction)
                         {
                             velocity.X = -1;
+                            isSide = false;
                         }
                         else
                         {
                             velocity.X = 1;
+                            isSide = false;
                         }
+                        if ((gameTime.TotalGameTime.TotalSeconds - timer1 > walkTime))
+                        {
+                            velocity.X = 0;
 
-                    }
-                }
-                else
-                {
-                    player.Direction = righting;
+                            if (!isSetTimer2)
+                            {
+                                timer2 = gameTime.TotalGameTime.TotalSeconds;
+                                isSetTimer2 = true;
+                            }
 
-                    if (player.Direction)
-                    {
-                        velocity.X = -1;
-                        isSide = false;
+                            if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
+                            {
+                                isSetTimer2 = false;
+                                isSetTimer1 = false;
+                                righting = !righting;
+                            }
+                        }
                     }
-                    else
+                    #endregion
+
+                    #region Met Plaats Guard
+                    if (position)
                     {
-                        velocity.X = 1;
-                        isSide = false;
+                        if (positie.X <= minX || positie.X >= maxX)
+                        {
+                            velocity.X = 0;
+
+                            if (!isSetTimer2)
+                            {
+                                timer2 = gameTime.TotalGameTime.TotalSeconds;
+                                isSetTimer2 = true;
+                            }
+
+                            if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
+                            {
+                                isSetTimer2 = false;
+                                isSetTimer1 = false;
+                                righting = !righting;
+                                if (righting)
+                                {
+                                    velocity.X = -1;
+                                }
+                                else
+                                {
+                                    velocity.X = 1;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            player.Direction = righting;
+
+                            if (player.Direction)
+                            {
+                                velocity.X = -1;
+                                isSide = false;
+                            }
+                            else
+                            {
+                                velocity.X = 1;
+                                isSide = false;
+                            }
+                        }
                     }
+                    #endregion
+                    this.CheckCollide();
+
+                    CheckGravity();
+
+                    player.Positie = positie;
+                    player.Velocity = velocity;
+                    //player.Positie += player.Versnelling;
+
+                    player.Update(gameTime);
                 }
             }
-            #endregion
-            this.CheckCollide();
 
-            CheckGravity();
-
-            player.Positie = positie;
-            player.Velocity = velocity;
-            //player.Positie += player.Versnelling;
-
-            player.Update(gameTime);
         }
         protected override void CheckCollide()
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandStaticNPC : AMovement
+    class MoveCommandStaticNPC : MoveCommandFollowWhenNearby
     {
         public MoveCommandStaticNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
         {
@@ -15,12 +16,24 @@ namespace Pigit.Movement.NPCMoveCommands
         }
         public override void CheckMovement(GameTime gameTime)
         {
-            base.CheckMovement(gameTime);
+            RecastPositions();
 
-            CheckCollide();
-            CheckGravity();
+            if (player is IMovementEnemy)
+            {
+                var temp = player as IMovementEnemy;
+                if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
+                {
+                    base.CheckMovement(gameTime);
+                }
+                else
+                {
 
-            player.Update(gameTime);
+                    CheckCollide();
+                    CheckGravity();
+
+                    player.Update(gameTime);
+                }
+            }
         }
     }
 }
