@@ -23,7 +23,8 @@ namespace Pigit
         private Texture2D _rectBlock;
         private Texture2D _rectBlock2;
 
-        private CameraAnimatie _camera;
+        private CameraAnimatie _cameraFollow;
+        private CameraZoom _cameraZoom;
 
         private AMovement moveHero;
         private SpriteOpbouw opbouwSprites;
@@ -59,6 +60,8 @@ namespace Pigit
             worldsLevel1.Add(new World1Layout());
             worldsLevel1.Add(new World2Layout());
 
+            //_cameraZoom = new CameraZoom(GraphicsDevice.Viewport);
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //DEBUG
@@ -82,16 +85,30 @@ namespace Pigit
             moveHero = new MoveCommandHero((IPlayerObject)player, level);
 
 
-            _camera = new CameraAnimatie();
+            _cameraFollow = new CameraAnimatie(GraphicsDevice.Viewport);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            _camera.Follow(player);
+            _cameraFollow.Follow(player);
+            //if (Keyboard.GetState().IsKeyDown(Keys.I))
+            //{
+            //    _cameraZoom.Zoom += 0.1f;
+            //}
+            //else if (Keyboard.GetState().IsKeyDown(Keys.K))
+            //{
+            //    _cameraZoom.Zoom -= 0.1f;
+            //}
+
+            
+
 
             moveHero.CheckMovement(gameTime);
             level.Update(gameTime);
 
+            //_cameraZoom.Update(player.Positie);
+            
+            
             base.Update(gameTime);
         }
 
@@ -99,7 +116,7 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _camera.Transform);
+            _spriteBatch.Begin(transformMatrix: _cameraFollow.Transform);
 
             //Draw Tiles
             level.DrawWorld(_spriteBatch);
