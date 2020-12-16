@@ -112,7 +112,7 @@ namespace Pigit.Map
         }
         public void Update(GameTime gameTime)
         {
-            foreach (var moveCommand in worldsMoveEnemys[0])
+            foreach (var moveCommand in CurrMovementEnemy)
             {
                 moveCommand.CheckMovement(gameTime);
             }
