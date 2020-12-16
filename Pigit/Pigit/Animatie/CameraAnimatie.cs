@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Objects;
 using SharpDX.Direct3D9;
@@ -48,11 +49,6 @@ namespace Pigit
             //Transform = centerSprite * offset;
             Transform = ((centerSprite * rotation) * scale) * offset;
             //Transform = ((centerSprite * scale) * offset);
-        }
-
-        public CameraAnimatie(Viewport viewport)
-        {
-            this.viewport = viewport;
         }
     }
 }

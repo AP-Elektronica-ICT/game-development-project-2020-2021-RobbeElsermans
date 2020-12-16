@@ -24,7 +24,6 @@ namespace Pigit
         private Texture2D _rectBlock2;
 
         private CameraAnimatie _cameraFollow;
-        private CameraZoom _cameraZoom;
 
         private AMovement moveHero;
         private SpriteOpbouw opbouwSprites;
@@ -85,7 +84,7 @@ namespace Pigit
             moveHero = new MoveCommandHero((IPlayerObject)player, level);
 
 
-            _cameraFollow = new CameraAnimatie(GraphicsDevice.Viewport);
+            _cameraFollow = new CameraAnimatie();
         }
 
         protected override void Update(GameTime gameTime)
@@ -116,7 +115,7 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _camera.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+            _spriteBatch.Begin(transformMatrix: _cameraFollow.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
             //Draw Tiles
             level.DrawWorld(_spriteBatch);
