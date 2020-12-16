@@ -6,12 +6,14 @@ using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Movement
 {
     abstract class AMovement
     {
+        public static IMoveable HeroPlayer { get; set; }
         protected IInputReader keyboard;
         protected IPlayerObject player;
         protected Level level;
@@ -39,9 +41,15 @@ namespace Pigit.Movement
 
         public virtual void CheckMovement(GameTime gameTime)
         {
+            RecastPositions();
+        }
+        protected void RecastPositions()
+        {
             positie = new Vector2(player.Positie.X, player.Positie.Y);
             velocity = new Vector2(0f, player.Velocity.Y);
         }
+
+
         protected virtual void CheckCollide()
         {
             isGround = false;

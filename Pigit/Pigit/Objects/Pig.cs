@@ -15,7 +15,7 @@ namespace Pigit
 {
     class Pig : APlayerObject, IMovementEnemy
     {
-        public MoveTypes MovementType { get; private set; }
+        public MoveTypes MovementType { get; set; }
         public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, MoveTypes moveTypes): base (spriteOpbouw, beginPosition)
         {
             this.MovementType = moveTypes;

@@ -13,7 +13,7 @@ namespace Pigit.Animatie
         private Vector2 center;
         private Viewport viewport;
 
-        private float zoom = 2.2f;
+        private float zoom = 1;
         private float rotation = 0;
 
         public float X

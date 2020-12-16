@@ -44,6 +44,8 @@ namespace Pigit.Map
             CurrMovementEnemy = new List<AMovement>();
             CurrEnemys = new List<INPCObject>();
             CurrTiles = new List<ITile>();
+
+            AMovement.HeroPlayer = heroPlayer;
         }
 
         private void GenerateMovement()
@@ -77,8 +79,10 @@ namespace Pigit.Map
             //    //moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
             //}
 
+            //worldsMoveEnemys = new List<List<AMovement>>();
             for (int i = 0; i < worldEnemys.Count; i++)
             {
+                
                 foreach (var enemy in worldEnemys[i])
                 {
                     var temp = enemy as IMovementEnemy;
@@ -97,7 +101,7 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
                             break;
                         case MoveTypes.Follow:
-                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this, heroPlayer));
+                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this));
                             break;
                         default:
                             break;

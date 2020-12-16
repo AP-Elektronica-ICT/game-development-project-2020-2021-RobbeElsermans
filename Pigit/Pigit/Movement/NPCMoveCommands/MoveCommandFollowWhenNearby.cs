@@ -8,24 +8,20 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandFollowNPC: MoveCommandFollowWhenNearby
-    {
-        public MoveCommandFollowNPC(IPlayerObject player, Level level,int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+    class MoveCommandFollowWhenNearby: AMovement
+    { 
+        public MoveCommandFollowWhenNearby(IPlayerObject player, Level level, int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
-
         }
+
         public override void CheckMovement(GameTime gameTime)
         {
-            RecastPositions();
+            base.CheckMovement(gameTime);
 
             if (player is IMovementEnemy)
             {
                 var temp = player as IMovementEnemy;
                 if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
-                {
-                    base.CheckMovement(gameTime);
-                }
-                else
                 {
                     if (HeroPlayer.Positie.X + 32 < positie.X)
                     {
@@ -54,6 +50,10 @@ namespace Pigit.Movement.NPCMoveCommands
                     CheckGravity();
 
                     player.Update(gameTime);
+                }
+                else
+                {
+                    temp.MovementType = MoveTypes.Static;
                 }
             }
         }

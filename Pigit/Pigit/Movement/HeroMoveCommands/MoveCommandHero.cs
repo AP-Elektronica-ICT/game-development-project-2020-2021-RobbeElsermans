@@ -142,7 +142,7 @@ namespace Pigit.Movement
 
             foreach (var enemy in level.CurrEnemys)
             {
-                if (NPCCollision.isTouchingNPC(player.Rectangle, enemy.Rectangle) && attack)
+                if (NPCCollision.IsTouchingNPC(player.Rectangle, enemy.Rectangle) && attack)
                 {
                     var tempEnemy = enemy as IPlayerObject;
                     if (gameTime.TotalGameTime.TotalSeconds - timer > 0.5)
