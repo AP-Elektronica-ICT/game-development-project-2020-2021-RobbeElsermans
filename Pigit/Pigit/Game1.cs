@@ -47,8 +47,8 @@ namespace Pigit
 
         protected override void Initialize()
         {
-            ScreenHeight = _graphics.PreferredBackBufferHeight;
-            ScreenWidth = _graphics.PreferredBackBufferWidth;
+            ScreenHeight = _graphics.GraphicsDevice.Viewport.Height;
+            ScreenWidth = _graphics.GraphicsDevice.Viewport.Width;
 
             base.Initialize();
         }
@@ -99,7 +99,7 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _camera.Transform);
+            _spriteBatch.Begin(transformMatrix: _camera.Transform, sortMode: SpriteSortMode.Immediate);
 
             //Draw Tiles
             level.DrawWorld(_spriteBatch);

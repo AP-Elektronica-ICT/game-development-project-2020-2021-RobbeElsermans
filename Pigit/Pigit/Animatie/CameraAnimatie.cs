@@ -10,17 +10,29 @@ namespace Pigit
 
         public void Follow(INPCObject target)
         {
-            Matrix offset = Matrix.CreateTranslation(
+            Matrix offset = 
+                Matrix.CreateTranslation(
                     Game1.ScreenWidth / 2,
                     Game1.ScreenHeight / 2,
                     0);
-            Matrix centerSprite = Matrix.CreateTranslation(
-                -target.Positie.X - (target.Rectangle.Width / 2),
-                -target.Positie.Y - (target.Rectangle.Height / 2),
-                0);
+
+            Matrix centerSprite = 
+                Matrix.CreateTranslation(
+                    -target.Rectangle.X - (target.Rectangle.Width / 2),
+                    -target.Rectangle.Y - (target.Rectangle.Height / 2),
+                    0);
+
+            var scalingFactor = new Vector3(
+                1.3f, 
+                1.3f, 
+                1);
+
+            var scale = 
+                Matrix.CreateScale(scalingFactor);
 
             //Center van de sprite
-            Transform = centerSprite * offset;
+            //Transform = centerSprite * offset;
+            Transform = (centerSprite * scale) * offset;
         }
     }
 }
