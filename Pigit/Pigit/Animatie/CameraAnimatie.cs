@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Pigit.Objects;
 using SharpDX.Direct3D9;
 
@@ -34,11 +35,11 @@ namespace Pigit
 
             if (Keyboard.GetState().IsKeyDown(Keys.I))
             {
-                _camera.Zoom += 0.005f;
+                Zoom += 0.005f;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
-                _camera.Zoom -= 0.005f;
+                Zoom -= 0.005f;
             }
 
             Matrix rotation = Matrix.CreateRotationZ(Zoom);
