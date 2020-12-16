@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
+using Pigit.Movement;
 using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
 using System;
@@ -15,8 +16,8 @@ namespace Pigit.Objects
         AnimatieTypes Type { get; set; }
         void Update(GameTime gameTime);
         void Draw(SpriteBatch _spriteBatch);
-        public Rectangle Rectangle { get; set; }
-        public SpriteDefine CurrentSprite { get; }
-        public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
+        Rectangle Rectangle { get; set; }
+        SpriteDefine CurrentSprite { get; }
+        Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
     }
 }

@@ -9,21 +9,19 @@ namespace Pigit.Movement.NPCMoveCommands
 {
     class MoveCommandFollowNPC:AMovement
     {
-        private IMoveable heroPlayer;
-        public MoveCommandFollowNPC(IPlayerObject player, Level level,IMoveable hero ,int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandFollowNPC(IPlayerObject player, Level level,int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
-            heroPlayer = hero;
         }
         public override void CheckMovement(GameTime gameTime)
         {
             base.CheckMovement(gameTime);
             
-            if (heroPlayer.Positie.X + 32 < positie.X)
+            if (HeroPlayer.Positie.X + 32 < positie.X)
             {
                 player.Direction = true;
                 velocity.X = -1;
             }
-            else if (heroPlayer.Positie.X + 32 > positie.X)
+            else if (HeroPlayer.Positie.X + 32 > positie.X)
             {
                 player.Direction = false;
                 velocity.X = 1;
@@ -33,7 +31,7 @@ namespace Pigit.Movement.NPCMoveCommands
                 velocity.X = 0;
             }
 
-            if (heroPlayer.Positie.Y + 20 < positie.Y && !hasJumped)
+            if (HeroPlayer.Positie.Y + 20 < positie.Y && !hasJumped)
             {
                 //Jump
                 velocity.Y = -jumpHeight;

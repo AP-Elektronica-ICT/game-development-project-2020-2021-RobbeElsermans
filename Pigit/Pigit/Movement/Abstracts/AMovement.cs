@@ -6,12 +6,14 @@ using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Movement
 {
     abstract class AMovement
     {
+        public static IMoveable HeroPlayer { get; set; }
         protected IInputReader keyboard;
         protected IPlayerObject player;
         protected Level level;
@@ -88,6 +90,8 @@ namespace Pigit.Movement
                     }
                 }
             }
+            CheckDistance();
+
         }
         protected virtual void CheckGravity()
         {
@@ -105,6 +109,22 @@ namespace Pigit.Movement
 
             player.Positie = positie;
             player.Velocity = velocity;
+        }
+
+        protected virtual void CheckDistance()
+        {
+            if (player is IMovementEnemy)
+            {
+                var temp = player as IMovementEnemy;
+                if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
+                {
+                    temp.MovementType = MoveTypes.Follow;
+                }
+                else
+                {
+                    temp.MovementType = MoveTypes.Static;
+                }
+            }
         }
     }
 }

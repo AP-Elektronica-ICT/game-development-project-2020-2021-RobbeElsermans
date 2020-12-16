@@ -4,6 +4,6 @@ namespace Pigit
 {
     interface IMovementEnemy
     {
-        public MoveTypes MovementType { get;}
+        MoveTypes MovementType { get; set; }
     }
 }
