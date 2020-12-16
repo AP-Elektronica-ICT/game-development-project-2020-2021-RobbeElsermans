@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandGuardNPC: MoveCommandFollowWhenNearby
+    class MoveCommandGuardNPC: AMoveCommandFollowWhenNearby
     {
         private bool righting = false;
         private double timer1;

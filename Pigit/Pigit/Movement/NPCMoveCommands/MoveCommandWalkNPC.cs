@@ -14,7 +14,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandWalkNPC : MoveCommandFollowWhenNearby
+    class MoveCommandWalkNPC : AMoveCommandFollowWhenNearby
     {
         private bool righting = false;
         private double timer;

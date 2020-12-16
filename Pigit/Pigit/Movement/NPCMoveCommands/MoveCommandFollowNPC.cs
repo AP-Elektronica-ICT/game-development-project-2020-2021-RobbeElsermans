@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandFollowNPC: MoveCommandFollowWhenNearby
+    class MoveCommandFollowNPC: AMoveCommandFollowWhenNearby
     {
         public MoveCommandFollowNPC(IPlayerObject player, Level level,int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
