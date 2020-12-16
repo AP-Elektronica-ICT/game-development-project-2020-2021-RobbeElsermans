@@ -21,11 +21,13 @@ namespace Pigit.Movement.NPCMoveCommands
         private double walkTime = 1;
         private double stopTime = 3;
 
-        private int minX = 200;
-        private int maxX = 232;
+        private float minX;
+        private float maxX;
 
         private bool time = false;
         private bool position = false;
+
+        private bool hasFollow = false;
 
         public MoveCommandGuardNPC(IPlayerObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
@@ -33,7 +35,7 @@ namespace Pigit.Movement.NPCMoveCommands
             this.stopTime = stopTime;
             time = true;
         }
-        public MoveCommandGuardNPC(IPlayerObject player, Level level, int minX = 200, int maxX= 232,double  stopTime = 3.0) : base(player, level, 4, 2)
+        public MoveCommandGuardNPC(IPlayerObject player, Level level, int minX, int maxX,double  stopTime = 3.0) : base(player, level, 4, 2)
         {
             this.minX = minX;
             this.maxX = maxX;
@@ -49,9 +51,17 @@ namespace Pigit.Movement.NPCMoveCommands
                 if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
                 {
                     base.CheckMovement(gameTime);
+                    hasFollow = true;
                 }
                 else
                 {
+                    if (hasFollow)
+                    {
+                        minX = positie.X - 32f;
+                        maxX = positie.X + 32f;
+                        hasFollow = false;
+                    }
+
                     #region met Tijd Guard
                     if (time)
                     {
