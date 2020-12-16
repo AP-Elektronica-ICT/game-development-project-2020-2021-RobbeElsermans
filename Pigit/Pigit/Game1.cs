@@ -99,11 +99,10 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _camera.Transform, sortMode: SpriteSortMode.Immediate);
+            _spriteBatch.Begin(transformMatrix: _camera.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
             //Draw Tiles
             level.DrawWorld(_spriteBatch);
-
 
             //DEBUG
 

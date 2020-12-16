@@ -7,6 +7,7 @@ namespace Pigit
     class CameraAnimatie
     {
         public Matrix Transform { get; private set; }
+        public float Zoom { get; set; }
 
         public void Follow(INPCObject target)
         {
@@ -23,16 +24,29 @@ namespace Pigit
                     0);
 
             var scalingFactor = new Vector3(
-                1.3f, 
-                1.3f, 
+                1.0f, 
+                1.0f, 
                 1);
 
             var scale = 
                 Matrix.CreateScale(scalingFactor);
 
+
+            if (Keyboard.GetState().IsKeyDown(Keys.I))
+            {
+                _camera.Zoom += 0.005f;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.K))
+            {
+                _camera.Zoom -= 0.005f;
+            }
+
+            Matrix rotation = Matrix.CreateRotationZ(Zoom);
+
             //Center van de sprite
             //Transform = centerSprite * offset;
-            Transform = (centerSprite * scale) * offset;
+            Transform = ((centerSprite * rotation) * scale) * offset;
+            //Transform = ((centerSprite * scale) * offset);
         }
     }
 }
