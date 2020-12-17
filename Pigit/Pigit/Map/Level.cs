@@ -10,15 +10,17 @@ using Pigit.Objects;
 using Pigit.SpriteBuild.Enums;
 using Pigit.Movement.NPCMoveCommands;
 using Pigit.Movement;
+using Pigit.Objects.Interfaces;
+using Pigit.Objects.PlayerObjects;
 
 namespace Pigit.Map
 {
     class Level
     {
-        private List<IWorldLayout> worlds;
+        private List<IRoomLayout> worlds;
         //private IWorldLayout currentWorld;
         private TileOpbouw blockOpbouw;
-        private List<List<INPCObject>> worldEnemys;
+        private List<List<IPlayerObject>> worldEnemys;
         private List<List<AMovement>> worldsMoveEnemys;
         private SpriteOpbouw opbouwSprites;
         private ContentManager content;
@@ -26,12 +28,12 @@ namespace Pigit.Map
         private List<List<ITile>> worldsTiles;
 
         public List<ITile> CurrTiles { get; set; }
-        public List<INPCObject> CurrEnemys { get; set; }
+        public List<IPlayerObject> CurrEnemys { get; set; }
 
         public List<AMovement> CurrMovementEnemy { get; set; }
         public int CurrMap { get; set; } = 1;
 
-        public Level(ContentManager content, List<IWorldLayout> worlds, IMoveable hero)
+        public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
         {
             heroPlayer = hero;
             this.worlds = worlds;
@@ -39,50 +41,41 @@ namespace Pigit.Map
             opbouwSprites = new SpriteOpbouw(content);
 
             worldsTiles = new List<List<ITile>>();
-            worldEnemys = new List<List<INPCObject>>();
+            worldEnemys = new List<List<IPlayerObject>>();
             worldsMoveEnemys = new List<List<AMovement>>();
             CurrMovementEnemy = new List<AMovement>();
-            CurrEnemys = new List<INPCObject>();
+            CurrEnemys = new List<IPlayerObject>();
             CurrTiles = new List<ITile>();
 
-            AMovement.HeroPlayer = heroPlayer;
+            AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
+        }
+
+        private void InitializeTiles(ContentManager content)
+        {
+            this.blockOpbouw = new TileOpbouw(content);
+        }
+        public void Update(GameTime gameTime)
+        {
+            foreach (var moveCommand in CurrMovementEnemy)
+            {
+                moveCommand.CheckMovement(gameTime);
+            }
+        }
+
+        public void CreateLevels()
+        {
+            InitializeTiles(content);
+
+            GeneratelevelContent(content);
+            GenerateMovement();
+            CheckCurrMap();
         }
 
         private void GenerateMovement()
         {
-            //foreach (var enemys in worldEnemys)
-            //{
-            //    foreach (var enemy in enemys)
-            //    {
-            //        var temp = enemy as IMovementEnemy;
-            //        switch (temp.MovementType)
-            //        {
-            //            case MoveTypes.Static:
-            //                worldsMoveEnemys[0].Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
-            //                break;
-            //            case MoveTypes.Walk:
-            //                worldsMoveEnemys[0].Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
-            //                break;
-            //            case MoveTypes.GuardTime:
-            //                worldsMoveEnemys[0].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, 5.0, 3.0));
-            //                break;
-            //            case MoveTypes.GuardPosition:
-            //                worldsMoveEnemys[0].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
-            //                break;
-            //            case MoveTypes.Follow:
-            //                worldsMoveEnemys[0].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this, heroPlayer));
-            //                break;
-            //            default:
-            //                break;
-            //        }
-            //    }
-            //    //moveEnemys.Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
-            //}
-
-            //worldsMoveEnemys = new List<List<AMovement>>();
             for (int i = 0; i < worldEnemys.Count; i++)
             {
-                
+
                 foreach (var enemy in worldEnemys[i])
                 {
                     var temp = enemy as IMovementEnemy;
@@ -110,27 +103,6 @@ namespace Pigit.Map
             }
         }
 
-        private void InitializeTiles(ContentManager content)
-        {
-            this.blockOpbouw = new TileOpbouw(content);
-        }
-        public void Update(GameTime gameTime)
-        {
-            foreach (var moveCommand in CurrMovementEnemy)
-            {
-                moveCommand.CheckMovement(gameTime);
-            }
-        }
-
-        public void CreateWorlds()
-        {
-            InitializeTiles(content);
-            //GenerateNPC(content);
-
-            GenerateMapContent(content);
-            GenerateMovement();
-            CheckCurrMap();
-        }
 
         private void CheckCurrMap()
         {
@@ -139,12 +111,12 @@ namespace Pigit.Map
             CurrMovementEnemy = worldsMoveEnemys[CurrMap];
         }
 
-        private void GenerateMapContent(ContentManager content)
+        private void GeneratelevelContent(ContentManager content)
         {
             foreach (var map in worlds)
             {
                 worldsTiles.Add(new List<ITile>());
-                worldEnemys.Add(new List<INPCObject>());
+                worldEnemys.Add(new List<IPlayerObject>());
                 worldsMoveEnemys.Add(new List<AMovement>());
             }
 

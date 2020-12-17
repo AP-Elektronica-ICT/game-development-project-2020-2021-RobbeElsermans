@@ -1,4 +1,7 @@
-﻿using Pigit.Objects;
+﻿using Microsoft.Xna.Framework;
+using Pigit.Collison;
+using Pigit.Objects;
+using Pigit.Objects.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,17 +10,35 @@ namespace Pigit.Attack
 {
     class AttackCommand
     {
-        private List<IPlayerObject> enemys;
-        private IPlayerObject player1;
-        public AttackCommand(List<IPlayerObject> enemys, IPlayerObject player)
-        {
-            this.enemys = enemys;
-            this.player1 = player;
-        }
+        private double timer;
+        private bool isSetTimer = false;
 
-        public void SmallAttack(IPlayerObject enemy, IPlayerObject player)
+        public void Attack(List<IPlayerObject> enemys, IPlayerObject player, GameTime gametime)
         {
+            //Attack an enemy
+            if (!isSetTimer)
+            {
+                timer = gametime.TotalGameTime.TotalSeconds;
+                isSetTimer = true;
+            }
 
+            foreach (var enemy in enemys)
+            {
+                if (NPCCollision.IsTouchingNPC(player.Rectangle, enemy.Rectangle))
+                {
+                    var tempEnemy = enemy as IPlayerObject;
+                    if (gametime.TotalGameTime.TotalSeconds - timer > 0.5)
+                    {
+                        isSetTimer = false;
+                        tempEnemy.Hearts -= player.AttackDamage;
+                        if (!tempEnemy.IsHit)
+                        {
+                            tempEnemy.IsHit = true;
+                        }
+                        //Debug.Print($"{tempEnemy.Hearts}");
+                    }
+                }
+            }
         }
     }
 }

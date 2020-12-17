@@ -3,8 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
 using Pigit.Map;
+using Pigit.Map.Interfaces;
 using Pigit.Movement;
 using Pigit.Objects;
+using Pigit.Objects.Interfaces;
+using Pigit.Objects.PlayerObjects;
 using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
@@ -22,27 +25,27 @@ namespace Pigit
         //DEBUG
         private Texture2D _rectBlock;
         private Texture2D _rectBlock2;
+        //DEBUG
 
-        private CameraAnimatie _cameraFollow;
+        private CameraAnimatie _cameraAnimatie;
 
         private AMovement moveHero;
         private SpriteOpbouw opbouwSprites;
+
         public static int ScreenWidth;
         public static int ScreenHeight;
-        private List<IWorldLayout> worldsLevel1;
 
+        private List<IRoomLayout> levelsWorld1;
+        private Level level1;
+        IObject player;
 
-        private Level level;
-
-
-        INPCObject player;
-
+        private IInputReader KeyBoardReader;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
@@ -55,9 +58,11 @@ namespace Pigit
 
         protected override void LoadContent()
         {
-            worldsLevel1 = new List<IWorldLayout>();
-            worldsLevel1.Add(new World1Layout());
-            worldsLevel1.Add(new World2Layout());
+            KeyBoardReader = new KeyBoardReader();
+
+            levelsWorld1 = new List<IRoomLayout>();
+            levelsWorld1.Add(new World1Room1Layout());
+            levelsWorld1.Add(new World1Room2Layout());
 
             //_cameraZoom = new CameraZoom(GraphicsDevice.Viewport);
 
@@ -78,18 +83,19 @@ namespace Pigit
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
 
-            level = new Level(Content, worldsLevel1, player);
-            level.CreateWorlds();
+            level1 = new Level(Content, levelsWorld1, player);
+            level1.CreateLevels();
 
-            moveHero = new MoveCommandHero((IPlayerObject)player, level);
+            moveHero = new MoveCommandHero((IPlayerObject)player, level1, KeyBoardReader);
 
 
-            _cameraFollow = new CameraAnimatie();
+            _cameraAnimatie = new CameraAnimatie();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            _cameraFollow.Follow(player);
+            _cameraAnimatie.Follow(player);
+
             //if (Keyboard.GetState().IsKeyDown(Keys.I))
             //{
             //    _cameraZoom.Zoom += 0.1f;
@@ -99,15 +105,9 @@ namespace Pigit
             //    _cameraZoom.Zoom -= 0.1f;
             //}
 
-            
-
-
             moveHero.CheckMovement(gameTime);
-            level.Update(gameTime);
-
-            //_cameraZoom.Update(player.Positie);
-            
-            
+            level1.Update(gameTime);
+                        
             base.Update(gameTime);
         }
 
@@ -115,10 +115,10 @@ namespace Pigit
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _cameraFollow.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+            _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
-            //Draw Tiles
-            level.DrawWorld(_spriteBatch);
+            //Draw Tiles & enemys
+            level1.DrawWorld(_spriteBatch);
 
             //DEBUG
 
@@ -139,6 +139,7 @@ namespace Pigit
             //{
             //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
             //}
+
             _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
 
             //Teken player

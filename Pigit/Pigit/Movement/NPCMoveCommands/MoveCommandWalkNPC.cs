@@ -4,6 +4,7 @@ using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
@@ -50,13 +51,13 @@ namespace Pigit.Movement.NPCMoveCommands
                     {
                         velocity.X = -1;
                         isGround = false;
-                        isSide = false;
+
                     }
                     else
                     {
                         velocity.X = 1;
                         isGround = false;
-                        isSide = false;
+
                     }
 
                     if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
@@ -67,7 +68,7 @@ namespace Pigit.Movement.NPCMoveCommands
                         isGround = false;
                     }
 
-                    this.CheckCollide();
+                    this.CheckCollide(4,5);
 
                     CheckGravity();
 
@@ -76,7 +77,7 @@ namespace Pigit.Movement.NPCMoveCommands
             }
         }
 
-        protected override void CheckCollide()
+        protected override void CheckCollide(int offsetHeight1, int offsetHeight2)
         {
             isGround = false;
 

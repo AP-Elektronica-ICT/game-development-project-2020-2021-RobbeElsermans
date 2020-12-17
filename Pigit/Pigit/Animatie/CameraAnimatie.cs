@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Objects;
+using Pigit.Objects.Interfaces;
 using SharpDX.Direct3D9;
 
 namespace Pigit
@@ -11,7 +12,7 @@ namespace Pigit
         public Matrix Transform { get; private set; }
         public float Zoom { get; set; }
 
-        public void Follow(INPCObject target)
+        public void Follow(IObject target)
         {
             Matrix offset = 
                 Matrix.CreateTranslation(

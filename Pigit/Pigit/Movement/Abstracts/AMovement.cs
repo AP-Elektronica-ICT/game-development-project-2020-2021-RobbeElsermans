@@ -2,6 +2,7 @@
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Interfaces;
 using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
@@ -13,15 +14,12 @@ namespace Pigit.Movement
 {
     abstract class AMovement
     {
-        public static IMoveable HeroPlayer { get; set; }
-        protected IInputReader keyboard;
         protected IPlayerObject player;
         protected Level level;
         protected bool isGround = false;
-        protected bool isSide = false;
 
-        protected float jumpHeight = 6f;
-        protected float walkingSpeed = 2f;
+        protected float jumpHeight;
+        protected float walkingSpeed;
         protected Vector2 positie;
         protected Vector2 velocity;
 
@@ -29,28 +27,22 @@ namespace Pigit.Movement
 
         public AMovement(IPlayerObject player, Level level, float jumpHeight = 6f, float walkSpeed = 2f)
         {
-            keyboard = new KeyBoardReader();
             this.player = player;
             this.level = level;
             hasJumped = true;
             isGround = false;
-            isSide = false;
             this.jumpHeight = jumpHeight;
             this.walkingSpeed = walkSpeed;
         }
 
-        public virtual void CheckMovement(GameTime gameTime)
-        {
-            RecastPositions();
-        }
+        public abstract void CheckMovement(GameTime gameTime);
         protected void RecastPositions()
         {
             positie = new Vector2(player.Positie.X, player.Positie.Y);
             velocity = new Vector2(0f, player.Velocity.Y);
         }
 
-
-        protected virtual void CheckCollide()
+        protected virtual void CheckCollide(int offsetHeight1, int offsetHeight2)
         {
             isGround = false;
 
@@ -61,19 +53,13 @@ namespace Pigit.Movement
                     var temp = tile as ICollideTile;
                     Rectangle rectangle = player.Rectangle;
 
-                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle))
+                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle) || EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
                     {
                         velocity.X = 0f;
-                    }
-
-                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
-                    {
-                        velocity.X = 0f;
-
                     }
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
-                        positie.Y = temp.Border.Y - (temp.Border.Height - 4);
+                        positie.Y = temp.Border.Y - (temp.Border.Height - offsetHeight1);
                         velocity.Y = 0f;
                         isGround = true;
                     }
@@ -90,7 +76,7 @@ namespace Pigit.Movement
 
                     if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
                     {
-                        positie.Y = temp.Border.Y - (temp.Border.Height - 5);
+                        positie.Y = temp.Border.Y - (temp.Border.Height - offsetHeight2);
                         velocity.Y = 0f;
                         isGround = true;
                     }

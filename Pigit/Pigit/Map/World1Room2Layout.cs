@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pigit.Map
 {
-    class World2Layout: IWorldLayout
+    class World1Room2Layout: IRoomLayout
     {
         private const int width = 50;
         private const int height = 50;
@@ -18,7 +18,7 @@ namespace Pigit.Map
         public int Height { get { return width; } }
         public int Width { get { return height; } }
 
-        public World2Layout()
+        public World1Room2Layout()
         {
             CollideTileLayout = new int[width, height]
             {

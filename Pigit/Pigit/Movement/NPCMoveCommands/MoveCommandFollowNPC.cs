@@ -2,6 +2,7 @@
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,7 +51,7 @@ namespace Pigit.Movement.NPCMoveCommands
                         isGround = false;
                     }
 
-                    CheckCollide();
+                    CheckCollide(4,5);
                     CheckGravity();
 
                     player.Update(gameTime);

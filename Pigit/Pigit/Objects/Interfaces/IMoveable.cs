@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Pigit.Objects
+namespace Pigit.Objects.Interfaces
 {
     internal interface IMoveable
     {

@@ -6,15 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Pigit.Movement;
-using Pigit.Objects;
-
-using Microsoft.Xna.Framework.Content;
-using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
 using System.Diagnostics;
+using Pigit.Attack;
+using Pigit.Objects.Interfaces;
 
-namespace Pigit.Objects
+namespace Pigit.Objects.Abstracts
 {
     abstract class APlayerObject : IPlayerObject
     {
@@ -33,9 +30,11 @@ namespace Pigit.Objects
         public bool Dead { get; private set; }
         public bool IsHit { get; set; }
         public bool IsAttacking { get; set; }
+        public AttackCommand Attack { get; set; }
 
         public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, int levens = 10, int attackDamage = 1)
         {
+            Attack = new AttackCommand();
             Hearts = levens;
             AttackDamage = attackDamage;
             Sprites = spriteOpbouw;

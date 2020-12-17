@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Pigit.Map
+namespace Pigit.Map.Interfaces
 {
-    interface IWorldLayout
+    interface IRoomLayout
     {
         public int Width { get; }
         public int Height { get; }
@@ -11,5 +11,6 @@ namespace Pigit.Map
         public int[,] ForegroundTiles { get; }
         public int[,] PlatformTiles { get; }
         public int[,] Enemys { get; set; }
+        public int[,] Collectable { get; set; }
     }
 }
