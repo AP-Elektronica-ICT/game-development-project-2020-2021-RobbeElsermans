@@ -16,10 +16,19 @@ namespace Pigit.Objects.CollectableObjects
         public bool IsTaken { get; set; }
         public bool IsCollected { get; set; }
         public SizeCollectable Size { get; }
-        public void Update(GameTime gameTime);
-        public void Draw(SpriteBatch _spriteBatch);
         public Rectangle Rectangle { get; set; }
         public SpriteDefine CurrentSprite { get; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
+        public Vector2 Positie { get; set; }
+        public Vector2 Velocity { get; set; }
+
+        public void Update(GameTime gameTime) 
+        {
+
+        }
+        public void Draw(SpriteBatch _spriteBatch) 
+        { 
+
+        }
     }
 }

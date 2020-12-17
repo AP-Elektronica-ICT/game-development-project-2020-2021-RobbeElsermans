@@ -7,7 +7,6 @@ namespace Pigit.Map
 {
     class World1Room1Layout : IRoomLayout
     {
-
         private const int width = 50;
         private const int height = 50;
 

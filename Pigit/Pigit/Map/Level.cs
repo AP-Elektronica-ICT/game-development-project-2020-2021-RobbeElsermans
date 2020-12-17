@@ -12,6 +12,7 @@ using Pigit.Movement.NPCMoveCommands;
 using Pigit.Movement;
 using Pigit.Objects.Interfaces;
 using Pigit.Objects.PlayerObjects;
+using Pigit.Map.Interfaces;
 
 namespace Pigit.Map
 {
@@ -31,7 +32,7 @@ namespace Pigit.Map
         public List<IPlayerObject> CurrEnemys { get; set; }
 
         public List<AMovement> CurrMovementEnemy { get; set; }
-        public int CurrMap { get; set; } = 1;
+        public int CurrMap { get; set; } = 2;
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
         {
