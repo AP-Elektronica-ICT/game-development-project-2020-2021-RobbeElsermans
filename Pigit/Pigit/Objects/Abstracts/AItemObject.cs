@@ -37,6 +37,7 @@ namespace Pigit.Objects.Abstracts
             this.Sprites = sprites;
             this.Positie = positie;
             IsCollected = false;
+            CheckSprites();
         }
         private void CheckType()
         {
@@ -51,7 +52,7 @@ namespace Pigit.Objects.Abstracts
 
         protected virtual void RectBuild()
         {
-            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
+            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieR.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieR.CurrentFrame.SourceRect.Height);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
@@ -63,7 +64,6 @@ namespace Pigit.Objects.Abstracts
         }
         private void CheckSprites()
         {
-
             Type = AnimatieTypes.Idle;
 
             if (IsCollected)
@@ -75,6 +75,7 @@ namespace Pigit.Objects.Abstracts
         }
         public void Update(GameTime gameTime)
         {
+            Positie += Velocity;
             CheckSprites();
             CurrentSprite.Update(gameTime);
             

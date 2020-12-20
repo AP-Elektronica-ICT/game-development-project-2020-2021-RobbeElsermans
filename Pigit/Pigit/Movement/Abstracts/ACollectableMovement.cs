@@ -38,7 +38,7 @@ namespace Pigit.Movement.Abstracts
         {
             RecastPositions();
 
-            CheckCollide(0, 0);
+            CheckCollide(18, 18);
             CheckGravity();
 
             item.Update(gameTime);
