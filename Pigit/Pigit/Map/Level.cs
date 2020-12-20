@@ -65,6 +65,7 @@ namespace Pigit.Map
             CurrCollectable = new List<ICollectableObject>();
 
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
+            ACollectableMovement.HeroPlayer = heroPlayer;
         }
 
         private void InitializeTiles(ContentManager content)
