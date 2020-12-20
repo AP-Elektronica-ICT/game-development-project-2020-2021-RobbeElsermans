@@ -12,7 +12,7 @@ namespace Pigit.Movement.NPCMoveCommands
     class AMoveCommandFollowWhenNearby : AMovement
     {
         public static IMoveable HeroPlayer { get; set; }
-        public AMoveCommandFollowWhenNearby(IPlayerObject player, Level level, int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public AMoveCommandFollowWhenNearby(IPlayerObject player, Level level, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
         }
 
@@ -20,12 +20,12 @@ namespace Pigit.Movement.NPCMoveCommands
         {
             RecastPositions();
 
-            if (HeroPlayer.Positie.X + 32 < positie.X)
+            if (NPCCollision.IsLeftFromNPC(HeroPlayer.Positie, positie))
             {
                 player.Direction = true;
                 velocity.X = -1;
             }
-            else if (HeroPlayer.Positie.X + 32 > positie.X)
+            else if (NPCCollision.IsRightFromNPC(HeroPlayer.Positie, positie))
             {
                 player.Direction = false;
                 velocity.X = 1;
@@ -35,7 +35,7 @@ namespace Pigit.Movement.NPCMoveCommands
                 velocity.X = 0;
             }
 
-            if (HeroPlayer.Positie.Y + 20 < positie.Y && !hasJumped)
+            if (NPCCollision.IsAboveNPC(HeroPlayer.Positie, positie) && !hasJumped)
             {
                 //Jump
                 velocity.Y = -jumpHeight;

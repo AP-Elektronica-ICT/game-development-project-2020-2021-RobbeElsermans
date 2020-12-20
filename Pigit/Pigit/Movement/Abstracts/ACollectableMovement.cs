@@ -14,6 +14,7 @@ namespace Pigit.Movement.Abstracts
     class ACollectableMovement
     {
         protected ICollectableObject item;
+        protected IPlayerObject heroPlayer;
         protected Level level;
         protected bool isGround = false;
 
@@ -23,8 +24,9 @@ namespace Pigit.Movement.Abstracts
         protected Vector2 velocity;
 
         protected bool hasJumped;
+        public static IMoveable HeroPlayer { get; set; }
 
-        public ACollectableMovement(ICollectableObject item, Level level, float jumpHeight = 6f, float walkSpeed = 2f)
+        public ACollectableMovement(ICollectableObject item, Level level, float jumpHeight = 2f, float walkSpeed = 2f)
         {
             this.item = item;
             this.level = level;
@@ -68,7 +70,6 @@ namespace Pigit.Movement.Abstracts
         protected virtual void CheckCollide(int offsetHeight1, int offsetHeight2)
         {
             isGround = false;
-            Debug.Print($"{positie.X}, {positie.Y}");
 
             foreach (var tile in level.CurrTiles)
             {

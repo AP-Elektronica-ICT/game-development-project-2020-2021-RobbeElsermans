@@ -10,7 +10,7 @@ namespace Pigit.Collison
     {
         public static bool IsTouchingNPC(Rectangle player1, Rectangle player2)
         {
-            if(player1.Intersects(player2))
+            if (player1.Intersects(player2))
             {
                 return true;
             }
@@ -27,10 +27,32 @@ namespace Pigit.Collison
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
+        public static bool IsLeftFromNPC(Vector2 player1, Vector2 player2)
+        {
+            if (player1.X + 32 < player2.X)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static bool IsRightFromNPC(Vector2 player1, Vector2 player2)
+        {
+            if (player1.X + 32 > player2.X)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static bool IsAboveNPC(Vector2 player1, Vector2 player2)
+        {
+            if (player1.Y + 20 < player2.Y)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }
