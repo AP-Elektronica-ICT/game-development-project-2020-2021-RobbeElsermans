@@ -10,18 +10,9 @@ namespace Pigit.Movement.CollectableMoveCommands
 {
     class CollectableMovement : ACollectableMovement
     {
-        private CollectableMovement(ICollectableObject player, Level level) : base(player, level)
+        public CollectableMovement(ICollectableObject player, Level level) : base(player, level)
         {
 
-        }
-        public override void CheckMovement(GameTime gameTime)
-        {
-            RecastPositions();
-
-            CheckCollide(0, 0);
-            CheckGravity();
-
-            player.Update(gameTime);
         }
     }
 }

@@ -16,6 +16,7 @@ using Pigit.Map.Interfaces;
 using Pigit.Objects.Enums;
 using Pigit.Objects.CollectableObjects;
 using Pigit.Movement.CollectableMoveCommands;
+using Pigit.Movement.Abstracts;
 
 namespace Pigit.Map
 {
@@ -26,6 +27,7 @@ namespace Pigit.Map
         private TileOpbouw blockOpbouw;
         private List<List<IPlayerObject>> worldEnemys;
         private List<List<AMovement>> worldsMoveEnemys;
+        private List<List<ACollectableMovement>> worldsMoveCollectables;
         private List<List<ICollectableObject>> worldsCollectables;
         private SpriteOpbouw opbouwSprites;
         private ContentManager content;
@@ -38,6 +40,7 @@ namespace Pigit.Map
         public List<AMovement> CurrMovementEnemy { get; set; }
         public List<ICollectableObject> CurrCollectable { get; set; }
         public int CurrMap { get; set; } = 2;
+        public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
         {
@@ -47,11 +50,16 @@ namespace Pigit.Map
             opbouwSprites = new SpriteOpbouw(content);
 
             worldsTiles = new List<List<ITile>>();
+
             worldEnemys = new List<List<IPlayerObject>>();
             worldsMoveEnemys = new List<List<AMovement>>();
+            
             worldsCollectables = new List<List<ICollectableObject>>();
+            worldsMoveCollectables = new List<List<ACollectableMovement>>();
 
             CurrMovementEnemy = new List<AMovement>();
+            CurrMovementCollectables = new List<ACollectableMovement>();
+
             CurrEnemys = new List<IPlayerObject>();
             CurrTiles = new List<ITile>();
             CurrCollectable = new List<ICollectableObject>();
@@ -66,6 +74,10 @@ namespace Pigit.Map
         public void Update(GameTime gameTime)
         {
             foreach (var moveCommand in CurrMovementEnemy)
+            {
+                moveCommand.CheckMovement(gameTime);
+            }
+            foreach (var moveCommand in CurrMovementCollectables)
             {
                 moveCommand.CheckMovement(gameTime);
             }
@@ -110,6 +122,25 @@ namespace Pigit.Map
                     }
                 }
             }
+
+            for (int i = 0; i < worldsCollectables.Count; i++)
+            {
+                foreach (var item in worldsCollectables[i])
+                {
+                    switch (item.MovementType)
+                    {
+                        case MoveTypes.Static:
+                            worldsMoveCollectables[i].Add(new CollectableMovement(item, this));
+                            break;
+                        case MoveTypes.Walk:
+                        case MoveTypes.GuardTime:
+                        case MoveTypes.GuardPosition:
+                        case MoveTypes.Follow:
+                        default:
+                            break;
+                    }
+                }
+            }
         }
 
 
@@ -118,6 +149,9 @@ namespace Pigit.Map
             CurrEnemys = worldEnemys[CurrMap];
             CurrTiles = worldsTiles[CurrMap];
             CurrMovementEnemy = worldsMoveEnemys[CurrMap];
+
+            CurrCollectable = worldsCollectables[CurrMap];
+            CurrMovementCollectables = worldsMoveCollectables[CurrMap];
         }
 
         private void GeneratelevelContent(ContentManager content)
@@ -127,6 +161,8 @@ namespace Pigit.Map
                 worldsTiles.Add(new List<ITile>());
                 worldEnemys.Add(new List<IPlayerObject>());
                 worldsMoveEnemys.Add(new List<AMovement>());
+                worldsCollectables.Add(new List<ICollectableObject>());
+                worldsMoveCollectables.Add(new List<ACollectableMovement>());
             }
 
             for (int a = 0; a < worlds.Count; a++)
@@ -185,7 +221,7 @@ namespace Pigit.Map
                         switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
                         {
                             case CollectableTypes.Heart:
-                                worldsCollectables[a].Add(new Hearts(opbouwSprites.GetSpriteHeart(12), new Vector2(x,y),MoveTypes.Static));
+                                worldsCollectables[a].Add(new Hearts(opbouwSprites.GetSpriteHeart(12), new Vector2(y*32,x*32),MoveTypes.Static));
                                 break;
                             case CollectableTypes.Diamond:
 
@@ -209,6 +245,10 @@ namespace Pigit.Map
             foreach (var enemy in CurrEnemys)
             {
                 enemy.Draw(spriteBatch);
+            }
+            foreach (var item in CurrCollectable)
+            {
+                item.Draw(spriteBatch);
             }
         }
     }

@@ -6,7 +6,7 @@ using Pigit.TileBuild;
 using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Movement.Abstracts
@@ -68,6 +68,7 @@ namespace Pigit.Movement.Abstracts
         protected virtual void CheckCollide(int offsetHeight1, int offsetHeight2)
         {
             isGround = false;
+            Debug.Print($"{positie.X}, {positie.Y}");
 
             foreach (var tile in level.CurrTiles)
             {
