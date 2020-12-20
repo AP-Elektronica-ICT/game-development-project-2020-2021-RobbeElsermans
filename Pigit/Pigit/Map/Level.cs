@@ -13,6 +13,9 @@ using Pigit.Movement;
 using Pigit.Objects.Interfaces;
 using Pigit.Objects.PlayerObjects;
 using Pigit.Map.Interfaces;
+using Pigit.Objects.Enums;
+using Pigit.Objects.CollectableObjects;
+using Pigit.Movement.CollectableMoveCommands;
 
 namespace Pigit.Map
 {
@@ -23,6 +26,7 @@ namespace Pigit.Map
         private TileOpbouw blockOpbouw;
         private List<List<IPlayerObject>> worldEnemys;
         private List<List<AMovement>> worldsMoveEnemys;
+        private List<List<ICollectableObject>> worldsCollectables;
         private SpriteOpbouw opbouwSprites;
         private ContentManager content;
         private IMoveable heroPlayer;
@@ -32,6 +36,7 @@ namespace Pigit.Map
         public List<IPlayerObject> CurrEnemys { get; set; }
 
         public List<AMovement> CurrMovementEnemy { get; set; }
+        public List<ICollectableObject> CurrCollectable { get; set; }
         public int CurrMap { get; set; } = 2;
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
@@ -44,9 +49,12 @@ namespace Pigit.Map
             worldsTiles = new List<List<ITile>>();
             worldEnemys = new List<List<IPlayerObject>>();
             worldsMoveEnemys = new List<List<AMovement>>();
+            worldsCollectables = new List<List<ICollectableObject>>();
+
             CurrMovementEnemy = new List<AMovement>();
             CurrEnemys = new List<IPlayerObject>();
             CurrTiles = new List<ITile>();
+            CurrCollectable = new List<ICollectableObject>();
 
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
         }
@@ -174,6 +182,18 @@ namespace Pigit.Map
                             default:
                                 break;
                         }
+                        switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
+                        {
+                            case CollectableTypes.Heart:
+                                worldsCollectables[a].Add(new Hearts(opbouwSprites.GetSpriteHeart(12), new Vector2(x,y),MoveTypes.Static));
+                                break;
+                            case CollectableTypes.Diamond:
+
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
                 }
             }

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Pigit.Objects.Enums
 {
-    enum SizeCollectable
+    enum CollectableTypes
     {
-        Small, 
-        Big
+        Heart,
+        Diamond
     }
 }

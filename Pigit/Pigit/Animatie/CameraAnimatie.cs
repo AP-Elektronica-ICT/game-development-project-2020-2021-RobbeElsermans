@@ -27,8 +27,8 @@ namespace Pigit
                     0);
 
             var scalingFactor = new Vector3(
-                1.0f, 
-                1.0f, 
+                1.3f, 
+                1.3f, 
                 1);
 
             var scale = 
