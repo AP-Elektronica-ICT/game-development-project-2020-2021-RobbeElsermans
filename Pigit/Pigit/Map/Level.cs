@@ -169,7 +169,6 @@ namespace Pigit.Map
             }
         }
 
-
         private void CheckCurrMap()
         {
             CurrEnemys = worldEnemys[CurrMap];
