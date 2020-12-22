@@ -22,6 +22,7 @@ namespace Pigit.Movement
         protected float walkingSpeed;
         protected Vector2 positie;
         protected Vector2 velocity;
+        private bool prevGround = false;
 
         protected bool hasJumped;
 
@@ -90,12 +91,18 @@ namespace Pigit.Movement
             {
                 velocity.Y = 0f;
                 hasJumped = false;
+                prevGround = isGround;
             }
-            else
+            else if (prevGround == false)
             {
                 float i = 1f;
-                velocity.Y += 0.20f * i;
+                velocity.Y += 0.2f * i;
+
+                Debug.Print(velocity.Y.ToString());
             }
+
+            prevGround = isGround;
+            Debug.Print(velocity.Y.ToString());
 
             player.Positie = positie;
             player.Velocity = velocity;

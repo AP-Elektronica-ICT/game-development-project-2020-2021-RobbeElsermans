@@ -2017,7 +2017,7 @@
 /processorParam:TextureFormat=Color
 /build:Objects/LiveAndCoints/Numbers (6x8).png
 
-#begin Objects/LiveAndCoints/Small Diamond (18x14).png
+#begin Objects/LiveAndCoints/Small Diamond Hit (12x14).png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -2027,7 +2027,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Objects/LiveAndCoints/Small Diamond (18x14).png
+/build:Objects/LiveAndCoints/Small Diamond Hit (12x14).png
+
+#begin Objects/LiveAndCoints/Small Diamond Idle (12x14).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Objects/LiveAndCoints/Small Diamond Idle (12x14).png
 
 #begin Objects/LiveAndCoints/Small Heart Hit (18x14).png
 /importer:TextureImporter

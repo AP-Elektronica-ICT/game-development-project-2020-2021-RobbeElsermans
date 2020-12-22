@@ -15,37 +15,64 @@ namespace Pigit.SpriteBuild
     {
         private Dictionary<AnimatieTypes, SpriteDefine> human;
         private Dictionary<AnimatieTypes, SpriteDefine> pig;
-        private Dictionary<AnimatieTypes, SpriteDefine> heart;
-        private Dictionary<AnimatieTypes, SpriteDefine> diamond;
+        private Dictionary<AnimatieTypes, SpriteDefine> bigHeart;
+        private Dictionary<AnimatieTypes, SpriteDefine> bigDiamond;
+        private Dictionary<AnimatieTypes, SpriteDefine> smallHeart;
+        private Dictionary<AnimatieTypes, SpriteDefine> smallDiamond;
         private ContentManager content;
 
         public SpriteOpbouw(ContentManager content)
         {
             this.content = content;
         }
-        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteDiamond(int speed)
+        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteSmallDiamond(int speed)
         {
-            diamond = new Dictionary<AnimatieTypes, SpriteDefine>();
-            diamond.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Idle (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Objects\LiveAndCoints\Big Diamond Idle (18x14)"), 10, new Vector2(18, 14)));
-            diamond.Add(AnimatieTypes.Hit, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Hit (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Hit (18x14)"), 2, new Vector2(18, 14)));
+            smallDiamond = new Dictionary<AnimatieTypes, SpriteDefine>();
+            smallDiamond.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Diamond Idle (12x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Diamond Idle (12x14)"), 8, new Vector2(12, 14)));
+            smallDiamond.Add(AnimatieTypes.Hit, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Diamond Hit (12x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Diamond Hit (12x14)"), 2, new Vector2(12, 14)));
 
-            foreach (var spriteAnimatieFrame in diamond)
+            foreach (var spriteAnimatieFrame in smallDiamond)
             {
                 spriteAnimatieFrame.Value.SetSpeed(speed);
             }
-            return diamond;
+            return smallDiamond;
         }
-        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteHeart(int speed)
+        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteSmallHeart(int speed)
         {
-            heart = new Dictionary<AnimatieTypes, SpriteDefine>();
-            heart.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Idle (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Idle (18x14)"), 8, new Vector2(18, 14)));
-            heart.Add(AnimatieTypes.Hit, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Hit (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Hit (18x14)"), 2, new Vector2(18, 14)));
+            smallHeart = new Dictionary<AnimatieTypes, SpriteDefine>();
+            smallHeart.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Idle (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Idle (18x14)"), 8, new Vector2(18, 14)));
+            smallHeart.Add(AnimatieTypes.Hit, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Hit (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Small Heart Hit (18x14)"), 2, new Vector2(18, 14)));
 
-            foreach (var spriteAnimatieFrame in heart)
+            foreach (var spriteAnimatieFrame in smallHeart)
             {
                 spriteAnimatieFrame.Value.SetSpeed(speed);
             }
-            return heart;
+            return smallHeart;
+        }
+
+        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteBigDiamond(int speed)
+        {
+            bigDiamond = new Dictionary<AnimatieTypes, SpriteDefine>();
+            bigDiamond.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Idle (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Idle (18x14)"), 10, new Vector2(18, 14)));
+            bigDiamond.Add(AnimatieTypes.Hit, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Hit (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Diamond Hit (18x14)"), 2, new Vector2(18, 14)));
+
+            foreach (var spriteAnimatieFrame in bigDiamond)
+            {
+                spriteAnimatieFrame.Value.SetSpeed(speed);
+            }
+            return bigDiamond;
+        }
+        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteBigHeart(int speed)
+        {
+            bigHeart = new Dictionary<AnimatieTypes, SpriteDefine>();
+            bigHeart.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Heart Idle (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Heart Idle (18x14)"), 8, new Vector2(18, 14)));
+            bigHeart.Add(AnimatieTypes.Hit, new SpriteDefine(content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Heart Hit (18x14)"), content.Load<Texture2D>(@"Objects\LiveAndCoints\Big Heart Hit (18x14)"), 2, new Vector2(18, 14)));
+
+            foreach (var spriteAnimatieFrame in bigHeart)
+            {
+                spriteAnimatieFrame.Value.SetSpeed(speed);
+            }
+            return bigHeart;
         }
         public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteHuman(int speed)
         {

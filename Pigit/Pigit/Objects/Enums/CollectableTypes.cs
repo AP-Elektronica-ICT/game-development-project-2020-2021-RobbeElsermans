@@ -6,7 +6,9 @@ namespace Pigit.Objects.Enums
 {
     enum CollectableTypes
     {
-        Heart=1,
-        Diamond
+        BigHeart=1,
+        BigDiamond,
+        SmallHeart,
+        SmallDiamond
     }
 }

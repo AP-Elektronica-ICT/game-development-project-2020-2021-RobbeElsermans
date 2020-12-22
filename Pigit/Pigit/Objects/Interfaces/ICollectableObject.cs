@@ -13,7 +13,7 @@ namespace Pigit.Objects.Interfaces
         public int Value { get; }
         public bool IsTaken { get; set; }
         public bool IsCollected { get; set; }
-        public CollectableTypes Size { get;}
-        AnimatieTypes Type { get; set; }
+        public CollectableTypes ItemType { get;}
+        AnimatieTypes AnimatieType { get; set; }
     }
 }

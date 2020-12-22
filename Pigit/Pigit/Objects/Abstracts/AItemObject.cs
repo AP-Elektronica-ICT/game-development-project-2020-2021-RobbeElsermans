@@ -14,14 +14,14 @@ namespace Pigit.Objects.Abstracts
     class AItemObject : ICollectableObject
     {
         public MoveTypes MovementType { get; set; }
-        public AnimatieTypes Type { get; set; }
+        public AnimatieTypes AnimatieType { get; set; }
 
         public int Value { get; protected set; }
 
         public bool IsTaken { get; set; }
         public bool IsCollected { get; set; }
 
-        public CollectableTypes Size { get; protected set; }
+        public CollectableTypes ItemType { get; protected set; }
 
         public Rectangle Rectangle { get; set; }
 
@@ -31,11 +31,12 @@ namespace Pigit.Objects.Abstracts
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
 
-        public AItemObject(Dictionary<AnimatieTypes, SpriteDefine> sprites, Vector2 positie, MoveTypes movement)
+        public AItemObject(Dictionary<AnimatieTypes, SpriteDefine> sprites, CollectableTypes type, Vector2 positie, MoveTypes movement)
         {
             this.MovementType = movement;
             this.Sprites = sprites;
             this.Positie = positie;
+            this.ItemType = type;
             IsCollected = false;
             CheckSprites();
         }
@@ -43,7 +44,7 @@ namespace Pigit.Objects.Abstracts
         {
             foreach (var sprites in Sprites)
             {
-                if (sprites.Key == Type)
+                if (sprites.Key == AnimatieType)
                 {
                     CurrentSprite = sprites.Value;
                 }
@@ -64,11 +65,11 @@ namespace Pigit.Objects.Abstracts
         }
         private void CheckSprites()
         {
-            Type = AnimatieTypes.Idle;
+            AnimatieType = AnimatieTypes.Idle;
 
             if (IsCollected)
             {
-                Type = AnimatieTypes.Hit;
+                AnimatieType = AnimatieTypes.Hit;
             }
 
             CheckType();

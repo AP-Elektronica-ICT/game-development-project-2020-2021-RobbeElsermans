@@ -221,11 +221,17 @@ namespace Pigit.Map
                         }
                         switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
                         {
-                            case CollectableTypes.Heart:
-                                worldsCollectables[a].Add(new Hearts(opbouwSprites.GetSpriteHeart(12), new Vector2(y*32,x*32),MoveTypes.Static));
+                            case CollectableTypes.BigHeart:
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y*32,x*32),MoveTypes.Static));
                                 break;
-                            case CollectableTypes.Diamond:
-
+                            case CollectableTypes.BigDiamond:
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static));
+                                break;
+                            case CollectableTypes.SmallHeart:
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static));
+                                break;
+                            case CollectableTypes.SmallDiamond:
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static));
                                 break;
                             default:
                                 break;
