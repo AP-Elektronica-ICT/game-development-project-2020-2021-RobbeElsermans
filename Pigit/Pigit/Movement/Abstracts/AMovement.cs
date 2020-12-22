@@ -96,7 +96,7 @@ namespace Pigit.Movement
             {
                 float i = 1f;
                 velocity.Y += 0.2f * i;
-                
+                hasJumped = true;
                 //Debug.Print(velocity.Y.ToString());
             }
 

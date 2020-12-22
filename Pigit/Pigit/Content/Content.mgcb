@@ -2353,3 +2353,17 @@
 /processorParam:TextureFormat=Color
 /build:PlatformTiles/PlatformTile  (8).png
 
+#begin Text/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Text/File.spritefont;Text/Title.spritefont
+
+#begin Text/Title.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Text/Title.spritefont
+

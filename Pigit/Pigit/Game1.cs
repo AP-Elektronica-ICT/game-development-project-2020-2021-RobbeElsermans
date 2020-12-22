@@ -146,7 +146,6 @@ namespace Pigit
             //Teken player
             player.Draw(_spriteBatch);
 
-
             _spriteBatch.End();
 
             base.Draw(gameTime);
