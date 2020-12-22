@@ -61,7 +61,7 @@ namespace Pigit.Movement
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - offsetHeight1);
-                        velocity.Y = 0f;
+                        velocity.Y = 0.2f;
                         isGround = true;
                     }
                     if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
@@ -78,7 +78,7 @@ namespace Pigit.Movement
                     if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - offsetHeight2);
-                        velocity.Y = 0f;
+                        velocity.Y = 0.2f;
                         isGround = true;
                     }
                 }
@@ -89,19 +89,17 @@ namespace Pigit.Movement
             //Hit another object
             if (isGround)
             {
-                velocity.Y = 0f;
+                velocity.Y = 0.2f;
                 hasJumped = false;
-                prevGround = isGround;
             }
-            else if (prevGround == false)
+            else
             {
                 float i = 1f;
                 velocity.Y += 0.2f * i;
-
-                Debug.Print(velocity.Y.ToString());
+                
+                //Debug.Print(velocity.Y.ToString());
             }
 
-            prevGround = isGround;
             Debug.Print(velocity.Y.ToString());
 
             player.Positie = positie;

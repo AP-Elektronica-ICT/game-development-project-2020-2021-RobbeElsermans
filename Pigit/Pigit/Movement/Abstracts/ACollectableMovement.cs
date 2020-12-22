@@ -55,7 +55,7 @@ namespace Pigit.Movement.Abstracts
             //Hit another object
             if (isGround)
             {
-                velocity.Y = 0f;
+                velocity.Y = 0.2f;
                 hasJumped = false;
             }
             else
@@ -85,12 +85,12 @@ namespace Pigit.Movement.Abstracts
                     if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - offsetHeight1);
-                        velocity.Y = 0f;
+                        velocity.Y = 0.2f;
                         isGround = true;
                     }
                     if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
                     {
-                        velocity.Y = 0f;
+                        velocity.Y = 0.2f;
                     }
                 }
 
