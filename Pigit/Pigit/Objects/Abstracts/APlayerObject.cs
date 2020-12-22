@@ -149,8 +149,6 @@ namespace Pigit.Objects.Abstracts
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-            if (!Dead)
-            {
                 Texture2D tempTexture = null;
 
                 if (!Direction)
@@ -163,7 +161,6 @@ namespace Pigit.Objects.Abstracts
                 }
 
                 _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
-            }
         }
     }
 }

@@ -4,6 +4,7 @@ using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Enums;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
@@ -61,7 +62,7 @@ namespace Pigit.Movement
                 isGround = false;
             }
 
-            CheckCollide(-13, -13);
+            this.CheckCollide(-13, -13);
 
             CheckGravity();
 
@@ -74,6 +75,33 @@ namespace Pigit.Movement
             player.Velocity = velocity;
 
             player.Update(gameTime);
+        }
+        protected override void CheckCollide(int offsetHeight1, int offsetHeight2)
+        {
+            base.CheckCollide(offsetHeight1, offsetHeight2);
+
+            foreach (var item in level.CurrCollectable)
+            {
+                if (ItemCollision.IsTouchingItem(player.Rectangle, item.Rectangle))
+                {
+                    Debug.Print("Raak");
+                    item.IsCollected = true;
+
+                    switch (item.ItemType)
+                    {
+                        case CollectableTypes.BigHeart:
+                        case CollectableTypes.SmallHeart:
+                            player.Hearts += item.Value;
+                            break;
+                        case CollectableTypes.BigDiamond:
+                        case CollectableTypes.SmallDiamond:
+                            //Score verhogen.
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
     }
 }

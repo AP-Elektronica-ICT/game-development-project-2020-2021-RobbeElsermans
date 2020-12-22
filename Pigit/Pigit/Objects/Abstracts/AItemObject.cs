@@ -18,8 +18,8 @@ namespace Pigit.Objects.Abstracts
 
         public int Value { get; protected set; }
 
-        public bool IsTaken { get; set; }
         public bool IsCollected { get; set; }
+        public bool IsTaken { get; set; }
 
         public CollectableTypes ItemType { get; protected set; }
 
@@ -31,13 +31,14 @@ namespace Pigit.Objects.Abstracts
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
 
-        public AItemObject(Dictionary<AnimatieTypes, SpriteDefine> sprites, CollectableTypes type, Vector2 positie, MoveTypes movement)
+        public AItemObject(Dictionary<AnimatieTypes, SpriteDefine> sprites, CollectableTypes type, Vector2 positie, MoveTypes movement, int value)
         {
             this.MovementType = movement;
             this.Sprites = sprites;
             this.Positie = positie;
             this.ItemType = type;
-            IsCollected = false;
+            this.IsCollected = false;
+            this.Value = value;
             CheckSprites();
         }
         private void CheckType()
@@ -58,10 +59,7 @@ namespace Pigit.Objects.Abstracts
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            if (!IsCollected)
-            {
                 _spriteBatch.Draw(CurrentSprite.TextureR, Positie, CurrentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
-            }
         }
         private void CheckSprites()
         {
@@ -78,9 +76,17 @@ namespace Pigit.Objects.Abstracts
         {
             Positie += Velocity;
             CheckSprites();
-            CurrentSprite.Update(gameTime);
-            
             RectBuild();
+
+            if (CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames-1 && IsCollected)
+            {
+                IsTaken = true;
+            }
+            else
+            {
+                CurrentSprite.Update(gameTime);
+            }
+
         }
     }
 }

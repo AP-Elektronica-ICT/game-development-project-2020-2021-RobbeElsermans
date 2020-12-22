@@ -100,8 +100,6 @@ namespace Pigit.Movement
                 //Debug.Print(velocity.Y.ToString());
             }
 
-            Debug.Print(velocity.Y.ToString());
-
             player.Positie = positie;
             player.Velocity = velocity;
         }

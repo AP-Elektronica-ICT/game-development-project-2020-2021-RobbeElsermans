@@ -53,7 +53,7 @@ namespace Pigit.Map
 
             worldEnemys = new List<List<IPlayerObject>>();
             worldsMoveEnemys = new List<List<AMovement>>();
-            
+
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
 
@@ -74,6 +74,9 @@ namespace Pigit.Map
         }
         public void Update(GameTime gameTime)
         {
+            CheckCollected();
+            CheckEnemys();
+
             foreach (var moveCommand in CurrMovementEnemy)
             {
                 moveCommand.CheckMovement(gameTime);
@@ -81,6 +84,28 @@ namespace Pigit.Map
             foreach (var moveCommand in CurrMovementCollectables)
             {
                 moveCommand.CheckMovement(gameTime);
+            }
+        }
+
+        private void CheckEnemys()
+        {
+            for (int i = 0; i < CurrEnemys.Count; i++)
+            {
+                if (CurrEnemys[i].Dead)
+                {
+                    CurrEnemys.RemoveAt(i);
+                }
+            }
+        }
+
+        private void CheckCollected()
+        {
+            for (int i = 0; i < CurrCollectable.Count; i++)
+            {
+                if (CurrCollectable[i].IsTaken)
+                {
+                    CurrCollectable.RemoveAt(i);
+                }
             }
         }
 
@@ -222,16 +247,16 @@ namespace Pigit.Map
                         switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
                         {
                             case CollectableTypes.BigHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y*32,x*32),MoveTypes.Static));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,2));
                                 break;
                             case CollectableTypes.BigDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,10));
                                 break;
                             case CollectableTypes.SmallHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,1)) ;
                                 break;
                             case CollectableTypes.SmallDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,5));
                                 break;
                             default:
                                 break;

@@ -12,7 +12,7 @@ namespace Pigit.Objects.CollectableObjects
 {
     class Item : AItemObject
     {
-        public Item(Dictionary<AnimatieTypes, SpriteDefine> sprites,CollectableTypes type, Vector2 positie, MoveTypes movement) : base(sprites,type , positie, movement)
+        public Item(Dictionary<AnimatieTypes, SpriteDefine> sprites,CollectableTypes type, Vector2 positie, MoveTypes movement, int value) : base(sprites,type , positie, movement,value)
         {
 
         }
