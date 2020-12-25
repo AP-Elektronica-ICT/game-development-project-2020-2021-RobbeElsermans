@@ -35,6 +35,7 @@
     <None Remove="Content\ForegroundTile  %287%29.png" />
     <None Remove="Content\ForegroundTile  %288%29.png" />
     <None Remove="Content\ForegroundTile  %289%29.png" />
+    <None Remove="Content\Text\Title.spritefont" />
   </ItemGroup>
   <ItemGroup>
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />

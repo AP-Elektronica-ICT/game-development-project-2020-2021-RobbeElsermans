@@ -29,7 +29,7 @@ namespace Pigit.Map
         private List<List<AMovement>> worldsMoveEnemys;
         private List<List<ACollectableMovement>> worldsMoveCollectables;
         private List<List<ICollectableObject>> worldsCollectables;
-        private SpriteOpbouw opbouwSprites;
+        private SpriteGenerator opbouwSprites;
         private ContentManager content;
         private IMoveable heroPlayer;
         private List<List<ITile>> worldsTiles;
@@ -47,7 +47,7 @@ namespace Pigit.Map
             heroPlayer = hero;
             this.worlds = worlds;
             this.content = content;
-            opbouwSprites = new SpriteOpbouw(content);
+            opbouwSprites = new SpriteGenerator(content);
 
             worldsTiles = new List<List<ITile>>();
 

@@ -1,17 +1,28 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Input.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pigit
+namespace Pigit.Input
 {
-    public class KeyBoardReader : IInputReader
+    public class KeyBoardReader : IInputReader, IInputMenu
     {
         public bool Move { get; set; } = false;
         public bool Direction { get; set; } = false;
         public bool Attack { get; set; } = false;
         public bool Jump { get; set ; }
+        public bool Enter { get; set; }
+        public bool Up { get; set; }
+        public bool Down { get; set; }
+
+        private bool currUp;
+        private bool prevUp;
+        private bool currDown;
+        private bool prevDown;
+        private bool currEnter;
+        private bool prevEnter;
 
         KeyboardState keyboard;
 
@@ -42,6 +53,63 @@ namespace Pigit
             {
                 this.Jump = true;
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                currUp = true;
+            }
+            else
+            {
+                currUp = false;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                currDown = true;
+            }
+            else
+            {
+                currDown = false;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                currEnter = true;
+            }
+            else
+            {
+                currEnter = false;
+            }
+
+            if (currEnter && !prevEnter)
+            {
+                Enter = true;
+            }
+            else
+            {
+                Enter = false;
+            }
+            prevEnter = currEnter;
+
+            if (currUp && !prevUp)
+            {
+                Up = true;
+            }
+            else
+            {
+                Up = false;
+            }
+            prevUp = currUp;
+
+
+            if (currDown && !prevDown)
+            {
+                Down = true;
+            }
+            else
+            {
+                Down = false;
+            }
+            prevDown = currDown;
+
         }
     }
 }

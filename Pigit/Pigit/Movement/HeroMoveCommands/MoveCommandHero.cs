@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
 using Pigit.Collison;
+using Pigit.Input.Interfaces;
 using Pigit.Map;
 using Pigit.Objects;
 using Pigit.Objects.Enums;

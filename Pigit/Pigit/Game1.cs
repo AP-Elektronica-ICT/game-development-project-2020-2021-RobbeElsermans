@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
+using Pigit.Input;
+using Pigit.Input.Interfaces;
 using Pigit.Map;
 using Pigit.Map.Interfaces;
 using Pigit.Movement;
@@ -9,8 +11,7 @@ using Pigit.Objects;
 using Pigit.Objects.Interfaces;
 using Pigit.Objects.PlayerObjects;
 using Pigit.SpriteBuild;
-using Pigit.SpriteBuild.Enums;
-using Pigit.TileBuild;
+using Pigit.Text;
 using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Pigit
         private CameraAnimatie _cameraAnimatie;
 
         private AMovement moveHero;
-        private SpriteOpbouw opbouwSprites;
+        private SpriteGenerator opbouwSprites;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -38,6 +39,9 @@ namespace Pigit
         private List<IRoomLayout> levelsWorld1;
         private Level level1;
         IObject player;
+
+        private MenuText menuText;
+        private TextGenerator textGenerator;
 
         private IInputReader KeyBoardReader;
 
@@ -80,7 +84,7 @@ namespace Pigit
 
         private void InitializeGameObjects()
         {
-            opbouwSprites = new SpriteOpbouw(Content);
+            opbouwSprites = new SpriteGenerator(Content);
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
 
@@ -91,6 +95,9 @@ namespace Pigit
 
 
             _cameraAnimatie = new CameraAnimatie();
+
+            textGenerator = new TextGenerator(Content);
+            menuText = new MenuText(textGenerator.spriteFonts, (IInputMenu)KeyBoardReader, new Vector2(96,32));
         }
 
         protected override void Update(GameTime gameTime)
@@ -105,6 +112,7 @@ namespace Pigit
             //{
             //    _cameraZoom.Zoom -= 0.1f;
             //}
+            menuText.Update(gameTime);
 
             moveHero.CheckMovement(gameTime);
             level1.Update(gameTime);
@@ -145,6 +153,8 @@ namespace Pigit
 
             //Teken player
             player.Draw(_spriteBatch);
+
+            menuText.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

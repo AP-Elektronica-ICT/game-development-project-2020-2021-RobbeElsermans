@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pigit
+namespace Pigit.Input.Interfaces
 {
     public interface IInputReader
     {
