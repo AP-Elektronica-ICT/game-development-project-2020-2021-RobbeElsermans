@@ -33,13 +33,13 @@ namespace Pigit.Map
         private ContentManager content;
         private IMoveable heroPlayer;
         private List<List<ITile>> worldsTiles;
+        private int prevCurrMap;
 
-        public List<ITile> CurrTiles { get; set; }
-        public List<IPlayerObject> CurrEnemys { get; set; }
-
-        public List<AMovement> CurrMovementEnemy { get; set; }
+        public List<ITile> CurrTiles { get; private set; }
+        public List<IPlayerObject> CurrEnemys { get; private set; }
+        public List<AMovement> CurrMovementEnemy { get; private set; }
         public List<ICollectableObject> CurrCollectable { get; set; }
-        public int CurrMap { get; set; } = 2;
+        public int CurrMap { get; set; }
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
@@ -76,6 +76,7 @@ namespace Pigit.Map
         {
             CheckCollected();
             CheckEnemys();
+            CheckCurrMap();
 
             foreach (var moveCommand in CurrMovementEnemy)
             {
@@ -177,6 +178,12 @@ namespace Pigit.Map
 
             CurrCollectable = worldsCollectables[CurrMap];
             CurrMovementCollectables = worldsMoveCollectables[CurrMap];
+
+            if (CurrMap == prevCurrMap)
+            {
+                //Plaats speler juist
+            }
+            prevCurrMap = CurrMap;
         }
 
         private void GeneratelevelContent(ContentManager content)

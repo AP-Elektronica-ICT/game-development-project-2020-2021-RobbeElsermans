@@ -49,7 +49,7 @@ namespace Pigit.Text
 
         public void Update(GameTime gameTime)
         {
-            cursorPos.Y = (basePositon.Y - 20 / 2) + 30 * cursor;
+            cursorPos.Y = basePositon.Y + 30 * cursor;
         }
 
         public void Draw(SpriteBatch _spriteBatch, Color color)

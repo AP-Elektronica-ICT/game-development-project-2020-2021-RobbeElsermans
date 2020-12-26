@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
+using Pigit.Global.Enums;
 using Pigit.Input;
 using Pigit.Input.Interfaces;
 using Pigit.Map;
@@ -20,6 +21,7 @@ namespace Pigit
 {
     public class Game1 : Game
     {
+        public static GameLoop currGameState { get; set; }
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -80,6 +82,8 @@ namespace Pigit
             _rectBlock2.SetData(new Color[] { Color.Blue });
 
             InitializeGameObjects();
+
+            currGameState = GameLoop.Menu;
         }
 
         private void InitializeGameObjects()
@@ -102,8 +106,35 @@ namespace Pigit
 
         protected override void Update(GameTime gameTime)
         {
-            _cameraAnimatie.Follow(player);
+            switch (currGameState)
+            {
+                case GameLoop.Menu:
+                    menuText.Update(gameTime);
+                    moveHero.CheckMovement(gameTime);
 
+                    level1.CurrMap = 2;
+                    level1.Update(gameTime);
+                    
+                    break;
+                case GameLoop.Play:
+                    _cameraAnimatie.Follow(player);
+                    moveHero.CheckMovement(gameTime);
+
+                    level1.CurrMap = 1;
+                    level1.Update(gameTime);
+                    
+                    break;
+                case GameLoop.Pause:
+                    break;
+                case GameLoop.Dead:
+                    break;
+                case GameLoop.End:
+                    break;
+                case GameLoop.Exit:
+                    break;
+                default:
+                    break;
+            }
             //if (Keyboard.GetState().IsKeyDown(Keys.I))
             //{
             //    _cameraZoom.Zoom += 0.1f;
@@ -112,22 +143,43 @@ namespace Pigit
             //{
             //    _cameraZoom.Zoom -= 0.1f;
             //}
-            menuText.Update(gameTime);
-
-            moveHero.CheckMovement(gameTime);
-            level1.Update(gameTime);
                         
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
-            //Draw Tiles & enemys
-            level1.DrawWorld(_spriteBatch);
+            switch (currGameState)
+            {
+                case GameLoop.Menu:
+                    _spriteBatch.Begin();
+
+                    level1.DrawWorld(_spriteBatch);
+                    player.Draw(_spriteBatch);
+                    menuText.Draw(_spriteBatch);
+                    break;
+                case GameLoop.Play:
+                    _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+
+                    level1.DrawWorld(_spriteBatch);
+                    player.Draw(_spriteBatch);
+
+                    break;
+                case GameLoop.Pause:
+                    break;
+                case GameLoop.Dead:
+                    break;
+                case GameLoop.End:
+                    break;
+                case GameLoop.Exit:
+                    break;
+                default:
+                    break;
+            }
 
             //DEBUG
 
@@ -152,9 +204,6 @@ namespace Pigit
            // _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
 
             //Teken player
-            player.Draw(_spriteBatch);
-
-            menuText.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

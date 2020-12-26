@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Pigit.Map.Interfaces
 {
@@ -12,5 +13,7 @@ namespace Pigit.Map.Interfaces
         public int[,] PlatformTiles { get; }
         public int[,] Enemys { get; set; }
         public int[,] Collectable { get; set; }
+        public Vector2 StartPos { get; set; }
+        public Vector2 Warp { get; set; }
     }
 }

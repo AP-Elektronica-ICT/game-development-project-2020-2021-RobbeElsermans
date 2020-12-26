@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pigit.Global.Enums;
 using Pigit.Input.Interfaces;
 using Pigit.Text.Enums;
 using System;
@@ -35,7 +36,6 @@ namespace Pigit.Text
             text.Add("Help");
             text.Add("Exit");
             text.Add("->");
-
             cursor = new Cursor(new Vector2(position.X - 10, position.Y + 50), 3, this.arrow, this.text[text.Count-1]);
         }
 
@@ -44,6 +44,10 @@ namespace Pigit.Text
             if (Input.Enter)
             {
                 Debug.Print("Enter");
+                if (cursor.CursorIndex == 0)
+                {
+                    Game1.currGameState = GameLoop.Play;
+                }
             }
 
             if (Input.Up)
@@ -60,7 +64,6 @@ namespace Pigit.Text
                 cursor.CursorDown();
             }
 
-
             cursor.Update(gameTime);
         }
         public void Draw(SpriteBatch _spriteBatch)
@@ -69,7 +72,6 @@ namespace Pigit.Text
             _spriteBatch.DrawString(normal, text[1], new Vector2(position.X + 20, position.Y + 50), Color.Yellow);
             _spriteBatch.DrawString(normal, text[2], new Vector2(position.X + 20, position.Y + 80), Color.Yellow);
             _spriteBatch.DrawString(normal, text[3], new Vector2(position.X + 20, position.Y + 110), Color.Yellow);
-
             cursor.Draw(_spriteBatch, Color.White);
         }
     }
