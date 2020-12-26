@@ -10,6 +10,7 @@ namespace Pigit.Input.Interfaces
         public bool Up { get; set; }
         public bool Down { get; set; }
         public bool Esc { get; set; }
+        void ReadInput();
 
     }
 }

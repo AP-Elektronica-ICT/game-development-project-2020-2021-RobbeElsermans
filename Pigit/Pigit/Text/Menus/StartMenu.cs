@@ -18,15 +18,40 @@ namespace Pigit.Text.Menus
         }
         public override void EnterLoop(GameTime gameTime)
         {
-            if (cursor.CursorIndex == 0)
+
+            switch (cursor.CursorIndex)
             {
-                Game1.currGameState = GameLoop.Play;
+                case 0:
+                    //play
+                    Game1.currGameState = GameLoop.Play;
+
+                    cursor.ResetCursor();
+                    break;
+                case 1:
+                    //Help
+
+                    cursor.ResetCursor();
+                    break;
+                case 2:
+                    //Setting
+
+                    cursor.ResetCursor();
+                    break;
+                case 3:
+                    //Exit
+                    Game1.currGameState = GameLoop.Exit;
+
+                    cursor.ResetCursor();
+                    break;
+                default:
+                    break;
             }
+
         }
 
-        public override void EscapeLoop(GameTime gameTime)
-        {
+        //public override void EscapeLoop(GameTime gameTime)
+        //{
             
-        }
+        //}
     }
 }

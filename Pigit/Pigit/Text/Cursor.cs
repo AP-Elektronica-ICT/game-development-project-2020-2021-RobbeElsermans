@@ -46,6 +46,11 @@ namespace Pigit.Text
             this.text = text;
         }
 
+        public void ResetCursor()
+        {
+            CursorIndex = 0;
+        }
+
         public void Update(GameTime gameTime)
         {
             cursorPos.Y = basePositon.Y + 20 * cursor;

@@ -57,18 +57,18 @@ namespace Pigit.Text.Abstract
                 cursor.CursorDown();
             }
 
-            if (Input.Esc)
-            {
-                Debug.Print("Esc");
-                EscapeLoop(gameTime);
-            }
+            //if (Input.Esc)
+            //{
+            //    Debug.Print("Esc");
+            //    EscapeLoop(gameTime);
+            //}
 
             cursor.Update(gameTime);
         }
 
         public abstract void EnterLoop(GameTime gameTime);
 
-        public abstract void EscapeLoop(GameTime gameTime);
+        //public abstract void EscapeLoop(GameTime gameTime);
 
         public void Draw(SpriteBatch _spriteBatch)
         {

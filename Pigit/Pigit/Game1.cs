@@ -44,7 +44,8 @@ namespace Pigit
         private Level level1;
         IObject player;
 
-        private AShowMenu menuText;
+        private AShowMenu startMenu;
+        private AShowMenu pauseMenu;
         private TextGenerator textGenerator;
 
         private IInputReader KeyBoardReader;
@@ -99,20 +100,21 @@ namespace Pigit
 
             moveHero = new MoveCommandHero((IPlayerObject)player, level1, KeyBoardReader);
 
-
             _cameraAnimatie = new CameraAnimatie();
 
-
             textGenerator = new TextGenerator(Content);
-            menuText = new StartMenu(textGenerator.spriteFonts,(IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Start", "Help", "Settings", "Exit","->"});
+            startMenu = new StartMenu(textGenerator.spriteFonts,(IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Play", "Help", "Settings", "Exit","->"});
+            pauseMenu = new PauseMenu(textGenerator.spriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), new List<string> { "Pause", "Resume", "Help", "Exit", "->" });
         }
 
         protected override void Update(GameTime gameTime)
         {
+            CheckInputs(KeyBoardReader as IInputMenu);
+
             switch (currGameState)
             {
                 case GameLoop.Menu:
-                    menuText.Update(gameTime);
+                    startMenu.Update(gameTime);
                     moveHero.CheckMovement(gameTime);
                     level1.Play = false;
                     level1.Update(gameTime);
@@ -124,15 +126,19 @@ namespace Pigit
 
                     level1.Play = true;
                     level1.Update(gameTime);
+                    level1.Play = false;
 
                     break;
                 case GameLoop.Pause:
+                    pauseMenu.Update(gameTime);
+
                     break;
                 case GameLoop.Dead:
                     break;
                 case GameLoop.End:
                     break;
                 case GameLoop.Exit:
+                    Exit();
                     break;
                 default:
                     break;
@@ -149,6 +155,15 @@ namespace Pigit
             base.Update(gameTime);
         }
 
+        private void CheckInputs(IInputMenu keys)
+        {
+            keys.ReadInput();
+            if (keys.Esc && currGameState == GameLoop.Play)
+            {
+                currGameState = GameLoop.Pause;
+            }
+        }
+
         protected override void Draw(GameTime gameTime)
         {
 
@@ -162,7 +177,7 @@ namespace Pigit
 
                     level1.DrawWorld(_spriteBatch);
                     player.Draw(_spriteBatch);
-                    menuText.Draw(_spriteBatch);
+                    startMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Play:
                     _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
@@ -172,12 +187,16 @@ namespace Pigit
 
                     break;
                 case GameLoop.Pause:
+                    _spriteBatch.Begin();
+                    pauseMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Dead:
                     break;
                 case GameLoop.End:
                     break;
                 case GameLoop.Exit:
+                    _spriteBatch.Begin();
+
                     break;
                 default:
                     break;
