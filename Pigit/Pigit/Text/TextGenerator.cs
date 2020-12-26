@@ -10,18 +10,16 @@ namespace Pigit.Text
 {
     class TextGenerator
     {
-        IInputMenu Input;
-
-        public Dictionary<TextTypes,SpriteFont> spriteFonts;
+        public Dictionary<TextTypes, SpriteFont> SpriteFonts { get; private set; }
 
         public TextGenerator(ContentManager content)
         {
-            spriteFonts = new Dictionary<TextTypes, SpriteFont>();
+            SpriteFonts = new Dictionary<TextTypes, SpriteFont>();
 
-            spriteFonts.Add(TextTypes.Title,content.Load<SpriteFont>(@"Text\Title"));
-            spriteFonts.Add(TextTypes.Normal, content.Load<SpriteFont>(@"Text\Normal"));
-            spriteFonts.Add(TextTypes.Hint, content.Load<SpriteFont>(@"Text\Hint"));
-            spriteFonts.Add(TextTypes.Arrow, content.Load<SpriteFont>(@"Text\arrow"));
+            SpriteFonts.Add(TextTypes.Title,content.Load<SpriteFont>(@"Text\Title"));
+            SpriteFonts.Add(TextTypes.Normal, content.Load<SpriteFont>(@"Text\Normal"));
+            SpriteFonts.Add(TextTypes.Hint, content.Load<SpriteFont>(@"Text\Hint"));
+            SpriteFonts.Add(TextTypes.Arrow, content.Load<SpriteFont>(@"Text\arrow"));
         }
     }
 }

@@ -91,20 +91,20 @@ namespace Pigit
 
         private void InitializeGameObjects()
         {
+            textGenerator = new TextGenerator(Content);
             opbouwSprites = new SpriteGenerator(Content);
 
-            player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32));
+            player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32), textGenerator.SpriteFonts);
 
-            level1 = new Level(Content, levelsWorld1, player);
+            level1 = new Level(Content, levelsWorld1, player, textGenerator.SpriteFonts);
             level1.CreateLevels();
 
             moveHero = new MoveCommandHero((IPlayerObject)player, level1, KeyBoardReader);
 
             _cameraAnimatie = new CameraAnimatie();
 
-            textGenerator = new TextGenerator(Content);
-            startMenu = new StartMenu(textGenerator.spriteFonts,(IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Play", "Help", "Settings", "Exit Game","->"});
-            pauseMenu = new PauseMenu(textGenerator.spriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), new List<string> { "Pause", "Resume", "Help", "Main Menu", "->" });
+            startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Play", "Help", "Settings", "Exit Game","->"});
+            pauseMenu = new PauseMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), new List<string> { "Pause", "Resume", "Help", "Main Menu", "->" });
         }
 
         protected override void Update(GameTime gameTime)

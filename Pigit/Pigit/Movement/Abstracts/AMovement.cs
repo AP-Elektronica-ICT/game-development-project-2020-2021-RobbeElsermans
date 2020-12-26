@@ -22,7 +22,6 @@ namespace Pigit.Movement
         protected float walkingSpeed;
         protected Vector2 positie;
         protected Vector2 velocity;
-        private bool prevGround = false;
 
         protected bool hasJumped;
 

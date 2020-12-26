@@ -7,6 +7,8 @@ using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
+using Pigit.Text.Enums;
+using Pigit.Text.PlayerTexts;
 using SharpDX.MediaFoundation;
 using System;
 using System.Collections.Generic;
@@ -16,13 +18,17 @@ namespace Pigit.Objects.PlayerObjects
 {
     class Human : APlayerObject
     {
-        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition) :base(spriteOpbouw, beginPosition)
+        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts) :base(spriteOpbouw, beginPosition, spriteFonts)
         {
-
         }
         protected override void RectBuild()
         {
             Rectangle = new Rectangle((int)Positie.X + 36, (int)Positie.Y + 20, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width - 45, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height - 33);
+        }
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            text.Update(Positie, Hearts, Points);
         }
     }
 }

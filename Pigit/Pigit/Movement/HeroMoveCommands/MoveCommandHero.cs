@@ -83,9 +83,8 @@ namespace Pigit.Movement
 
             foreach (var item in level.CurrCollectable)
             {
-                if (ItemCollision.IsTouchingItem(player.Rectangle, item.Rectangle))
+                if (ItemCollision.IsTouchingItem(player.Rectangle, item.Rectangle) && !item.IsCollected)
                 {
-                    Debug.Print("Raak");
                     item.IsCollected = true;
 
                     switch (item.ItemType)
@@ -96,6 +95,7 @@ namespace Pigit.Movement
                             break;
                         case CollectableTypes.BigDiamond:
                         case CollectableTypes.SmallDiamond:
+                            player.Points += item.Value;
                             //Score verhogen.
                             break;
                         default:

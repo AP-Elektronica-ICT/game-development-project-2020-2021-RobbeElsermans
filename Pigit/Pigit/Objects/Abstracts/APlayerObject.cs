@@ -10,6 +10,8 @@ using Pigit.SpriteBuild.Enums;
 using System.Diagnostics;
 using Pigit.Attack;
 using Pigit.Objects.Interfaces;
+using Pigit.Text.PlayerTexts;
+using Pigit.Text.Enums;
 
 namespace Pigit.Objects.Abstracts
 {
@@ -17,7 +19,9 @@ namespace Pigit.Objects.Abstracts
     {
         private double timer;
         private bool isSetTimer;
+        protected HeroText text;
 
+        public int Points { get; set; }
         public Rectangle Rectangle { get; set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
@@ -32,8 +36,9 @@ namespace Pigit.Objects.Abstracts
         public bool IsAttacking { get; set; }
         public AttackCommand Attack { get; set; }
 
-        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, int levens = 10, int attackDamage = 1)
+        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int levens = 10, int attackDamage = 1)
         {
+            text = new HeroText(spriteFonts);
             Attack = new AttackCommand();
             Hearts = levens;
             AttackDamage = attackDamage;
@@ -147,7 +152,7 @@ namespace Pigit.Objects.Abstracts
         {
             Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
         }
-        public void Draw(SpriteBatch _spriteBatch)
+        public virtual void Draw(SpriteBatch _spriteBatch)
         {
                 Texture2D tempTexture = null;
 
@@ -161,6 +166,8 @@ namespace Pigit.Objects.Abstracts
                 }
 
                 _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+
+                text.Draw(_spriteBatch);
         }
     }
 }

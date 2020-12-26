@@ -19,6 +19,7 @@ using Pigit.Movement.CollectableMoveCommands;
 using Pigit.Movement.Abstracts;
 using Pigit.Collison;
 using System.Diagnostics;
+using Pigit.Text.Enums;
 
 namespace Pigit.Map
 {
@@ -37,6 +38,8 @@ namespace Pigit.Map
         private List<List<ITile>> worldsTiles;
         private int prevCurrMap;
 
+        Dictionary<TextTypes, SpriteFont> spriteFonts;
+
         public List<ITile> CurrTiles { get; private set; }
         public List<IPlayerObject> CurrEnemys { get; private set; }
         public List<AMovement> CurrMovementEnemy { get; private set; }
@@ -45,12 +48,13 @@ namespace Pigit.Map
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
         public bool Play { get; set; }
 
-        public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
+        public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero, Dictionary<TextTypes, SpriteFont> spriteFonts)
         {
             heroPlayer = hero;
             this.worlds = worlds;
             this.content = content;
             opbouwSprites = new SpriteGenerator(content);
+            this.spriteFonts = spriteFonts;
 
             worldsTiles = new List<List<ITile>>();
 
@@ -294,7 +298,7 @@ namespace Pigit.Map
                         switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))
                         {
                             case PigTypes.Standard:
-                                worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32), (MoveTypes)(worlds[a].Enemys[x, y] % 10)));
+                                worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts));
                                 break;
                             case PigTypes.Match:
                                 break;
