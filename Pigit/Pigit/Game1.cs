@@ -23,14 +23,12 @@ namespace Pigit
 {
     public class Game1 : Game
     {
+        private const float maxZoom = 1.5f;
+        private const float noZoom = 1f;
+
         public static GameLoop currGameState { get; set; }
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        //DEBUG
-        private Texture2D _rectBlock;
-        private Texture2D _rectBlock2;
-        //DEBUG
 
         private CameraAnimatie _cameraAnimatie;
 
@@ -47,6 +45,8 @@ namespace Pigit
         private AShowMenu startMenu;
         private AShowMenu pauseMenu;
         private TextGenerator textGenerator;
+        private List<string> startMenuText;
+        private List<string> pauseMenuText;
 
         private IInputReader KeyBoardReader;
 
@@ -76,15 +76,17 @@ namespace Pigit
             levelsWorld1.Add(new World1Room3Layout());
             levelsWorld1.Add(new World1Room4Layout());
 
-            //_cameraZoom = new CameraZoom(GraphicsDevice.Viewport);
+            startMenuText = new List<string>
+            {
+                "Pigit", "Play", "Help", "Settings", "Exit Game","->"
+            };
+
+            pauseMenuText = new List<string>
+            {
+                 "Pause", "Resume", "Help", "Main Menu", "->"
+            };
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            //DEBUG
-            _rectBlock = new Texture2D(GraphicsDevice, 1, 1);
-            _rectBlock.SetData(new Color[] { Color.Red });
-            _rectBlock2 = new Texture2D(GraphicsDevice, 1, 1);
-            _rectBlock2.SetData(new Color[] { Color.Blue });
 
             InitializeGameObjects();
 
@@ -96,7 +98,7 @@ namespace Pigit
             textGenerator = new TextGenerator(Content);
             opbouwSprites = new SpriteGenerator(Content);
 
-            player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32), textGenerator.SpriteFonts);
+            player = new Human(opbouwSprites.GetSpriteHuman(12),Vector2.Zero, textGenerator.SpriteFonts);
 
             level1 = new Level(Content, levelsWorld1, player as IPlayerObject, textGenerator.SpriteFonts);
             level1.CreateLevels();
@@ -105,8 +107,8 @@ namespace Pigit
 
             _cameraAnimatie = new CameraAnimatie();
 
-            startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Play", "Help", "Settings", "Exit Game","->"});
-            pauseMenu = new PauseMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), new List<string> { "Pause", "Resume", "Help", "Main Menu", "->" });
+            startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader,new Vector2(12, 2), startMenuText);
+            pauseMenu = new PauseMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuText);
         }
 
         protected override void Update(GameTime gameTime)
@@ -120,7 +122,7 @@ namespace Pigit
                     moveHero.CheckMovement(gameTime);
                     level1.Play = false;
                     level1.Update(gameTime);
-                    _cameraAnimatie.Zoom = 1f;
+                    _cameraAnimatie.Zoom = noZoom;
 
                     break;
                 case GameLoop.Play:
@@ -147,21 +149,13 @@ namespace Pigit
                 default:
                     break;
             }
-            //if (Keyboard.GetState().IsKeyDown(Keys.I))
-            //{
-            //    _cameraZoom.Zoom += 0.1f;
-            //}
-            //else if (Keyboard.GetState().IsKeyDown(Keys.K))
-            //{
-            //    _cameraZoom.Zoom -= 0.1f;
-            //}
 
             base.Update(gameTime);
         }
 
         private void CameraZoomIn()
         {
-            if (_cameraAnimatie.Zoom <= 1.5)
+            if (_cameraAnimatie.Zoom <= maxZoom)
             {
                 float x = 1f;
                 _cameraAnimatie.Zoom += x * 0.005f;
@@ -181,7 +175,6 @@ namespace Pigit
         {
 
             GraphicsDevice.Clear(Color.Black);
-
 
             switch (currGameState)
             {
@@ -214,30 +207,6 @@ namespace Pigit
                 default:
                     break;
             }
-
-            //DEBUG
-
-            //foreach (var tile in beginWorld.Tiles)
-            //{
-            //    if (tile is IPlatformTile)
-            //    {
-            //        var temp = tile as IPlatformTile;
-            //        _spriteBatch.Draw(_rectBlock2, temp.Border, Color.White);
-            //    }
-            //}
-
-            //if (player.Direction)
-            //{
-            //    _spriteBatch.Draw(_rectBlock, player.RectangleL, Color.White);
-            //}
-            //else
-            //{
-            //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
-            //}
-
-            // _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
-
-            //Teken player
 
             _spriteBatch.End();
 
