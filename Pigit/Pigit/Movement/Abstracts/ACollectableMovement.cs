@@ -14,7 +14,6 @@ namespace Pigit.Movement.Abstracts
     class ACollectableMovement
     {
         protected ICollectableObject item;
-        protected IPlayerObject heroPlayer;
         protected Level level;
         protected bool isGround = false;
 
@@ -78,19 +77,11 @@ namespace Pigit.Movement.Abstracts
                     var temp = tile as ICollideTile;
                     Rectangle rectangle = item.Rectangle;
 
-                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle) || EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
-                    {
-                        velocity.X = 0f;
-                    }
-                    if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
+                    if (EndBlockCollision.isTouchingTop(velocity, temp.Border, rectangle) && !isGround)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - offsetHeight1);
                         velocity.Y = 0.2f;
                         isGround = true;
-                    }
-                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
-                    {
-                        velocity.Y = 0.2f;
                     }
                 }
 

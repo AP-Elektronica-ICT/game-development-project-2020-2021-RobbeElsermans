@@ -88,25 +88,25 @@ namespace Pigit.Movement.NPCMoveCommands
                     var temp = tile as ICollideTile;
                     Rectangle rectangle = player.Rectangle;
 
-                    if (EndBlockCollision.isTouchingRight(velocity, temp, rectangle))
+                    if (EndBlockCollision.isTouchingRight(velocity, temp.Border, rectangle))
                     {
                         righting = false;
                         velocity.X = 0f;
                     }
 
-                    if (EndBlockCollision.isTouchingLeft(velocity, temp, rectangle))
+                    if (EndBlockCollision.isTouchingLeft(velocity, temp.Border, rectangle))
                     {
                         righting = true;
                         velocity.X = 0f;
 
                     }
-                    if (EndBlockCollision.isTouchingTop(velocity, temp, rectangle) && !isGround)
+                    if (EndBlockCollision.isTouchingTop(velocity, temp.Border, rectangle) && !isGround)
                     {
                         positie.Y = temp.Border.Y - (temp.Border.Height - 4);
                         velocity.Y = 0f;
                         isGround = true;
                     }
-                    if (EndBlockCollision.isTouchingBottom(velocity, temp, rectangle))
+                    if (EndBlockCollision.isTouchingBottom(velocity, temp.Border, rectangle))
                     {
                         velocity.Y = 0f;
                     }
