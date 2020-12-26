@@ -217,15 +217,21 @@ namespace Pigit.Map
                     heroPlayer.Positie = worlds[CurrMap].StartPos;
                 }
                 prevCurrMap = CurrMap;
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp) && CurrMap == 0)
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 0)
                 {
-                    Debug.Print("is Around warp");
                     CurrMap = 1;
                 }
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp) && CurrMap == 1)
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1)
                 {
                     CurrMap = 0;
-                    Debug.Print("is Around warp");
+                }
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 1)
+                {
+                    CurrMap = 3;
+                }
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 3)
+                {
+                    CurrMap = 1;
                 }
             }
             else

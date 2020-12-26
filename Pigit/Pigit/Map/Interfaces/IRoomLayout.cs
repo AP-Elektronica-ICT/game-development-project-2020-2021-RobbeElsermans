@@ -14,6 +14,7 @@ namespace Pigit.Map.Interfaces
         public int[,] Enemys { get; set; }
         public int[,] Collectable { get; set; }
         public Vector2 StartPos { get; set; }
-        public Vector2 Warp { get; set; }
+        public Vector2 Warp1 { get; set; }
+        public Vector2 Warp2 { get; set; }
     }
 }

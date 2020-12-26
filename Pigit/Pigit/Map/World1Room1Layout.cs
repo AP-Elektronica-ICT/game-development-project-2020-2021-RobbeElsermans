@@ -18,7 +18,8 @@ namespace Pigit.Map
         public int[,  ] Enemys { get; set; }
         public int[,] Collectable { get; set; }
         public Vector2 StartPos { get; set; }
-        public Vector2 Warp { get; set; }
+        public Vector2 Warp1 { get; set; }
+        public Vector2 Warp2 { get; set; }
 
         public int Height { get { return width; } }
         public int Width { get { return height; } }
@@ -26,7 +27,9 @@ namespace Pigit.Map
         public World1Room1Layout()
         {
             StartPos = new Vector2(32 * 5, 32 * 3);
-            Warp = new Vector2(32 * 35, 32 * 23);
+            
+            Warp1 = new Vector2(32* 32, 32 * 22);
+            Warp2 = Vector2.Zero;
 
             CollideTileLayout = new int[width,   height]
             {

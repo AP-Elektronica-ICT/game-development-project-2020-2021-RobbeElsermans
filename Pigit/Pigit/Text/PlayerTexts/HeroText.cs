@@ -39,7 +39,7 @@ namespace Pigit.Text.PlayerTexts
             _spriteBatch.DrawString(hint, "Hearts " + lives, position, Color.Yellow);
             if (points != -1)
             {
-                _spriteBatch.DrawString(hint, "Hearts " + points, position + new Vector2(0, 10), Color.Yellow);
+                _spriteBatch.DrawString(hint, "Points " + points, position + new Vector2(0, 10), Color.Yellow);
             }
         }
 
