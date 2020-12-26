@@ -36,7 +36,7 @@ namespace Pigit.Map
         private ContentManager content;
         private IPlayerObject heroPlayer;
         private List<List<ITile>> worldsTiles;
-        private int prevCurrMap;
+        private int prevCurrMap = 500;
 
         Dictionary<TextTypes, SpriteFont> spriteFonts;
 
@@ -193,14 +193,14 @@ namespace Pigit.Map
             if (Play)
             {
 
-                if (CurrMap == 2)
+                if (CurrMap == 0)
                 {
                     //initial opbouw van mappen
                     DeleteContent();
                     CreateLevels();
 
                     //Start map
-                    CurrMap = 4; 
+                    CurrMap = 1; 
                 }
 
                 CurrEnemys = worldEnemys[CurrMap];
@@ -217,26 +217,34 @@ namespace Pigit.Map
                     heroPlayer.Positie = worlds[CurrMap].StartPos;
                 }
                 prevCurrMap = CurrMap;
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 0)
-                {
-                    CurrMap = 1;
-                }
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1)
                 {
-                    CurrMap = 0;
+                    CurrMap = 2;
                 }
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 1)
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 2)
+                {
+                    CurrMap = 4;
+                }
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 2)
                 {
                     CurrMap = 3;
                 }
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 3)
                 {
-                    CurrMap = 1;
+                    CurrMap = 2;
                 }
             }
             else
             {
-                CurrMap = 2;
+                if (CurrMap != 0)
+                {
+                    //initial opbouw van mappen
+                    DeleteContent();
+                    CreateLevels();
+
+                    //Start map
+                    CurrMap = 0;
+                }
 
                 CurrEnemys = worldEnemys[CurrMap];
                 CurrTiles = worldsTiles[CurrMap];
@@ -253,7 +261,6 @@ namespace Pigit.Map
                 }
                 prevCurrMap = CurrMap;
             }
-
         }
 
         private void GeneratelevelContent(ContentManager content)

@@ -70,9 +70,9 @@ namespace Pigit
             KeyBoardReader = new KeyBoardReader();
 
             levelsWorld1 = new List<IRoomLayout>();
+            levelsWorld1.Add(new StartWorldLayout());
             levelsWorld1.Add(new World1Room1Layout());
             levelsWorld1.Add(new World1Room2Layout());
-            levelsWorld1.Add(new StartWorldLayout());
             levelsWorld1.Add(new World1Room3Layout());
             levelsWorld1.Add(new World1Room4Layout());
 
