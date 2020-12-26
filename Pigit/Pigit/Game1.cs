@@ -120,11 +120,14 @@ namespace Pigit
                     moveHero.CheckMovement(gameTime);
                     level1.Play = false;
                     level1.Update(gameTime);
+                    _cameraAnimatie.Zoom = 1f;
 
                     break;
                 case GameLoop.Play:
                     _cameraAnimatie.Follow(player);
                     moveHero.CheckMovement(gameTime);
+
+                    CameraZoomIn();
 
                     level1.Play = true;
                     level1.Update(gameTime);
@@ -154,6 +157,15 @@ namespace Pigit
             //}
 
             base.Update(gameTime);
+        }
+
+        private void CameraZoomIn()
+        {
+            if (_cameraAnimatie.Zoom <= 1.5)
+            {
+                float x = 1f;
+                _cameraAnimatie.Zoom += x * 0.005f;
+            }
         }
 
         private void CheckInputs(IInputMenu keys)
