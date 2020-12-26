@@ -9,7 +9,6 @@ namespace Pigit.Text
 {
     class Cursor
     {
-
         int amountItems = 0;
         Vector2 cursorPos;
         Vector2 basePositon;
@@ -49,7 +48,7 @@ namespace Pigit.Text
 
         public void Update(GameTime gameTime)
         {
-            cursorPos.Y = basePositon.Y + 30 * cursor;
+            cursorPos.Y = basePositon.Y + 20 * cursor;
         }
 
         public void Draw(SpriteBatch _spriteBatch, Color color)

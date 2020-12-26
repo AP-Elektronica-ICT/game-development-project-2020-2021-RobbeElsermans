@@ -21,7 +21,7 @@ namespace Pigit.Text
         private List<string> text;
         private Cursor cursor;
 
-        public MenuText(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position)
+        public MenuText(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position, List<string> text)
         {
             Input = inputMenu;
             spriteFonts.TryGetValue(TextTypes.Title, out this.title);
@@ -30,13 +30,9 @@ namespace Pigit.Text
             spriteFonts.TryGetValue(TextTypes.Arrow, out this.arrow);
             this.position = position;
 
-            text = new List<string>();
-            text.Add("Pigit");
-            text.Add("start");
-            text.Add("Help");
-            text.Add("Exit");
-            text.Add("->");
-            cursor = new Cursor(new Vector2(position.X - 10, position.Y + 50), 3, this.arrow, this.text[text.Count-1]);
+            this.text = text;
+
+            cursor = new Cursor(new Vector2(position.X - 10, position.Y + 50), text.Count - 2, this.arrow, this.text[text.Count-1]);
         }
 
         public void Update(GameTime gameTime)
@@ -69,9 +65,11 @@ namespace Pigit.Text
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.DrawString(title, text[0], position, Color.Yellow);
-            _spriteBatch.DrawString(normal, text[1], new Vector2(position.X + 20, position.Y + 50), Color.Yellow);
-            _spriteBatch.DrawString(normal, text[2], new Vector2(position.X + 20, position.Y + 80), Color.Yellow);
-            _spriteBatch.DrawString(normal, text[3], new Vector2(position.X + 20, position.Y + 110), Color.Yellow);
+            for (int i = 0; i < text.Count - 2; i++)
+            {
+                _spriteBatch.DrawString(normal, text[i + 1], new Vector2(position.X + 20, position.Y + 50 + (20 * i)), Color.Yellow);
+            }
+
             cursor.Draw(_spriteBatch, Color.White);
         }
     }

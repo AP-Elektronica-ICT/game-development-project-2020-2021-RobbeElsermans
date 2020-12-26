@@ -17,6 +17,8 @@ using Pigit.Objects.Enums;
 using Pigit.Objects.CollectableObjects;
 using Pigit.Movement.CollectableMoveCommands;
 using Pigit.Movement.Abstracts;
+using Pigit.Collison;
+using System.Diagnostics;
 
 namespace Pigit.Map
 {
@@ -41,6 +43,7 @@ namespace Pigit.Map
         public List<ICollectableObject> CurrCollectable { get; set; }
         public int CurrMap { get; set; }
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
+        public bool Play { get; set; }
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero)
         {
@@ -172,18 +175,59 @@ namespace Pigit.Map
 
         private void CheckCurrMap()
         {
-            CurrEnemys = worldEnemys[CurrMap];
-            CurrTiles = worldsTiles[CurrMap];
-            CurrMovementEnemy = worldsMoveEnemys[CurrMap];
-
-            CurrCollectable = worldsCollectables[CurrMap];
-            CurrMovementCollectables = worldsMoveCollectables[CurrMap];
-
-            if (CurrMap == prevCurrMap)
+            if (Play)
             {
-                //Plaats speler juist
+
+                if (CurrMap == 2)
+                {
+                    CurrMap = 0; //Start map
+                }
+
+                CurrEnemys = worldEnemys[CurrMap];
+                CurrTiles = worldsTiles[CurrMap];
+                CurrMovementEnemy = worldsMoveEnemys[CurrMap];
+
+                CurrCollectable = worldsCollectables[CurrMap];
+                CurrMovementCollectables = worldsMoveCollectables[CurrMap];
+
+                if (CurrMap != prevCurrMap)
+                {
+                    //Plaats speler juist
+                    heroPlayer.Velocity = Vector2.Zero;
+                    heroPlayer.Positie = worlds[CurrMap].StartPos;
+                }
+                prevCurrMap = CurrMap;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp) && CurrMap == 0)
+                {
+                    Debug.Print("is Around warp");
+                    CurrMap = 1;
+                }
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp) && CurrMap == 1)
+                {
+                    CurrMap = 0;
+                    Debug.Print("is Around warp");
+                }
             }
-            prevCurrMap = CurrMap;
+            else
+            {
+                CurrMap = 2;
+
+                CurrEnemys = worldEnemys[CurrMap];
+                CurrTiles = worldsTiles[CurrMap];
+                CurrMovementEnemy = worldsMoveEnemys[CurrMap];
+
+                CurrCollectable = worldsCollectables[CurrMap];
+                CurrMovementCollectables = worldsMoveCollectables[CurrMap];
+
+                if (CurrMap != prevCurrMap)
+                {
+                    //Plaats speler juist
+                    heroPlayer.Velocity = Vector2.Zero;
+                    heroPlayer.Positie = worlds[CurrMap].StartPos;
+                }
+                prevCurrMap = CurrMap;
+            }
+
         }
 
         private void GeneratelevelContent(ContentManager content)

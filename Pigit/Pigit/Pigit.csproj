@@ -49,5 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Factory\" />
+    <Folder Include="Text\Interface\" />
   </ItemGroup>
 </Project>

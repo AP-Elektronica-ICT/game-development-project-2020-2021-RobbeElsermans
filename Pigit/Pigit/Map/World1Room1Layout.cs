@@ -25,6 +25,9 @@ namespace Pigit.Map
 
         public World1Room1Layout()
         {
+            StartPos = new Vector2(32 * 5, 32 * 3);
+            Warp = new Vector2(32 * 35, 32 * 23);
+
             CollideTileLayout = new int[width,   height]
             {
             {0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},  

@@ -76,7 +76,7 @@ namespace Pigit
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //DEBUG
-            _rectBlock = new Texture2D(GraphicsDevice,1,1);
+            _rectBlock = new Texture2D(GraphicsDevice, 1, 1);
             _rectBlock.SetData(new Color[] { Color.Red });
             _rectBlock2 = new Texture2D(GraphicsDevice, 1, 1);
             _rectBlock2.SetData(new Color[] { Color.Blue });
@@ -100,8 +100,12 @@ namespace Pigit
 
             _cameraAnimatie = new CameraAnimatie();
 
+
             textGenerator = new TextGenerator(Content);
-            menuText = new MenuText(textGenerator.spriteFonts, (IInputMenu)KeyBoardReader, new Vector2(96,32));
+            menuText = new MenuText(textGenerator.spriteFonts,
+                (IInputMenu)KeyBoardReader,
+                new Vector2(96, 32),
+                new List<string>{"Pigit","start","Help","Exit","settings","menu","->"});
         }
 
         protected override void Update(GameTime gameTime)
@@ -111,18 +115,17 @@ namespace Pigit
                 case GameLoop.Menu:
                     menuText.Update(gameTime);
                     moveHero.CheckMovement(gameTime);
-
-                    level1.CurrMap = 2;
+                    level1.Play = false;
                     level1.Update(gameTime);
-                    
+
                     break;
                 case GameLoop.Play:
                     _cameraAnimatie.Follow(player);
                     moveHero.CheckMovement(gameTime);
 
-                    level1.CurrMap = 1;
+                    level1.Play = true;
                     level1.Update(gameTime);
-                    
+
                     break;
                 case GameLoop.Pause:
                     break;
@@ -143,7 +146,7 @@ namespace Pigit
             //{
             //    _cameraZoom.Zoom -= 0.1f;
             //}
-                        
+
             base.Update(gameTime);
         }
 
@@ -201,7 +204,7 @@ namespace Pigit
             //    _spriteBatch.Draw(_rectBlock, player.RectangleR, Color.White);
             //}
 
-           // _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
+            // _spriteBatch.Draw(_rectBlock, player.Rectangle, Color.White);
 
             //Teken player
 
