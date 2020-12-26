@@ -34,7 +34,7 @@ namespace Pigit.Map
         private List<List<ICollectableObject>> worldsCollectables;
         private SpriteGenerator opbouwSprites;
         private ContentManager content;
-        private IMoveable heroPlayer;
+        private IPlayerObject heroPlayer;
         private List<List<ITile>> worldsTiles;
         private int prevCurrMap;
 
@@ -48,7 +48,7 @@ namespace Pigit.Map
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
         public bool Play { get; set; }
 
-        public Level(ContentManager content, List<IRoomLayout> worlds, IMoveable hero, Dictionary<TextTypes, SpriteFont> spriteFonts)
+        public Level(ContentManager content, List<IRoomLayout> worlds, IPlayerObject hero, Dictionary<TextTypes, SpriteFont> spriteFonts)
         {
             heroPlayer = hero;
             this.worlds = worlds;
@@ -81,6 +81,7 @@ namespace Pigit.Map
         }
         private void DeleteContent()
         {
+            heroPlayer.Reset();
             worldsTiles = new List<List<ITile>>();
 
             worldEnemys = new List<List<IPlayerObject>>();
@@ -111,6 +112,8 @@ namespace Pigit.Map
             {
                 if (CurrEnemys[i].Dead)
                 {
+                    heroPlayer.Points += 20;
+
                     CurrEnemys.RemoveAt(i);
                 }
             }

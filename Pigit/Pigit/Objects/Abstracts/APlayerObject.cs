@@ -20,6 +20,7 @@ namespace Pigit.Objects.Abstracts
         private double timer;
         private bool isSetTimer;
         protected HeroText text;
+        protected int beginHearts;
 
         public int Points { get; set; }
         public Rectangle Rectangle { get; set; }
@@ -38,6 +39,7 @@ namespace Pigit.Objects.Abstracts
 
         public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int levens = 10, int attackDamage = 1)
         {
+            beginHearts = levens;
             text = new HeroText(spriteFonts);
             Attack = new AttackCommand();
             Hearts = levens;
@@ -168,6 +170,11 @@ namespace Pigit.Objects.Abstracts
                 _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
 
                 text.Draw(_spriteBatch);
+        }
+
+        public virtual void Reset()
+        {
+    
         }
     }
 }

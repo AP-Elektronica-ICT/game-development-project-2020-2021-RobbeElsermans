@@ -14,7 +14,7 @@ using Pigit.SpriteBuild.Enums;
 
 namespace Pigit.Objects.Interfaces
 {
-    interface IPlayerObject: IObject
+    interface IPlayerObject: IObject, IResetAble
     {
         public int Points { get; set; }
         public AttackCommand Attack { get; set; }

@@ -30,5 +30,10 @@ namespace Pigit.Objects.PlayerObjects
             base.Update(gameTime);
             text.Update(Positie, Hearts, Points);
         }
+        public override void Reset()
+        {
+            Hearts = beginHearts;
+            Points = 0;
+        }
     }
 }

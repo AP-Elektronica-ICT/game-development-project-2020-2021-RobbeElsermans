@@ -96,7 +96,7 @@ namespace Pigit
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), new Vector2(5 * 32, 4 * 32), textGenerator.SpriteFonts);
 
-            level1 = new Level(Content, levelsWorld1, player, textGenerator.SpriteFonts);
+            level1 = new Level(Content, levelsWorld1, player as IPlayerObject, textGenerator.SpriteFonts);
             level1.CreateLevels();
 
             moveHero = new MoveCommandHero((IPlayerObject)player, level1, KeyBoardReader);
