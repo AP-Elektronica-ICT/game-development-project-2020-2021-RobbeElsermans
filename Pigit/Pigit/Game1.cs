@@ -74,6 +74,7 @@ namespace Pigit
             levelsWorld1.Add(new World1Room2Layout());
             levelsWorld1.Add(new StartWorldLayout());
             levelsWorld1.Add(new World1Room3Layout());
+            levelsWorld1.Add(new World1Room4Layout());
 
             //_cameraZoom = new CameraZoom(GraphicsDevice.Viewport);
 

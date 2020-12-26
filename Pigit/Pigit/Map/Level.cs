@@ -200,7 +200,7 @@ namespace Pigit.Map
                     CreateLevels();
 
                     //Start map
-                    CurrMap = 0; 
+                    CurrMap = 4; 
                 }
 
                 CurrEnemys = worldEnemys[CurrMap];
