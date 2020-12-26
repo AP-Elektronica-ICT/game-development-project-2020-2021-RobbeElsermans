@@ -11,7 +11,7 @@ namespace Pigit.Movement.NPCMoveCommands
 {
     class MoveCommandFollowNPC: AMoveCommandFollowWhenNearby
     {
-        public MoveCommandFollowNPC(IPlayerObject player, Level level,int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandFollowNPC(IPlayerObject player, Level level,float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
 
         }

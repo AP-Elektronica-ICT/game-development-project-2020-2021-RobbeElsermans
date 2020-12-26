@@ -5,6 +5,7 @@ using Pigit.Objects;
 using Pigit.Objects.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
@@ -41,6 +42,12 @@ namespace Pigit.Movement.NPCMoveCommands
                 velocity.Y = -jumpHeight;
                 hasJumped = true;
                 isGround = false;
+            }
+            player.IsAttacking = false;
+            if (NPCCollision.IsTouchingNPC(HeroPlayer.Rectangle, player.Rectangle))
+            {
+                player.IsAttacking = true;
+                player.Attack.NPCAttack(HeroPlayer as IPlayerObject, player, gameTime);
             }
 
             CheckCollide(4,5);

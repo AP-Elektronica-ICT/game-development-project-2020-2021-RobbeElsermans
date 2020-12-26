@@ -37,12 +37,12 @@ namespace Pigit.Objects.Abstracts
         public bool IsAttacking { get; set; }
         public AttackCommand Attack { get; set; }
 
-        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int levens = 10, int attackDamage = 1)
+        public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1)
         {
-            beginHearts = levens;
+            beginHearts = hearts;
             text = new HeroText(spriteFonts);
             Attack = new AttackCommand();
-            Hearts = levens;
+            Hearts = hearts;
             AttackDamage = attackDamage;
             Sprites = spriteOpbouw;
             Positie = beginPosition;
@@ -76,6 +76,10 @@ namespace Pigit.Objects.Abstracts
         public virtual void Update(GameTime gameTime)
         {
             CheckSprites();
+            if (Points > 100)
+            {
+                AttackDamage = 2 * Points /100;
+            }
 
             if (Type == AnimatieTypes.Hit)
             {

@@ -35,10 +35,32 @@ namespace Pigit.Attack
                         {
                             tempEnemy.IsHit = true;
                         }
-                        //Debug.Print($"{tempEnemy.Hearts}");
                     }
                 }
             }
+        }
+        public void NPCAttack(IPlayerObject enemy, IPlayerObject player, GameTime gametime)
+        {
+            //Attack an enemy
+            if (!isSetTimer)
+            {
+                timer = gametime.TotalGameTime.TotalSeconds;
+                isSetTimer = true;
+            }
+
+                if (NPCCollision.IsTouchingNPC(player.Rectangle, enemy.Rectangle))
+                {
+                    var tempEnemy = enemy as IPlayerObject;
+                    if (gametime.TotalGameTime.TotalSeconds - timer > 0.7)
+                    {
+                        isSetTimer = false;
+                        tempEnemy.Hearts -= player.AttackDamage;
+                        if (!tempEnemy.IsHit)
+                        {
+                            tempEnemy.IsHit = true;
+                        }
+                    }
+                }
         }
     }
 }

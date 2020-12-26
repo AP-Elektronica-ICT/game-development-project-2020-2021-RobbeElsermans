@@ -18,7 +18,7 @@ namespace Pigit.Objects.PlayerObjects
 {
     class Human : APlayerObject
     {
-        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts) :base(spriteOpbouw, beginPosition, spriteFonts)
+        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts) :base(spriteOpbouw, beginPosition, spriteFonts, hearts: 100, attackDamage: 2)
         {
         }
         protected override void RectBuild()

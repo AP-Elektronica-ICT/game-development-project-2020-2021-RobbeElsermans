@@ -6,5 +6,6 @@ namespace Pigit.Objects.Interfaces
     {
         Vector2 Positie { get; set; }
         Vector2 Velocity { get; set; }
+        Rectangle Rectangle { get; set; }
     }
 }

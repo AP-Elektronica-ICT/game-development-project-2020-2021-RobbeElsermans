@@ -14,7 +14,6 @@ namespace Pigit.Objects.Interfaces
     {
         public void Update(GameTime gameTime);
         public void Draw(SpriteBatch _spriteBatch);
-        public Rectangle Rectangle { get; set; }
         public SpriteDefine CurrentSprite { get; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
     }

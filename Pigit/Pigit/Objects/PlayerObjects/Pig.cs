@@ -17,7 +17,7 @@ namespace Pigit.Objects.PlayerObjects
     class Pig : APlayerObject, IMovementEnemy
     {
         public MoveTypes MovementType { get; set; }
-        public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, MoveTypes moveTypes, Dictionary<TextTypes, SpriteFont> spriteFonts) : base (spriteOpbouw, beginPosition, spriteFonts)
+        public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, MoveTypes moveTypes, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1) : base (spriteOpbouw, beginPosition, spriteFonts, hearts, attackDamage)
         {
             this.MovementType = moveTypes;
         }
@@ -27,5 +27,4 @@ namespace Pigit.Objects.PlayerObjects
             text.Update(Positie, Hearts, -1);
         }
     }
-
 }

@@ -39,21 +39,16 @@ namespace Pigit.Text.Abstract
         {
             if (Input.Enter)
             {
-                Debug.Print("Enter");
                 this.EnterLoop(gameTime);
             }
 
             if (Input.Up)
             {
-                Debug.Print("Up");
-
                 cursor.CursorUp();
             }
 
             if (Input.Down)
             {
-                Debug.Print("Down");
-
                 cursor.CursorDown();
             }
 

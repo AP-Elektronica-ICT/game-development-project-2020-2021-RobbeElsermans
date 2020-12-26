@@ -25,6 +25,24 @@ namespace Pigit.Map
 {
     class Level
     {
+        private const int bigHeartValue = 7;
+        private const int smallgHeartValue = 2;
+        private const int bigDiamondValue = 15;
+        private const int smallgDiamondValue = 10;
+
+        private const int enemyBaseAttackDamage = 1;
+        private const int enemyBaseHearts = 10;
+
+        private const float enemyWalkSpeed = 2f;
+        private const float enemyJumpHeight = 2f;
+        private const float enemyStopTime = 4f;
+        private const float enemyWalkTime = 2f;
+
+        private const int enemyDeadPoints = 20;
+
+        private const int oneBlockStep = 32;
+
+
         private List<IRoomLayout> worlds;
         //private IWorldLayout currentWorld;
         private TileOpbouw blockOpbouw;
@@ -112,9 +130,10 @@ namespace Pigit.Map
             {
                 if (CurrEnemys[i].Dead)
                 {
-                    heroPlayer.Points += 20;
+                    heroPlayer.Points += enemyDeadPoints;
 
                     CurrEnemys.RemoveAt(i);
+                    CurrMovementEnemy.RemoveAt(i);
                 }
             }
         }
@@ -126,6 +145,7 @@ namespace Pigit.Map
                 if (CurrCollectable[i].IsTaken)
                 {
                     CurrCollectable.RemoveAt(i);
+                    CurrMovementCollectables.RemoveAt(i);
                 }
             }
         }
@@ -151,16 +171,16 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
                             break;
                         case MoveTypes.Walk:
-                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this));
+                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, 5.0, 3.0));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this,enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - 32, (int)enemy.Positie.X + 32, 4.0));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
                             break;
                         case MoveTypes.Follow:
-                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this));
+                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         default:
                             break;
@@ -200,7 +220,7 @@ namespace Pigit.Map
                     CreateLevels();
 
                     //Start map
-                    CurrMap = 4; 
+                    CurrMap = 1;
                 }
 
                 CurrEnemys = worldEnemys[CurrMap];
@@ -284,7 +304,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].BackgroundTiles[x, y])
                             {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * 32, x * 32)));
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
                             }
                         }
 
@@ -292,7 +312,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].CollideTileLayout[x, y])
                             {
-                                worldsTiles[a].Add(new CollideTileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * 32, x * 32)));
+                                worldsTiles[a].Add(new CollideTileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
                             }
                         }
 
@@ -300,7 +320,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].ForegroundTiles[x, y])
                             {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * 32, x * 32)));
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
                             }
                         }
 
@@ -308,13 +328,14 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].PlatformTiles[x, y])
                             {
-                                worldsTiles[a].Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * 32, x * 32)));
+                                worldsTiles[a].Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
                             }
                         }
                         switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))
                         {
                             case PigTypes.Standard:
-                                worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * 32, x * 32), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts));
+                                if (a != 0) worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
+                                else worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
                                 break;
                             case PigTypes.Match:
                                 break;
@@ -330,16 +351,16 @@ namespace Pigit.Map
                         switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
                         {
                             case CollectableTypes.BigHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,2));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigHeartValue));
                                 break;
                             case CollectableTypes.BigDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,10));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigDiamondValue));
                                 break;
                             case CollectableTypes.SmallHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,1)) ;
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgHeartValue));
                                 break;
                             case CollectableTypes.SmallDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * 32, x * 32), MoveTypes.Static,5));
+                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgDiamondValue));
                                 break;
                             default:
                                 break;

@@ -30,13 +30,13 @@ namespace Pigit.Movement.NPCMoveCommands
 
         private bool hasFollow = false;
 
-        public MoveCommandGuardNPC(IPlayerObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, int jumpHeight = 4, int walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandGuardNPC(IPlayerObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
             this.walkTime = walkTime;
             this.stopTime = stopTime;
             time = true;
         }
-        public MoveCommandGuardNPC(IPlayerObject player, Level level, int minX, int maxX,double  stopTime = 3.0) : base(player, level, 4, 2)
+        public MoveCommandGuardNPC(IPlayerObject player, Level level, int minX, int maxX, double  stopTime = 3.0) : base(player, level, 4, 2)
         {
             this.minX = minX;
             this.maxX = maxX;
