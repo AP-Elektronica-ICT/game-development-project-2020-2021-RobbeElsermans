@@ -13,6 +13,8 @@ using Pigit.Objects.Interfaces;
 using Pigit.Objects.PlayerObjects;
 using Pigit.SpriteBuild;
 using Pigit.Text;
+using Pigit.Text.Abstract;
+using Pigit.Text.Menus;
 using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
@@ -42,7 +44,7 @@ namespace Pigit
         private Level level1;
         IObject player;
 
-        private MenuText menuText;
+        private AShowMenu menuText;
         private TextGenerator textGenerator;
 
         private IInputReader KeyBoardReader;
@@ -102,10 +104,7 @@ namespace Pigit
 
 
             textGenerator = new TextGenerator(Content);
-            menuText = new MenuText(textGenerator.spriteFonts,
-                (IInputMenu)KeyBoardReader,
-                new Vector2(96, 32),
-                new List<string>{"Pigit","start","Help","Exit","settings","menu","->"});
+            menuText = new StartMenu(textGenerator.spriteFonts,(IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Start", "Help", "Settings", "Exit","->"});
         }
 
         protected override void Update(GameTime gameTime)

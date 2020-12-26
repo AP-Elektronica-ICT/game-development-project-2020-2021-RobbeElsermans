@@ -8,42 +8,39 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Pigit.Text
+namespace Pigit.Text.Abstract
 {
-    class MenuText
+    abstract class AShowMenu
     {
-        IInputMenu Input;
-        SpriteFont title;
-        SpriteFont normal;
-        SpriteFont hint;
-        SpriteFont arrow;
-        private Vector2 position;
-        private List<string> text;
-        private Cursor cursor;
+        protected IInputMenu Input;
+        protected SpriteFont title;
+        protected SpriteFont normal;
+        protected SpriteFont hint;
+        protected SpriteFont arrow;
+        protected Vector2 position;
+        protected List<string> text;
+        protected Cursor cursor;
 
-        public MenuText(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position, List<string> text)
+        public AShowMenu(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position, List<string> text)
         {
             Input = inputMenu;
             spriteFonts.TryGetValue(TextTypes.Title, out this.title);
             spriteFonts.TryGetValue(TextTypes.Normal, out this.normal);
             spriteFonts.TryGetValue(TextTypes.Hint, out this.hint);
             spriteFonts.TryGetValue(TextTypes.Arrow, out this.arrow);
-            this.position = position;
+            this.position = new Vector2(32 * position.X, 32* position.Y);
 
             this.text = text;
 
-            cursor = new Cursor(new Vector2(position.X - 10, position.Y + 50), text.Count - 2, this.arrow, this.text[text.Count-1]);
+            cursor = new Cursor(new Vector2(this.position.X - 10, this.position.Y + 50), text.Count - 2, this.arrow, this.text[text.Count-1]);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             if (Input.Enter)
             {
                 Debug.Print("Enter");
-                if (cursor.CursorIndex == 0)
-                {
-                    Game1.currGameState = GameLoop.Play;
-                }
+                this.EnterLoop(gameTime);
             }
 
             if (Input.Up)
@@ -60,8 +57,19 @@ namespace Pigit.Text
                 cursor.CursorDown();
             }
 
+            if (Input.Esc)
+            {
+                Debug.Print("Esc");
+                EscapeLoop(gameTime);
+            }
+
             cursor.Update(gameTime);
         }
+
+        public abstract void EnterLoop(GameTime gameTime);
+
+        public abstract void EscapeLoop(GameTime gameTime);
+
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.DrawString(title, text[0], position, Color.Yellow);
