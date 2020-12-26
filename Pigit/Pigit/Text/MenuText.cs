@@ -18,10 +18,7 @@ namespace Pigit.Text
         SpriteFont arrow;
         private Vector2 position;
         private List<string> text;
-
-        int cursor;
-
-        Vector2 cursorPos;
+        private Cursor cursor;
 
         public MenuText(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position)
         {
@@ -39,7 +36,7 @@ namespace Pigit.Text
             text.Add("Exit");
             text.Add("->");
 
-            cursorPos = new Vector2(position.X - 20, 96);
+            cursor = new Cursor(new Vector2(position.X - 10, position.Y + 50), 3, this.arrow, this.text[text.Count-1]);
         }
 
         public void Update(GameTime gameTime)
@@ -53,24 +50,18 @@ namespace Pigit.Text
             {
                 Debug.Print("Up");
 
-                cursor--;
-                if (cursor < 0)
-                {
-                    cursor = 2;
-                }
+                cursor.CursorUp();
             }
 
             if (Input.Down)
             {
                 Debug.Print("Down");
 
-                cursor++;
-                if (cursor > 2)
-                {
-                    cursor = 0;
-                }
+                cursor.CursorDown();
             }
-            cursorPos.Y = (position.X - 20/2) + 30 * cursor;
+
+
+            cursor.Update(gameTime);
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
@@ -78,7 +69,8 @@ namespace Pigit.Text
             _spriteBatch.DrawString(normal, text[1], new Vector2(position.X + 20, position.Y + 50), Color.Yellow);
             _spriteBatch.DrawString(normal, text[2], new Vector2(position.X + 20, position.Y + 80), Color.Yellow);
             _spriteBatch.DrawString(normal, text[3], new Vector2(position.X + 20, position.Y + 110), Color.Yellow);
-            _spriteBatch.DrawString(arrow, text[4], new Vector2(cursorPos.X, cursorPos.Y) , Color.White);
+
+            cursor.Draw(_spriteBatch, Color.White);
         }
     }
 }
