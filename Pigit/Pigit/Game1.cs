@@ -103,8 +103,8 @@ namespace Pigit
             _cameraAnimatie = new CameraAnimatie();
 
             textGenerator = new TextGenerator(Content);
-            startMenu = new StartMenu(textGenerator.spriteFonts,(IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Play", "Help", "Settings", "Exit","->"});
-            pauseMenu = new PauseMenu(textGenerator.spriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), new List<string> { "Pause", "Resume", "Help", "Exit", "->" });
+            startMenu = new StartMenu(textGenerator.spriteFonts,(IInputMenu)KeyBoardReader,new Vector2(12, 2), new List<string>{"Pigit", "Play", "Help", "Settings", "Exit Game","->"});
+            pauseMenu = new PauseMenu(textGenerator.spriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), new List<string> { "Pause", "Resume", "Help", "Main Menu", "->" });
         }
 
         protected override void Update(GameTime gameTime)
@@ -126,7 +126,6 @@ namespace Pigit
 
                     level1.Play = true;
                     level1.Update(gameTime);
-                    level1.Play = false;
 
                     break;
                 case GameLoop.Pause:

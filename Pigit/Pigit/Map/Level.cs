@@ -75,6 +75,16 @@ namespace Pigit.Map
         {
             this.blockOpbouw = new TileOpbouw(content);
         }
+        private void DeleteContent()
+        {
+            worldsTiles = new List<List<ITile>>();
+
+            worldEnemys = new List<List<IPlayerObject>>();
+            worldsMoveEnemys = new List<List<AMovement>>();
+
+            worldsCollectables = new List<List<ICollectableObject>>();
+            worldsMoveCollectables = new List<List<ACollectableMovement>>();
+        }
         public void Update(GameTime gameTime)
         {
             CheckCollected();
@@ -119,14 +129,12 @@ namespace Pigit.Map
 
             GeneratelevelContent(content);
             GenerateMovement();
-            CheckCurrMap();
         }
 
         private void GenerateMovement()
         {
             for (int i = 0; i < worldEnemys.Count; i++)
             {
-
                 foreach (var enemy in worldEnemys[i])
                 {
                     var temp = enemy as IMovementEnemy;
@@ -180,7 +188,12 @@ namespace Pigit.Map
 
                 if (CurrMap == 2)
                 {
-                    CurrMap = 0; //Start map
+                    //initial opbouw van mappen
+                    DeleteContent();
+                    CreateLevels();
+
+                    //Start map
+                    CurrMap = 0; 
                 }
 
                 CurrEnemys = worldEnemys[CurrMap];
