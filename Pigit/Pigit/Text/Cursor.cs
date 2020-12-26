@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Pigit.Text
@@ -27,13 +28,13 @@ namespace Pigit.Text
                 cursor = value;
                 if (cursor < 0)
                 {
-                    cursor = amountItems;
+                    cursor = amountItems-1;
                 }
                 if (cursor >= amountItems)
                 {
                     cursor = 0;
                 }
-
+                Debug.Print(cursor.ToString());
             }
         }
 
