@@ -2,6 +2,7 @@
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
 using Pigit.TileBuild;
 using Pigit.TileBuild.Enums;
@@ -30,13 +31,13 @@ namespace Pigit.Movement.NPCMoveCommands
 
         private bool hasFollow = false;
 
-        public MoveCommandGuardNPC(IPlayerObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandGuardNPC(AEnemyObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
             this.walkTime = walkTime;
             this.stopTime = stopTime;
             time = true;
         }
-        public MoveCommandGuardNPC(IPlayerObject player, Level level, int minX, int maxX, double  stopTime = 3.0) : base(player, level, 4, 2)
+        public MoveCommandGuardNPC(AEnemyObject player, Level level, int minX, int maxX, double  stopTime = 3.0) : base(player, level, 4, 2)
         {
             this.minX = minX;
             this.maxX = maxX;
@@ -46,9 +47,9 @@ namespace Pigit.Movement.NPCMoveCommands
         public override void CheckMovement(GameTime gameTime)
         {
             RecastPositions();
-            if (player is IMovementEnemy)
+            if (player is IMovementNPC)
             {
-                var temp = player as IMovementEnemy;
+                var temp = player as IMovementNPC;
                 if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
                 {
                     base.CheckMovement(gameTime);

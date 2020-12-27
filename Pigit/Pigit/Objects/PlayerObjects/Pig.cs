@@ -14,12 +14,10 @@ using System.Collections.Generic;
 
 namespace Pigit.Objects.PlayerObjects
 {
-    class Pig : APlayerObject, IMovementEnemy
+    class Pig : AEnemyObject
     {
-        public MoveTypes MovementType { get; set; }
-        public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, MoveTypes moveTypes, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1) : base (spriteOpbouw, beginPosition, spriteFonts, hearts, attackDamage)
+        public Pig(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, MoveTypes moveTypes, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1) : base (spriteOpbouw, beginPosition, spriteFonts, hearts, attackDamage, moveTypes)
         {
-            this.MovementType = moveTypes;
         }
         public override void Update(GameTime gameTime)
         {

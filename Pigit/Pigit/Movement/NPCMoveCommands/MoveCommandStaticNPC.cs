@@ -2,6 +2,7 @@
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Pigit.Movement.NPCMoveCommands
 {
     class MoveCommandStaticNPC : AMoveCommandFollowWhenNearby
     {
-        public MoveCommandStaticNPC(IPlayerObject player, Level level) : base(player, level, 4, 2)
+        public MoveCommandStaticNPC(AEnemyObject player, Level level) : base(player, level, 4, 2)
         {
 
         }
@@ -19,9 +20,9 @@ namespace Pigit.Movement.NPCMoveCommands
         {
             RecastPositions();
 
-            if (player is IMovementEnemy)
+            if (player is IMovementNPC)
             {
-                var temp = player as IMovementEnemy;
+                var temp = player as IMovementNPC;
                 if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
                 {
                     base.CheckMovement(gameTime);

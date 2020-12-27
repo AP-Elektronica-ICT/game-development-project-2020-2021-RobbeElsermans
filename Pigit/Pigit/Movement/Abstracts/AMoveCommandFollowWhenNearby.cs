@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
-using Pigit.Objects;
+using Pigit.Movement.Abstracts;
+using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,10 +12,10 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class AMoveCommandFollowWhenNearby : AMovement
+    class AMoveCommandFollowWhenNearby : AEnemyMovement
     {
         public static IMoveable HeroPlayer { get; set; }
-        public AMoveCommandFollowWhenNearby(IPlayerObject player, Level level, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public AMoveCommandFollowWhenNearby(AEnemyObject player, Level level, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
         {
         }
 

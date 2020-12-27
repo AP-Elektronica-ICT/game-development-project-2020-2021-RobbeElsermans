@@ -4,6 +4,7 @@ using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
+using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
@@ -21,7 +22,7 @@ namespace Pigit.Movement.NPCMoveCommands
         private double timer;
         private bool isSetTimer = false;
 
-        public MoveCommandWalkNPC(IPlayerObject player, Level level,float jumpHeight = 4,float walkspeed= 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandWalkNPC(AEnemyObject player, Level level,float jumpHeight = 4,float walkspeed= 2) : base(player, level, jumpHeight, walkspeed)
         {
 
         }
@@ -30,9 +31,9 @@ namespace Pigit.Movement.NPCMoveCommands
             RecastPositions();
 
 
-            if (player is IMovementEnemy)
+            if (player is IMovementNPC)
             {
-                var temp = player as IMovementEnemy;
+                var temp = player as IMovementNPC;
                 if (NPCCollision.IsAroundNPC(HeroPlayer.Positie, positie))
                 {
                     base.CheckMovement(gameTime);

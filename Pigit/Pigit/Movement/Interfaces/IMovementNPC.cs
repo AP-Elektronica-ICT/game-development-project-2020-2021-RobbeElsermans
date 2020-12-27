@@ -2,7 +2,7 @@
 
 namespace Pigit
 {
-    interface IMovementEnemy
+    interface IMovementNPC
     {
         MoveTypes MovementType { get; set; }
     }

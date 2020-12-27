@@ -22,6 +22,7 @@ using System.Diagnostics;
 using Pigit.Text.Enums;
 using Pigit.Global.Enums;
 using Pigit.TileBuild.Enums;
+using Pigit.Objects.Abstracts;
 
 namespace Pigit.Map
 {
@@ -48,8 +49,8 @@ namespace Pigit.Map
         private List<IRoomLayout> worlds;
         //private IWorldLayout currentWorld;
         private TileOpbouw blockOpbouw;
-        private List<List<IPlayerObject>> worldEnemys;
-        private List<List<AMovement>> worldsMoveEnemys;
+        private List<List<AEnemyObject>> worldEnemys;
+        private List<List<AEnemyMovement>> worldsMoveEnemys;
         private List<List<ACollectableMovement>> worldsMoveCollectables;
         private List<List<ICollectableObject>> worldsCollectables;
         private SpriteGenerator opbouwSprites;
@@ -61,8 +62,8 @@ namespace Pigit.Map
         Dictionary<TextTypes, SpriteFont> spriteFonts;
 
         public List<ITile> CurrTiles { get; private set; }
-        public List<IPlayerObject> CurrEnemys { get; private set; }
-        public List<AMovement> CurrMovementEnemy { get; private set; }
+        public List<AEnemyObject> CurrEnemys { get; private set; }
+        public List<AEnemyMovement> CurrMovementEnemy { get; private set; }
         public List<ICollectableObject> CurrCollectable { get; set; }
         public int CurrMap { get; set; }
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
@@ -78,16 +79,16 @@ namespace Pigit.Map
 
             worldsTiles = new List<List<ITile>>();
 
-            worldEnemys = new List<List<IPlayerObject>>();
-            worldsMoveEnemys = new List<List<AMovement>>();
+            worldEnemys = new List<List<AEnemyObject>>();
+            worldsMoveEnemys = new List<List<AEnemyMovement>>();
 
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
 
-            CurrMovementEnemy = new List<AMovement>();
+            CurrMovementEnemy = new List<AEnemyMovement>();
             CurrMovementCollectables = new List<ACollectableMovement>();
 
-            CurrEnemys = new List<IPlayerObject>();
+            CurrEnemys = new List<AEnemyObject>();
             CurrTiles = new List<ITile>();
             CurrCollectable = new List<ICollectableObject>();
 
@@ -142,8 +143,8 @@ namespace Pigit.Map
             heroPlayer.Reset();
             worldsTiles = new List<List<ITile>>();
 
-            worldEnemys = new List<List<IPlayerObject>>();
-            worldsMoveEnemys = new List<List<AMovement>>();
+            worldEnemys = new List<List<AEnemyObject>>();
+            worldsMoveEnemys = new List<List<AEnemyMovement>>();
 
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
@@ -178,23 +179,22 @@ namespace Pigit.Map
             {
                 foreach (var enemy in worldEnemys[i])
                 {
-                    var temp = enemy as IMovementEnemy;
-                    switch (temp.MovementType)
+                    switch (enemy.MovementType)
                     {
                         case MoveTypes.Static:
-                            worldsMoveEnemys[i].Add(new MoveCommandStaticNPC((IPlayerObject)enemy, this));
+                            worldsMoveEnemys[i].Add(new MoveCommandStaticNPC(enemy, this));
                             break;
                         case MoveTypes.Walk:
-                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC((IPlayerObject)enemy, this, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this,enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this,enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC((IPlayerObject)enemy, this, (int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, (int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
                             break;
                         case MoveTypes.Follow:
-                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC((IPlayerObject)enemy, this, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         default:
                             break;
@@ -299,8 +299,8 @@ namespace Pigit.Map
             foreach (var map in worlds)
             {
                 worldsTiles.Add(new List<ITile>());
-                worldEnemys.Add(new List<IPlayerObject>());
-                worldsMoveEnemys.Add(new List<AMovement>());
+                worldEnemys.Add(new List<AEnemyObject>());
+                worldsMoveEnemys.Add(new List<AEnemyMovement>());
                 worldsCollectables.Add(new List<ICollectableObject>());
                 worldsMoveCollectables.Add(new List<ACollectableMovement>());
             }

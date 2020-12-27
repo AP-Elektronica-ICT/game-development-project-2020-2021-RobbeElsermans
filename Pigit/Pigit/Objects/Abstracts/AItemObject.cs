@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Pigit.Objects.Abstracts
 {
-    class AItemObject : ICollectableObject
+    abstract class AItemObject : ICollectableObject
     {
         public MoveTypes MovementType { get; set; }
         public AnimatieTypes AnimatieType { get; set; }

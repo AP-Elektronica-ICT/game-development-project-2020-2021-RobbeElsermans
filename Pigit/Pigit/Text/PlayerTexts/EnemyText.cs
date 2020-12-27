@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Pigit.Text.PlayerTexts
 {
-    class NPCText: APlayerText
+    class EnemyText: APlayerText
     {
-        public NPCText(Dictionary<TextTypes, SpriteFont> spriteFonts) : base(spriteFonts)
+        public EnemyText(Dictionary<TextTypes, SpriteFont> spriteFonts) : base(spriteFonts)
         {
         }
     }
