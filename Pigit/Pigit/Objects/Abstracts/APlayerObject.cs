@@ -28,11 +28,12 @@ namespace Pigit.Objects.Abstracts
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
         public AnimatieTypes Type { get; set; }
-        public int Hearts { get; set; }
+        private int hearts;
+        public int Hearts { get { return hearts; } set { hearts = value; if (hearts < 0) hearts = 0; } }
         public int AttackDamage { get; set; }
         public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
         public SpriteDefine CurrentSprite { get; private set; }
-        public bool Dead { get; private set; }
+        public bool Dead { get; protected set; }
         public bool IsHit { get; set; }
         public bool IsAttacking { get; set; }
         public AttackCommand Attack { get; set; }

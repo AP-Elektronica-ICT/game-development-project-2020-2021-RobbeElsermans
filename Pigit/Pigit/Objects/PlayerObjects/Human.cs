@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
+using Pigit.Global.Enums;
 using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.SpriteBuild;
@@ -18,7 +19,7 @@ namespace Pigit.Objects.PlayerObjects
 {
     class Human : APlayerObject
     {
-        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts) :base(spriteOpbouw, beginPosition, spriteFonts, hearts: 100, attackDamage: 2)
+        public Human(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts, int attackDamage) :base(spriteOpbouw, beginPosition, spriteFonts, hearts, attackDamage)
         {
         }
         protected override void RectBuild()
@@ -29,11 +30,19 @@ namespace Pigit.Objects.PlayerObjects
         {
             base.Update(gameTime);
             text.Update(Positie, Hearts, Points);
+
+            if (Dead && Game1.currGameState == GameLoop.Play)
+            {
+                Game1.currGameState = GameLoop.Dead;
+                Positie = new Vector2(Game1.ScreenWidth, Game1.ScreenHeight);
+            }
+            
         }
         public override void Reset()
         {
             Hearts = beginHearts;
             Points = 0;
+            Dead = false;
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Pigit
     {
         private const float maxZoom = 1.5f;
         private const float noZoom = 1f;
+        private const int heroHearts = 100;
+        private const int heroAttackDamage = 2;
 
         public static GameLoop currGameState { get; set; }
         private GraphicsDeviceManager _graphics;
@@ -44,9 +46,11 @@ namespace Pigit
 
         private AShowMenu startMenu;
         private AShowMenu pauseMenu;
+        private AShowMenu deadMenu;
         private TextGenerator textGenerator;
         private List<string> startMenuText;
         private List<string> pauseMenuText;
+        private List<string> deadMenuText;
 
         private IInputReader KeyBoardReader;
 
@@ -86,6 +90,11 @@ namespace Pigit
                  "Pause", "Resume", "Help", "Main Menu", "->"
             };
 
+            deadMenuText = new List<string>
+            {
+                 "Dead","Main Menu", "Help", "Exit Game", "->"
+            };
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             InitializeGameObjects();
@@ -98,7 +107,7 @@ namespace Pigit
             textGenerator = new TextGenerator(Content);
             opbouwSprites = new SpriteGenerator(Content);
 
-            player = new Human(opbouwSprites.GetSpriteHuman(12),Vector2.Zero, textGenerator.SpriteFonts);
+            player = new Human(opbouwSprites.GetSpriteHuman(12), Vector2.Zero, textGenerator.SpriteFonts, heroHearts,heroAttackDamage);
 
             level1 = new Level(Content, levelsWorld1, player as IPlayerObject, textGenerator.SpriteFonts);
             level1.CreateLevels();
@@ -107,8 +116,9 @@ namespace Pigit
 
             _cameraAnimatie = new CameraAnimatie();
 
-            startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader,new Vector2(12, 2), startMenuText);
+            startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(12, 2), startMenuText);
             pauseMenu = new PauseMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuText);
+            deadMenu = new DeadMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuText);
         }
 
         protected override void Update(GameTime gameTime)
@@ -119,20 +129,20 @@ namespace Pigit
             {
                 case GameLoop.Menu:
                     startMenu.Update(gameTime);
-                    moveHero.CheckMovement(gameTime);
                     level1.Play = false;
                     level1.Update(gameTime);
                     _cameraAnimatie.Zoom = noZoom;
+                    if (currGameState != GameLoop.Play)
+                        moveHero.CheckMovement(gameTime);
 
                     break;
                 case GameLoop.Play:
                     _cameraAnimatie.Follow(player);
+                    level1.Play = true;
+                    level1.Update(gameTime);
                     moveHero.CheckMovement(gameTime);
 
                     CameraZoomIn();
-
-                    level1.Play = true;
-                    level1.Update(gameTime);
 
                     break;
                 case GameLoop.Pause:
@@ -140,6 +150,12 @@ namespace Pigit
 
                     break;
                 case GameLoop.Dead:
+                    deadMenu.Update(gameTime);
+                    _cameraAnimatie.Follow(player);
+                    
+                    moveHero.CheckMovement(gameTime);
+                    CameraZoomOut();
+
                     break;
                 case GameLoop.End:
                     break;
@@ -159,6 +175,14 @@ namespace Pigit
             {
                 float x = 1f;
                 _cameraAnimatie.Zoom += x * 0.005f;
+            }
+        }
+        private void CameraZoomOut()
+        {
+            if (_cameraAnimatie.Zoom >= noZoom)
+            {
+                float x = 1f;
+                _cameraAnimatie.Zoom -= x * 0.005f;
             }
         }
 
@@ -194,9 +218,14 @@ namespace Pigit
                     break;
                 case GameLoop.Pause:
                     _spriteBatch.Begin();
+
                     pauseMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Dead:
+                    _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+
+                    player.Draw(_spriteBatch);
+                    deadMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.End:
                     break;

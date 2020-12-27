@@ -20,6 +20,7 @@ using Pigit.Movement.Abstracts;
 using Pigit.Collison;
 using System.Diagnostics;
 using Pigit.Text.Enums;
+using Pigit.Global.Enums;
 
 namespace Pigit.Map
 {
@@ -34,7 +35,7 @@ namespace Pigit.Map
         private const int enemyBaseHearts = 10;
 
         private const float enemyWalkSpeed = 2f;
-        private const float enemyJumpHeight = 2f;
+        private const float enemyJumpHeight = 4f;
         private const float enemyStopTime = 4f;
         private const float enemyWalkTime = 2f;
 
@@ -236,7 +237,13 @@ namespace Pigit.Map
                     heroPlayer.Velocity = Vector2.Zero;
                     heroPlayer.Positie = worlds[CurrMap].StartPos;
                 }
+                if(CurrMap != prevCurrMap && prevCurrMap == 3)
+                {
+                    heroPlayer.Velocity = Vector2.Zero;
+                    heroPlayer.Positie = new Vector2(worlds[CurrMap].Warp2.X - oneBlockStep * 2, worlds[CurrMap].Warp2.Y);
+                }
                 prevCurrMap = CurrMap;
+                
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1)
                 {
                     CurrMap = 2;

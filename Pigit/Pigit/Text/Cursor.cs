@@ -33,7 +33,6 @@ namespace Pigit.Text
                 {
                     cursor = 0;
                 }
-                Debug.Print(cursor.ToString());
             }
         }
 
