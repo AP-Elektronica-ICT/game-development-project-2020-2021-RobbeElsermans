@@ -10,9 +10,9 @@ using System.Text;
 
 namespace Pigit.Text.Menus
 {
-    class DeadMenu : AShowMenu
+    class EndingGameMenu : AShowMenu
     {
-        public DeadMenu(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position, List<string> text) : base(spriteFonts, inputMenu, position, text)
+        public EndingGameMenu(Dictionary<TextTypes, SpriteFont> spriteFonts, IInputMenu inputMenu, Vector2 position, List<string> text) : base(spriteFonts, inputMenu, position, text)
         {
 
         }

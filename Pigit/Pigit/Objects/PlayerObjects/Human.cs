@@ -41,6 +41,7 @@ namespace Pigit.Objects.PlayerObjects
         public override void Reset()
         {
             Hearts = beginHearts;
+            AttackDamage = beginAttackDamage;
             Points = 0;
             Dead = false;
         }

@@ -93,6 +93,44 @@ namespace Pigit.Map
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
             ACollectableMovement.HeroPlayer = heroPlayer;
         }
+        public void Update(GameTime gameTime)
+        {
+            CheckCollected();
+            CheckEnemys();
+            CheckCurrMap();
+
+            foreach (var moveCommand in CurrMovementEnemy)
+            {
+                moveCommand.CheckMovement(gameTime);
+            }
+            foreach (var moveCommand in CurrMovementCollectables)
+            {
+                moveCommand.CheckMovement(gameTime);
+            }
+        }
+        public void CreateLevels()
+        {
+            InitializeTiles(content);
+
+            GeneratelevelContent(content);
+            GenerateMovement();
+        }
+        public void DrawWorld(SpriteBatch spriteBatch)
+        {
+            foreach (var texture in CurrTiles)
+            {
+                texture.Draw(spriteBatch);
+            }
+
+            foreach (var enemy in CurrEnemys)
+            {
+                enemy.Draw(spriteBatch);
+            }
+            foreach (var item in CurrCollectable)
+            {
+                item.Draw(spriteBatch);
+            }
+        }
 
         private void InitializeTiles(ContentManager content)
         {
@@ -109,22 +147,6 @@ namespace Pigit.Map
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
         }
-        public void Update(GameTime gameTime)
-        {
-            CheckCollected();
-            CheckEnemys();
-            CheckCurrMap();
-
-            foreach (var moveCommand in CurrMovementEnemy)
-            {
-                moveCommand.CheckMovement(gameTime);
-            }
-            foreach (var moveCommand in CurrMovementCollectables)
-            {
-                moveCommand.CheckMovement(gameTime);
-            }
-        }
-
         private void CheckEnemys()
         {
             for (int i = 0; i < CurrEnemys.Count; i++)
@@ -138,7 +160,6 @@ namespace Pigit.Map
                 }
             }
         }
-
         private void CheckCollected()
         {
             for (int i = 0; i < CurrCollectable.Count; i++)
@@ -150,15 +171,6 @@ namespace Pigit.Map
                 }
             }
         }
-
-        public void CreateLevels()
-        {
-            InitializeTiles(content);
-
-            GeneratelevelContent(content);
-            GenerateMovement();
-        }
-
         private void GenerateMovement()
         {
             for (int i = 0; i < worldEnemys.Count; i++)
@@ -208,12 +220,10 @@ namespace Pigit.Map
                 }
             }
         }
-
         private void CheckCurrMap()
         {
             if (Play)
             {
-
                 if (CurrMap == 0)
                 {
                     //initial opbouw van mappen
@@ -244,21 +254,15 @@ namespace Pigit.Map
                 }
                 prevCurrMap = CurrMap;
                 
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1)
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1) CurrMap = 2;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 2) CurrMap = 4;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 2) CurrMap = 3;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 4)
                 {
-                    CurrMap = 2;
-                }
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 2)
-                {
-                    CurrMap = 4;
-                }
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 2)
-                {
-                    CurrMap = 3;
-                }
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 3)
-                {
-                    CurrMap = 2;
+                    if (CurrEnemys.Count == 0)
+                    {
+                        Game1.currGameState = GameLoop.End;
+                    }
                 }
             }
             else
@@ -289,7 +293,6 @@ namespace Pigit.Map
                 prevCurrMap = CurrMap;
             }
         }
-
         private void GeneratelevelContent(ContentManager content)
         {
             foreach (var map in worlds)
@@ -375,23 +378,6 @@ namespace Pigit.Map
 
                     }
                 }
-            }
-        }
-
-        public void DrawWorld(SpriteBatch spriteBatch)
-        {
-            foreach (var texture in CurrTiles)
-            {
-                texture.Draw(spriteBatch);
-            }
-
-            foreach (var enemy in CurrEnemys)
-            {
-                enemy.Draw(spriteBatch);
-            }
-            foreach (var item in CurrCollectable)
-            {
-                item.Draw(spriteBatch);
             }
         }
     }

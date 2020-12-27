@@ -21,6 +21,7 @@ namespace Pigit.Objects.Abstracts
         private bool isSetTimer;
         protected HeroText text;
         protected int beginHearts;
+        protected int beginAttackDamage;
 
         public int Points { get; set; }
         public Rectangle Rectangle { get; set; }
@@ -41,6 +42,7 @@ namespace Pigit.Objects.Abstracts
         public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1)
         {
             beginHearts = hearts;
+            beginAttackDamage = attackDamage;
             text = new HeroText(spriteFonts);
             Attack = new AttackCommand();
             Hearts = hearts;
@@ -79,7 +81,7 @@ namespace Pigit.Objects.Abstracts
             CheckSprites();
             if (Points > 100)
             {
-                AttackDamage = 2 * Points /100;
+                AttackDamage = beginAttackDamage * Points /100;
             }
 
             if (Type == AnimatieTypes.Hit)

@@ -25,8 +25,8 @@ namespace Pigit
     {
         private const float maxZoom = 1.5f;
         private const float noZoom = 1f;
-        private const int heroHearts = 100;
-        private const int heroAttackDamage = 2;
+        private const int heroHearts = 1000;
+        private const int heroAttackDamage = 100;
 
         public static GameLoop currGameState { get; set; }
         private GraphicsDeviceManager _graphics;
@@ -47,10 +47,12 @@ namespace Pigit
         private AShowMenu startMenu;
         private AShowMenu pauseMenu;
         private AShowMenu deadMenu;
+        private AShowMenu endMenu;
         private TextGenerator textGenerator;
         private List<string> startMenuText;
         private List<string> pauseMenuText;
         private List<string> deadMenuText;
+        private List<string> endMenuText;
 
         private IInputReader KeyBoardReader;
 
@@ -95,6 +97,11 @@ namespace Pigit
                  "Dead","Main Menu", "Help", "Exit Game", "->"
             };
 
+            endMenuText = new List<string>
+            {
+                 "End","Main Menu", "Help", "Exit Game", "->"
+            };
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             InitializeGameObjects();
@@ -118,7 +125,8 @@ namespace Pigit
 
             startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(12, 2), startMenuText);
             pauseMenu = new PauseMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuText);
-            deadMenu = new DeadMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuText);
+            deadMenu = new EndingGameMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuText);
+            endMenu = new EndingGameMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count-1].Warp1.X/32)-2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32)-4), endMenuText);
         }
 
         protected override void Update(GameTime gameTime)
@@ -158,6 +166,14 @@ namespace Pigit
 
                     break;
                 case GameLoop.End:
+                    endMenu.Update(gameTime);
+                    _cameraAnimatie.Follow(player);
+                    level1.Play = true;
+                    level1.Update(gameTime);
+
+                    moveHero.CheckMovement(gameTime);
+                    CameraZoomOut();
+
                     break;
                 case GameLoop.Exit:
                     Exit();
@@ -207,6 +223,7 @@ namespace Pigit
 
                     level1.DrawWorld(_spriteBatch);
                     player.Draw(_spriteBatch);
+
                     startMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Play:
@@ -225,9 +242,16 @@ namespace Pigit
                     _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
                     player.Draw(_spriteBatch);
+
                     deadMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.End:
+                    _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+
+                    level1.DrawWorld(_spriteBatch);
+                    player.Draw(_spriteBatch);
+
+                    endMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Exit:
                     _spriteBatch.Begin();
