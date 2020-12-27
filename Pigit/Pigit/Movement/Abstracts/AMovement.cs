@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
