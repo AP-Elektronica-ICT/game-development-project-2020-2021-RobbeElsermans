@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Objects;
@@ -50,7 +50,7 @@ namespace Pigit.Movement
             {
                 if (tile.Type == TileType.BorderTile)
                 {
-                    if (EndBlockCollision.isTouchingRight(velocity, tile.Border, player.Rectangle) || EndBlockCollision.isTouchingLeft(velocity, tile.Border, player.Rectangle))
+                    if (EndBlockCollision.isTouchingRight(velocity, tile.Border, player.Rectangle) || EndBlockCollision.isTouchingLeft(velocity, tile.Border, tile.Border))
                     {
                         velocity.X = 0f;
                     }
