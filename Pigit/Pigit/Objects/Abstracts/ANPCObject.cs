@@ -54,9 +54,9 @@ namespace Pigit.Objects.Abstracts
         {
             CheckSprites();
 
-                Positie += Velocity;
-                RectBuild();
-                CurrentSprite.Update(gameTime);
+            Positie += Velocity;
+            RectBuild();
+            CurrentSprite.Update(gameTime);
         }
 
         protected virtual void CheckSprites()
