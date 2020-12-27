@@ -9,7 +9,6 @@ using Pigit.Objects.Enums;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
-using Pigit.TileBuild.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

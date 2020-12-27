@@ -21,6 +21,7 @@ using Pigit.Collison;
 using System.Diagnostics;
 using Pigit.Text.Enums;
 using Pigit.Global.Enums;
+using Pigit.TileBuild.Enums;
 
 namespace Pigit.Map
 {
@@ -314,7 +315,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].BackgroundTiles[x, y])
                             {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep),TileType.BackGroundTile));
                             }
                         }
 
@@ -322,7 +323,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].CollideTileLayout[x, y])
                             {
-                                worldsTiles[a].Add(new CollideTileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep),TileType.BorderTile));
                             }
                         }
 
@@ -330,7 +331,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].ForegroundTiles[x, y])
                             {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep),TileType.BackGroundTile));
                             }
                         }
 
@@ -338,7 +339,7 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].PlatformTiles[x, y])
                             {
-                                worldsTiles[a].Add(new PlatformTileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep)));
+                                worldsTiles[a].Add(new TileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.PlatformTile));
                             }
                         }
                         switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))

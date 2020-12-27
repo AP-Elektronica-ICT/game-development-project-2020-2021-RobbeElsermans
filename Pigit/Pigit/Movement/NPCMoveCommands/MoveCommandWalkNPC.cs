@@ -7,7 +7,7 @@ using Pigit.Objects;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
 using Pigit.TileBuild;
-using Pigit.TileBuild.Interface;
+using Pigit.TileBuild.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -83,43 +83,37 @@ namespace Pigit.Movement.NPCMoveCommands
 
             foreach (var tile in level.CurrTiles)
             {
-                if (tile is ICollideTile)
+                if (tile.Type == TileType.BorderTile)
                 {
-                    var temp = tile as ICollideTile;
-                    Rectangle rectangle = player.Rectangle;
-
-                    if (EndBlockCollision.isTouchingRight(velocity, temp.Border, rectangle))
+                    if (EndBlockCollision.isTouchingRight(velocity, tile.Border, player.Rectangle))
                     {
                         righting = false;
                         velocity.X = 0f;
                     }
 
-                    if (EndBlockCollision.isTouchingLeft(velocity, temp.Border, rectangle))
+                    if (EndBlockCollision.isTouchingLeft(velocity, tile.Border, player.Rectangle))
                     {
                         righting = true;
                         velocity.X = 0f;
 
                     }
-                    if (EndBlockCollision.isTouchingTop(velocity, temp.Border, rectangle) && !isGround)
+                    if (EndBlockCollision.isTouchingTop(velocity, tile.Border, player.Rectangle) && !isGround)
                     {
-                        positie.Y = temp.Border.Y - (temp.Border.Height - 4);
+                        positie.Y = tile.Border.Y - (tile.Border.Height - 4);
                         velocity.Y = 0f;
                         isGround = true;
                     }
-                    if (EndBlockCollision.isTouchingBottom(velocity, temp.Border, rectangle))
+                    if (EndBlockCollision.isTouchingBottom(velocity, tile.Border, player.Rectangle))
                     {
                         velocity.Y = 0f;
                     }
                 }
 
-                if (tile is IPlatformTile)
+                if (tile.Type == TileType.PlatformTile)
                 {
-                    var temp = tile as IPlatformTile;
-                    Rectangle rectangle = player.Rectangle;
-
-                    if (PlatformBlockCollision.isOnTopOf(rectangle, temp.Border, velocity) && velocity.Y > 0)
+                    if (PlatformBlockCollision.isOnTopOf(player.Rectangle, tile.Border, velocity) && velocity.Y > 0)
                     {
-                        positie.Y = temp.Border.Y - (temp.Border.Height - 5);
+                        positie.Y = tile.Border.Y - (tile.Border.Height - 5);
                         velocity.Y = 0f;
                         isGround = true;
                     }
