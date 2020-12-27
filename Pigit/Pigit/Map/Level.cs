@@ -3,10 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.SpriteBuild;
 using Pigit.TileBuild;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Pigit.Objects;
 using Pigit.SpriteBuild.Enums;
 using Pigit.Movement.NPCMoveCommands;
 using Pigit.Movement;
@@ -18,11 +15,11 @@ using Pigit.Objects.CollectableObjects;
 using Pigit.Movement.CollectableMoveCommands;
 using Pigit.Movement.Abstracts;
 using Pigit.Collison;
-using System.Diagnostics;
 using Pigit.Text.Enums;
 using Pigit.Global.Enums;
 using Pigit.TileBuild.Enums;
 using Pigit.Objects.Abstracts;
+using Pigit.Objects.StaticObjects;
 
 namespace Pigit.Map
 {
@@ -45,11 +42,10 @@ namespace Pigit.Map
 
         private const int oneBlockStep = 32;
 
-
         private List<IRoomLayout> worlds;
-        //private IWorldLayout currentWorld;
         private TileOpbouw blockOpbouw;
-        private List<List<AEnemyObject>> worldEnemys;
+        private List<List<AStaticObject>> worldsDoors;
+        private List<List<AEnemyObject>> worldsEnemys;
         private List<List<AEnemyMovement>> worldsMoveEnemys;
         private List<List<ACollectableMovement>> worldsMoveCollectables;
         private List<List<ICollectableObject>> worldsCollectables;
@@ -67,6 +63,7 @@ namespace Pigit.Map
         public List<ICollectableObject> CurrCollectable { get; set; }
         public int CurrMap { get; set; }
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
+        public List<AStaticObject> CurrDoors { get; set; }
         public bool Play { get; set; }
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IPlayerObject hero, Dictionary<TextTypes, SpriteFont> spriteFonts)
@@ -79,7 +76,9 @@ namespace Pigit.Map
 
             worldsTiles = new List<List<ITile>>();
 
-            worldEnemys = new List<List<AEnemyObject>>();
+            worldsDoors = new List<List<AStaticObject>>();
+
+            worldsEnemys = new List<List<AEnemyObject>>();
             worldsMoveEnemys = new List<List<AEnemyMovement>>();
 
             worldsCollectables = new List<List<ICollectableObject>>();
@@ -91,6 +90,7 @@ namespace Pigit.Map
             CurrEnemys = new List<AEnemyObject>();
             CurrTiles = new List<ITile>();
             CurrCollectable = new List<ICollectableObject>();
+            CurrDoors = new List<AStaticObject>();
 
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
             ACollectableMovement.HeroPlayer = heroPlayer;
@@ -109,12 +109,16 @@ namespace Pigit.Map
             {
                 moveCommand.CheckMovement(gameTime);
             }
+            foreach (var door in CurrDoors)
+            {
+                door.Update(gameTime);
+            }
         }
         public void CreateLevels()
         {
             InitializeTiles(content);
 
-            GeneratelevelContent(content);
+            GenerateLevelContent(content);
             GenerateMovement();
         }
         public void DrawWorld(SpriteBatch spriteBatch)
@@ -123,7 +127,10 @@ namespace Pigit.Map
             {
                 texture.Draw(spriteBatch);
             }
-
+            foreach (var door in CurrDoors)
+            {
+                door.Draw(spriteBatch);
+            }
             foreach (var enemy in CurrEnemys)
             {
                 enemy.Draw(spriteBatch);
@@ -143,11 +150,13 @@ namespace Pigit.Map
             heroPlayer.Reset();
             worldsTiles = new List<List<ITile>>();
 
-            worldEnemys = new List<List<AEnemyObject>>();
+            worldsEnemys = new List<List<AEnemyObject>>();
             worldsMoveEnemys = new List<List<AEnemyMovement>>();
 
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
+
+            worldsDoors = new List<List<AStaticObject>>();
         }
         private void CheckEnemys()
         {
@@ -175,9 +184,9 @@ namespace Pigit.Map
         }
         private void GenerateMovement()
         {
-            for (int i = 0; i < worldEnemys.Count; i++)
+            for (int i = 0; i < worldsEnemys.Count; i++)
             {
-                foreach (var enemy in worldEnemys[i])
+                foreach (var enemy in worldsEnemys[i])
                 {
                     switch (enemy.MovementType)
                     {
@@ -188,7 +197,7 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this,enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
                             worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, (int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
@@ -235,7 +244,8 @@ namespace Pigit.Map
                     CurrMap = 1;
                 }
 
-                CurrEnemys = worldEnemys[CurrMap];
+                CurrDoors = worldsDoors[CurrMap];
+                CurrEnemys = worldsEnemys[CurrMap];
                 CurrTiles = worldsTiles[CurrMap];
                 CurrMovementEnemy = worldsMoveEnemys[CurrMap];
 
@@ -248,16 +258,17 @@ namespace Pigit.Map
                     heroPlayer.Velocity = Vector2.Zero;
                     heroPlayer.Positie = worlds[CurrMap].StartPos;
                 }
-                if(CurrMap != prevCurrMap && prevCurrMap == 3)
+                if (CurrMap != prevCurrMap && prevCurrMap == 3)
                 {
                     heroPlayer.Velocity = Vector2.Zero;
                     heroPlayer.Positie = new Vector2(worlds[CurrMap].Warp2.X - oneBlockStep * 2, worlds[CurrMap].Warp2.Y);
                 }
                 prevCurrMap = CurrMap;
-                
+
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1) CurrMap = 2;
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 2) CurrMap = 4;
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 2) CurrMap = 3;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 3) CurrMap = 2;
                 if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 4)
                 {
                     if (CurrEnemys.Count == 0)
@@ -278,7 +289,8 @@ namespace Pigit.Map
                     CurrMap = 0;
                 }
 
-                CurrEnemys = worldEnemys[CurrMap];
+                CurrDoors = worldsDoors[CurrMap];
+                CurrEnemys = worldsEnemys[CurrMap];
                 CurrTiles = worldsTiles[CurrMap];
                 CurrMovementEnemy = worldsMoveEnemys[CurrMap];
 
@@ -294,67 +306,54 @@ namespace Pigit.Map
                 prevCurrMap = CurrMap;
             }
         }
-        private void GeneratelevelContent(ContentManager content)
+        private void GenerateLevelContent(ContentManager content)
         {
             foreach (var map in worlds)
             {
                 worldsTiles.Add(new List<ITile>());
-                worldEnemys.Add(new List<AEnemyObject>());
+                worldsEnemys.Add(new List<AEnemyObject>());
                 worldsMoveEnemys.Add(new List<AEnemyMovement>());
                 worldsCollectables.Add(new List<ICollectableObject>());
                 worldsMoveCollectables.Add(new List<ACollectableMovement>());
+                worldsDoors.Add(new List<AStaticObject>());
             }
 
             for (int a = 0; a < worlds.Count; a++)
             {
+                foreach (var place in worlds[a].Doors)
+                {
+                    worldsDoors[a].Add(new StaticObject(opbouwSprites.GetSpriteDoor(1), place));
+                }
                 for (int x = 0; x < worlds[a].Width; x++)
                 {
                     for (int y = 0; y < worlds[a].Height; y++)
                     {
                         for (int i = 1; i <= blockOpbouw.BackgroundTiles.Count; i++)
                         {
-                            if (i == worlds[a].BackgroundTiles[x, y])
-                            {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep),TileType.BackGroundTile));
-                            }
+                            if (i == worlds[a].BackgroundTiles[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.BackgroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.BackGroundTile));
                         }
 
                         for (int i = 1; i <= blockOpbouw.CollideTiles.Count; i++)
                         {
-                            if (i == worlds[a].CollideTileLayout[x, y])
-                            {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep),TileType.BorderTile));
-                            }
+                            if (i == worlds[a].CollideTileLayout[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.CollideTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.BorderTile));
                         }
 
                         for (int i = 1; i <= blockOpbouw.ForegroundTiles.Count; i++)
                         {
-                            if (i == worlds[a].ForegroundTiles[x, y])
-                            {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep),TileType.BackGroundTile));
-                            }
+                            if (i == worlds[a].ForegroundTiles[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.ForegroundTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.BackGroundTile));
                         }
 
                         for (int i = 1; i <= blockOpbouw.PLatformTiles.Count; i++)
                         {
-                            if (i == worlds[a].PlatformTiles[x, y])
-                            {
-                                worldsTiles[a].Add(new TileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.PlatformTile));
-                            }
+                            if (i == worlds[a].PlatformTiles[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.PlatformTile));
                         }
                         switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))
                         {
                             case PigTypes.Standard:
-                                if (a != 0) worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
-                                else worldEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
+                                if (a != 0) worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
+                                else worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
                                 break;
-                            case PigTypes.Match:
-                                break;
-                            case PigTypes.HideBox:
-                                break;
-                            case PigTypes.TrowBox:
-                                break;
-                            case PigTypes.TrowBomb:
+                            case PigTypes.Boss:
                                 break;
                             default:
                                 break;
@@ -376,7 +375,6 @@ namespace Pigit.Map
                             default:
                                 break;
                         }
-
                     }
                 }
             }

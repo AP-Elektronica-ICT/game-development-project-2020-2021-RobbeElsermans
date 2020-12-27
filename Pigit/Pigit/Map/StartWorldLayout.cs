@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Pigit.Map.Interfaces;
+using Pigit.Objects.Abstracts;
+using Pigit.Objects.StaticObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +22,7 @@ namespace Pigit.Map
         public Vector2 StartPos { get; set; }
         public Vector2 Warp1 { get; set; }
         public Vector2 Warp2 { get; set; }
+        public List<Vector2> Doors { get; set; }
 
         public int Height { get { return width; } }
         public int Width { get { return height; } }
@@ -29,6 +32,16 @@ namespace Pigit.Map
             StartPos = new Vector2(32 * 3, 32 * 2);
             Warp1 = Vector2.Zero;
             Warp2 = Vector2.Zero;
+            Doors = new List<Vector2>();
+            if (Warp1 != Vector2.Zero)
+            {
+                Doors.Add(Warp1);
+            }
+            if (Warp2 != Vector2.Zero)
+            {
+                Doors.Add(Warp2);
+            }
+
 
             CollideTileLayout = new int[width, height]
             {

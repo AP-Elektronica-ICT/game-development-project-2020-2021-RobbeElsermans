@@ -81,12 +81,6 @@ namespace Pigit.Objects.Abstracts
                     CurrentSprite.Update(gameTime);
                 }
             }
-
-            if (Dead && Game1.currGameState == GameLoop.Play)
-            {
-                Game1.currGameState = GameLoop.Dead;
-                Positie = new Vector2(Game1.ScreenWidth, Game1.ScreenHeight);
-            }
         }
 
         protected override void CheckSprites()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Pigit.Objects.Abstracts;
 using System.Collections.Generic;
 
 namespace Pigit.Map.Interfaces
@@ -16,5 +17,6 @@ namespace Pigit.Map.Interfaces
         public Vector2 StartPos { get; set; }
         public Vector2 Warp1 { get; set; }
         public Vector2 Warp2 { get; set; }
+        public List<Vector2> Doors { get; set; }
     }
 }

@@ -19,11 +19,23 @@ namespace Pigit.SpriteBuild
         private Dictionary<AnimatieTypes, SpriteDefine> bigDiamond;
         private Dictionary<AnimatieTypes, SpriteDefine> smallHeart;
         private Dictionary<AnimatieTypes, SpriteDefine> smallDiamond;
+        private Dictionary<AnimatieTypes, SpriteDefine> door;
         private ContentManager content;
 
         public SpriteGenerator(ContentManager content)
         {
             this.content = content;
+        }
+        public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteDoor(int speed)
+        {
+            door = new Dictionary<AnimatieTypes, SpriteDefine>();
+            door.Add(AnimatieTypes.Idle, new SpriteDefine(content.Load<Texture2D>(@"Objects\Door\idle"), content.Load<Texture2D>(@"Objects\Door\idle"),1,new Vector2(46,56)));
+
+            foreach (var value in door)
+            {
+                value.Value.SetSpeed(speed);
+            }
+            return door;
         }
         public Dictionary<AnimatieTypes, SpriteDefine> GetSpriteSmallDiamond(int speed)
         {

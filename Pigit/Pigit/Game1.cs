@@ -24,8 +24,8 @@ namespace Pigit
     {
         private const float maxZoom = 1.5f;
         private const float noZoom = 1f;
-        private const int heroHearts = 1000;
-        private const int heroAttackDamage = 100;
+        private const int heroHearts = 100;
+        private const int heroAttackDamage = 2;
 
         public static GameLoop currGameState { get; set; }
         private GraphicsDeviceManager _graphics;
