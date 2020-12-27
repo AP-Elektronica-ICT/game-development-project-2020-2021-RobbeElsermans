@@ -30,20 +30,6 @@ namespace Pigit.Objects.PlayerObjects
         {
             base.Update(gameTime);
             text.Update(Positie, Hearts, Points);
-
-            if (Dead && Game1.currGameState == GameLoop.Play)
-            {
-                Game1.currGameState = GameLoop.Dead;
-                Positie = new Vector2(Game1.ScreenWidth, Game1.ScreenHeight);
-            }
-            
-        }
-        public override void Reset()
-        {
-            Hearts = beginHearts;
-            AttackDamage = beginAttackDamage;
-            Points = 0;
-            Dead = false;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Pigit.Objects.Interfaces
 { 
-    interface IObject: IMoveable
+    interface IObject
     {
         public void Update(GameTime gameTime);
         public void Draw(SpriteBatch _spriteBatch);

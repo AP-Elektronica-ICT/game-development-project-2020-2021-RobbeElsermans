@@ -7,13 +7,12 @@ using System.Text;
 
 namespace Pigit.Objects.Interfaces
 {
-    interface ICollectableObject: IObject
+    interface ICollectableObject: IObject, IMoveable
     {
         public MoveTypes MovementType { get; set; }
         public int Value { get; }
         public bool IsTaken { get; set; }
         public bool IsCollected { get; set; }
         public CollectableTypes ItemType { get;}
-        AnimatieTypes AnimatieType { get; set; }
     }
 }

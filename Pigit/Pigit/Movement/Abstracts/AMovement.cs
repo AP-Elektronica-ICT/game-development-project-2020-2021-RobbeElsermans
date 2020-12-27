@@ -50,7 +50,7 @@ namespace Pigit.Movement
             {
                 if (tile.Type == TileType.BorderTile)
                 {
-                    if (EndBlockCollision.isTouchingRight(velocity, tile.Border, player.Rectangle) || EndBlockCollision.isTouchingLeft(velocity, tile.Border, tile.Border))
+                    if (EndBlockCollision.isTouchingRight(velocity, tile.Border, player.Rectangle) || EndBlockCollision.isTouchingLeft(velocity, tile.Border, player.Rectangle))
                     {
                         velocity.X = 0f;
                     }
@@ -90,7 +90,6 @@ namespace Pigit.Movement
                 float i = 1f;
                 velocity.Y += 0.2f * i;
                 hasJumped = true;
-                //Debug.Print(velocity.Y.ToString());
             }
 
             player.Positie = positie;

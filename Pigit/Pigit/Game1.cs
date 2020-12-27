@@ -41,7 +41,7 @@ namespace Pigit
 
         private List<IRoomLayout> levelsWorld1;
         private Level level1;
-        IObject player;
+        IPlayerObject player;
 
         private AShowMenu startMenu;
         private AShowMenu pauseMenu;
@@ -115,10 +115,10 @@ namespace Pigit
 
             player = new Human(opbouwSprites.GetSpriteHuman(12), Vector2.Zero, textGenerator.SpriteFonts, heroHearts,heroAttackDamage);
 
-            level1 = new Level(Content, levelsWorld1, player as IPlayerObject, textGenerator.SpriteFonts);
+            level1 = new Level(Content, levelsWorld1, player, textGenerator.SpriteFonts);
             level1.CreateLevels();
 
-            moveHero = new MoveCommandHero((IPlayerObject)player, level1, KeyBoardReader);
+            moveHero = new MoveCommandHero(player, level1, KeyBoardReader);
 
             _cameraAnimatie = new CameraAnimatie();
 

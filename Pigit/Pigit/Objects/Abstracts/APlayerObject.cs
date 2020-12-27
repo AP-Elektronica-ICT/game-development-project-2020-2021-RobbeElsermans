@@ -12,13 +12,14 @@ using Pigit.Attack;
 using Pigit.Objects.Interfaces;
 using Pigit.Text.PlayerTexts;
 using Pigit.Text.Enums;
+using Pigit.Global.Enums;
 
 namespace Pigit.Objects.Abstracts
 {
     abstract class APlayerObject : IPlayerObject
     {
-        private double timer;
-        private bool isSetTimer;
+        protected double timer;
+        protected bool isSetTimer;
         protected HeroText text;
         protected int beginHearts;
         protected int beginAttackDamage;
@@ -116,6 +117,12 @@ namespace Pigit.Objects.Abstracts
                     CurrentSprite.Update(gameTime);
                 }
             }
+
+            if (Dead && Game1.currGameState == GameLoop.Play)
+            {
+                Game1.currGameState = GameLoop.Dead;
+                Positie = new Vector2(Game1.ScreenWidth, Game1.ScreenHeight);
+            }
         }
 
         private void CheckSprites()
@@ -181,7 +188,10 @@ namespace Pigit.Objects.Abstracts
 
         public virtual void Reset()
         {
-    
+            Hearts = beginHearts;
+            AttackDamage = beginAttackDamage;
+            Points = 0;
+            Dead = false;
         }
     }
 }

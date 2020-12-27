@@ -26,7 +26,7 @@ namespace Pigit
         private float zoom = 1;
 
 
-        public void Follow(IObject target)
+        public void Follow(IMoveable target)
         {
             Matrix offset =
                 Matrix.CreateTranslation(

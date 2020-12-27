@@ -24,7 +24,7 @@ namespace Pigit.Objects.PlayerObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            text.Update(Positie, Hearts, -1);
+            text.Update(Positie, Hearts);
         }
     }
 }
