@@ -96,6 +96,7 @@ namespace Pigit.Objects.Abstracts
             if (IsAttacking)
             {
                 Type = AnimatieTypes.Attack;
+                //IsAttacking = false;
             }
 
             if (Velocity.Y + 0.2f < 0)
