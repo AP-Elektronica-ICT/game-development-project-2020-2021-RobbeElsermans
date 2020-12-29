@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Pigit.Objects.Interfaces
 {
-    interface IEnemyObject: IObject, IMoveable, IMoveableSprite, IMovementNPC
+    interface IEnemyObject : IObject, IMoveable, IMoveableSprite, IMovementNPC
     {
     }
 }
+

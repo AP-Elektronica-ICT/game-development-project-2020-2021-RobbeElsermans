@@ -22,22 +22,22 @@ namespace Pigit
 {
     public class Game1 : Game
     {
+        public static GameLoop currGameState { get; set; }
+        public static int ScreenWidth { get; private set; }
+        public static int ScreenHeight { get; private set; }
+
         private const float maxZoom = 1.5f;
         private const float noZoom = 1f;
         private const int heroHearts = 100;
         private const int heroAttackDamage = 2;
 
-        public static GameLoop currGameState { get; set; }
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private CameraAnimatie _cameraAnimatie;
+        private CameraAnimatie _cameraAnimation;
 
         private AMovement moveHero;
-        private SpriteGenerator opbouwSprites;
-
-        public static int ScreenWidth;
-        public static int ScreenHeight;
+        private SpriteGenerator generateSprites;
 
         private List<IRoomLayout> levelsWorld1;
         private Level level1;
@@ -73,14 +73,16 @@ namespace Pigit
         protected override void LoadContent()
         {
             KeyBoardReader = new KeyBoardReader();
-
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            #region add worlds to level1
             levelsWorld1 = new List<IRoomLayout>();
             levelsWorld1.Add(new StartWorldLayout());
             levelsWorld1.Add(new World1Room1Layout());
             levelsWorld1.Add(new World1Room2Layout());
             levelsWorld1.Add(new World1Room3Layout());
             levelsWorld1.Add(new World1Room4Layout());
-
+            #endregion
+            #region add menu items to the menus
             startMenuItems = new List<string>
             {
                 "Pigit", "Play", "Exit Game","->"
@@ -100,32 +102,38 @@ namespace Pigit
             {
                  "End","Main Menu", "Exit Game", "->"
             };
-
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            #endregion
+            #region generate fonts
+            fontGenerator = new FontGenerator(Content);
+            generateSprites = new SpriteGenerator(Content);
+            #endregion
             InitializeGameObjects();
-
-            currGameState = GameLoop.Menu;
         }
 
         private void InitializeGameObjects()
         {
-            fontGenerator = new FontGenerator(Content);
-            opbouwSprites = new SpriteGenerator(Content);
-
-            player = new Human(opbouwSprites.GetSpriteHuman(12), Vector2.Zero, fontGenerator.SpriteFonts, heroHearts,heroAttackDamage);
-
+            #region initialize Hero
+            player = new Human(generateSprites.GetSpriteHuman(12), Vector2.Zero, fontGenerator.SpriteFonts, heroHearts, heroAttackDamage);
+            #endregion
+            #region initialize level1
             level1 = new Level(Content, levelsWorld1, player, fontGenerator.SpriteFonts);
             level1.CreateLevels();
-
+            #endregion
+            #region initialize hero movements
             moveHero = new MoveCommandHero(player, level1, KeyBoardReader);
-
-            _cameraAnimatie = new CameraAnimatie();
-
+            #endregion
+            #region initialize camera animation
+            _cameraAnimation = new CameraAnimatie();
+            #endregion
+            #region initialize menus
             startMenu = new StartMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(12, 2), startMenuItems);
             pauseMenu = new PauseMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuItems);
             deadMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuItems);
-            endMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count-1].Warp1.X/32)-2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32)-4), endMenuItems);
+            endMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count - 1].Warp1.X / 32) - 2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32) - 4), endMenuItems);
+            #endregion
+            #region initialize gameloop
+            currGameState = GameLoop.Menu;
+            #endregion
         }
 
         protected override void Update(GameTime gameTime)
@@ -136,21 +144,23 @@ namespace Pigit
             {
                 case GameLoop.Menu:
                     startMenu.Update(gameTime);
+
                     level1.Play = false;
                     level1.Update(gameTime);
-                    _cameraAnimatie.Zoom = noZoom;
-                    if (currGameState != GameLoop.Play)
-                        moveHero.CheckMovement(gameTime);
 
+                    _cameraAnimation.Zoom = noZoom;             //Set camera for no zooming
+                    if (currGameState != GameLoop.Play)         //Checks if gameloop has changed in the past
+                        moveHero.CheckMovement(gameTime);
                     break;
                 case GameLoop.Play:
-                    _cameraAnimatie.Follow(player);
+                    _cameraAnimation.Follow(player);
+
                     level1.Play = true;
                     level1.Update(gameTime);
+
                     moveHero.CheckMovement(gameTime);
 
                     CameraZoomIn();
-
                     break;
                 case GameLoop.Pause:
                     pauseMenu.Update(gameTime);
@@ -162,7 +172,7 @@ namespace Pigit
                     break;
                 case GameLoop.End:
                     endMenu.Update(gameTime);
-                    _cameraAnimatie.Follow(player);
+                    _cameraAnimation.Follow(player);
                     level1.Play = true;
                     level1.Update(gameTime);
 
@@ -179,24 +189,26 @@ namespace Pigit
 
             base.Update(gameTime);
         }
-
+        #region camera Effects
         private void CameraZoomIn()
         {
-            if (_cameraAnimatie.Zoom <= maxZoom)
+            if (_cameraAnimation.Zoom <= maxZoom)
             {
                 float x = 1f;
-                _cameraAnimatie.Zoom += x * 0.005f;
+                _cameraAnimation.Zoom += x * 0.005f;
             }
         }
         private void CameraZoomOut()
         {
-            if (_cameraAnimatie.Zoom >= noZoom)
+            if (_cameraAnimation.Zoom >= noZoom)
             {
                 float x = 1f;
-                _cameraAnimatie.Zoom -= x * 0.005f;
+                _cameraAnimation.Zoom -= x * 0.005f;
             }
         }
+        #endregion
 
+        #region check for Escape in gameloop play
         private void CheckInputs(IInputMenu keys)
         {
             keys.ReadInput();
@@ -205,6 +217,7 @@ namespace Pigit
                 currGameState = GameLoop.Pause;
             }
         }
+        #endregion
 
         protected override void Draw(GameTime gameTime)
         {
@@ -222,7 +235,7 @@ namespace Pigit
                     startMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Play:
-                    _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+                    _spriteBatch.Begin(transformMatrix: _cameraAnimation.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
                     level1.DrawWorld(_spriteBatch);
                     player.Draw(_spriteBatch);
@@ -239,7 +252,7 @@ namespace Pigit
                     deadMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.End:
-                    _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
+                    _spriteBatch.Begin(transformMatrix: _cameraAnimation.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
 
                     level1.DrawWorld(_spriteBatch);
                     player.Draw(_spriteBatch);

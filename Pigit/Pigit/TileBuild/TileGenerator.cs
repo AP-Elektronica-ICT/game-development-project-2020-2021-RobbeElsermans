@@ -7,19 +7,19 @@ using System.Text;
 
 namespace Pigit.TileBuild
 {
-    class TileOpbouw
+    class TileGenerator
     {
-        private int aantalCollideTiles = 46;
-        private int aantalBackgroundTiles = 48;
-        private int aantalForegroundTiles = 12;
-        private int aantalPlatformTiles = 8;
+        private const int aantalCollideTiles = 46;
+        private const int aantalBackgroundTiles = 48;
+        private const int aantalForegroundTiles = 12;
+        private const int aantalPlatformTiles = 8;
 
-        public List<Texture2D> CollideTiles { get; set; }
-        public List<Texture2D> BackgroundTiles { get; set; }
-        public List<Texture2D> ForegroundTiles { get; set; }
-        public List<Texture2D> PLatformTiles { get; set; }
+        public List<Texture2D> CollideTiles { get; private set; }
+        public List<Texture2D> BackgroundTiles { get; private set; }
+        public List<Texture2D> ForegroundTiles { get; private set; }
+        public List<Texture2D> PLatformTiles { get; private set; }
 
-        public TileOpbouw(ContentManager Content)
+        public TileGenerator(ContentManager Content)
         {
             CollideTiles = new List<Texture2D>();
             for (int i = 1; i <= aantalCollideTiles; i++)

@@ -11,7 +11,7 @@ namespace Pigit.Objects.Interfaces
     {
         public MoveTypes MovementType { get; }
         public int Value { get; }
-        public bool IsTaken { get; set; }
+        public bool IsTaken { get;}
         public bool IsCollected { get; set; }
         public CollectableTypes ItemType { get;}
     }

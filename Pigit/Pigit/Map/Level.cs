@@ -43,7 +43,7 @@ namespace Pigit.Map
         private const int oneBlockStep = 32;
 
         private List<IRoomLayout> worlds;
-        private TileOpbouw blockOpbouw;
+        private TileGenerator blockOpbouw;
         private List<List<AStaticObject>> worldsDoors;
         private List<List<AEnemyObject>> worldsEnemys;
         private List<List<AEnemyMovement>> worldsMoveEnemys;
@@ -73,23 +73,20 @@ namespace Pigit.Map
             opbouwSprites = new SpriteGenerator(content);
             this.spriteFonts = spriteFonts;
 
+            #region initialize all lists
             worldsTiles = new List<List<ITile>>();
-
             worldsDoors = new List<List<AStaticObject>>();
-
             worldsEnemys = new List<List<AEnemyObject>>();
             worldsMoveEnemys = new List<List<AEnemyMovement>>();
-
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
-
             currMovementEnemy = new List<AEnemyMovement>();
             CurrMovementCollectables = new List<ACollectableMovement>();
-
             CurrEnemys = new List<AEnemyObject>();
             CurrTiles = new List<ITile>();
             CurrCollectable = new List<ICollectableObject>();
             currDoors = new List<AStaticObject>();
+            #endregion
 
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
             ACollectableMovement.HeroPlayer = heroPlayer;
@@ -100,6 +97,7 @@ namespace Pigit.Map
             CheckEnemys();
             CheckCurrMap();
 
+            #region update every current movements and check for collision with the doors
             foreach (var moveCommand in currMovementEnemy)
             {
                 moveCommand.CheckMovement(gameTime);
@@ -112,6 +110,7 @@ namespace Pigit.Map
             {
                 door.Update(gameTime);
             }
+            #endregion
         }
         public void CreateLevels()
         {
@@ -120,8 +119,10 @@ namespace Pigit.Map
             GenerateLevelContent(content);
             GenerateMovement();
         }
+
         public void DrawWorld(SpriteBatch spriteBatch)
         {
+            #region draw every current item on the map
             foreach (var texture in CurrTiles)
             {
                 texture.Draw(spriteBatch);
@@ -138,11 +139,12 @@ namespace Pigit.Map
             {
                 item.Draw(spriteBatch);
             }
+            #endregion
         }
 
         private void InitializeTiles(ContentManager content)
         {
-            this.blockOpbouw = new TileOpbouw(content);
+            this.blockOpbouw = new TileGenerator(content);
         }
         private void DeleteContent()
         {
@@ -159,6 +161,7 @@ namespace Pigit.Map
         }
         private void CheckEnemys()
         {
+            #region check for dead enemys
             for (int i = 0; i < CurrEnemys.Count; i++)
             {
                 if (CurrEnemys[i].Dead)
@@ -169,9 +172,11 @@ namespace Pigit.Map
                     currMovementEnemy.RemoveAt(i);
                 }
             }
+            #endregion
         }
         private void CheckCollected()
         {
+            #region check for collected items
             for (int i = 0; i < CurrCollectable.Count; i++)
             {
                 if (CurrCollectable[i].IsTaken)
@@ -180,6 +185,7 @@ namespace Pigit.Map
                     CurrMovementCollectables.RemoveAt(i);
                 }
             }
+            #endregion
         }
         private void GenerateMovement()
         {

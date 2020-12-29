@@ -21,7 +21,7 @@ namespace Pigit.Objects.Abstracts
         public int Value { get; protected set; }
 
         public bool IsCollected { get; set; }
-        public bool IsTaken { get; set; }
+        public bool IsTaken { get; protected set; }
 
         public CollectableTypes ItemType { get; protected set; }
 

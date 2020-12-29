@@ -47,7 +47,4 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Text\Interface\" />
-  </ItemGroup>
 </Project>

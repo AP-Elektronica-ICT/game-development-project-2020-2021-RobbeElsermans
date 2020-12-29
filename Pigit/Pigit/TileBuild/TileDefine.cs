@@ -9,15 +9,15 @@ namespace Pigit.TileBuild
 {
     class TileDefine: ITile
     {
-        protected Texture2D texture;
-        public Vector2 Position { get; set; }
-        public Rectangle Border { get; set; }
+        private Texture2D texture;
+        private Vector2 position;
+        public Rectangle Border { get; private set; }
         public TileType Type { get; protected set; }
 
         public TileDefine(Texture2D texture, Vector2 position, TileType tileType)
         {
             this.texture = texture;
-            this.Position = position;
+            this.position = position;
             this.Type = tileType;
 
             if (Type != TileType.BackGroundTile)
@@ -28,7 +28,7 @@ namespace Pigit.TileBuild
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, Color.White);
+            spriteBatch.Draw(texture, position, Color.White);
         }
     }
 }

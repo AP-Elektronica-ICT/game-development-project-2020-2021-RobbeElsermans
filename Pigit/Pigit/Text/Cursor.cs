@@ -9,13 +9,13 @@ namespace Pigit.Text
 {
     class Cursor
     {
-        int amountItems = 0;
-        Vector2 cursorPos;
-        Vector2 basePositon;
-        SpriteFont font;
-        string text;
-
+        private int amountItems = 0;
+        private Vector2 cursorPos;
+        private Vector2 basePositon;
+        private SpriteFont font;
+        private string text;
         private int cursor;
+
         public int CursorIndex
         {
             get

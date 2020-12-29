@@ -28,7 +28,7 @@ namespace Pigit.Objects.Abstracts
         protected SpriteDefine currentSprite;
         protected AnimatieTypes type;
 
-        public int Points { get; protected set; }
+        public int Points { get; set; }
         public Rectangle Rectangle { get; protected set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }

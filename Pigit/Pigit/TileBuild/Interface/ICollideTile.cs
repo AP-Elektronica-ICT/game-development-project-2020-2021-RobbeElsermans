@@ -10,6 +10,6 @@ namespace Pigit.TileBuild
     interface ICollideTile
     {
         public TileType Type { get;}
-        public Rectangle Border { get; set; }
+        public Rectangle Border { get;}
     }
 }
