@@ -56,9 +56,6 @@ namespace Pigit.Text.Abstract
         }
 
         public abstract void EnterLoop(GameTime gameTime);
-
-        //public abstract void EscapeLoop(GameTime gameTime);
-
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.DrawString(title, text[0], position, Color.Yellow);

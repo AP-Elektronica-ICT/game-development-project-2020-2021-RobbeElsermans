@@ -158,10 +158,6 @@ namespace Pigit
                     break;
                 case GameLoop.Dead:
                     deadMenu.Update(gameTime);
-                    _cameraAnimatie.Follow(player);
-                    
-                    moveHero.CheckMovement(gameTime);
-                    CameraZoomOut();
 
                     break;
                 case GameLoop.End:
@@ -238,9 +234,7 @@ namespace Pigit
                     pauseMenu.Draw(_spriteBatch);
                     break;
                 case GameLoop.Dead:
-                    _spriteBatch.Begin(transformMatrix: _cameraAnimatie.Transform, sortMode: SpriteSortMode.Deferred, blendState: BlendState.AlphaBlend);
-
-                    player.Draw(_spriteBatch);
+                    _spriteBatch.Begin();
 
                     deadMenu.Draw(_spriteBatch);
                     break;

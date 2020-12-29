@@ -24,8 +24,6 @@ namespace Pigit
         public float Rotation { get; set; }
 
         private float zoom = 1;
-
-
         public void Follow(IMoveable target)
         {
             Matrix offset =
