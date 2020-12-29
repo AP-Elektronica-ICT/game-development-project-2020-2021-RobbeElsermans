@@ -45,6 +45,7 @@ namespace Pigit.Movement.NPCMoveCommands
                 hasJumped = true;
                 isGround = false;
             }
+
             player.IsAttacking = false;
             if (NPCCollision.IsTouchingNPC(HeroPlayer.Rectangle, player.Rectangle))
             {

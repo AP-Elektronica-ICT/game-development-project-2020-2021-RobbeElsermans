@@ -47,6 +47,7 @@ namespace Pigit.Objects.Abstracts
 
         public override void Update(GameTime gameTime)
         {
+            Type = AnimatieTypes.Idle;
             CheckSprites();
 
             if (Type == AnimatieTypes.Hit)
@@ -96,7 +97,7 @@ namespace Pigit.Objects.Abstracts
             if (IsAttacking)
             {
                 Type = AnimatieTypes.Attack;
-                //IsAttacking = false;
+                IsAttacking = false;
             }
 
             if (Velocity.Y + 0.2f < 0)
