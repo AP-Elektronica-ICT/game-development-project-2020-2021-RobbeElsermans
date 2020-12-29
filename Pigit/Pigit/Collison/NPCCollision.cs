@@ -9,9 +9,9 @@ namespace Pigit.Collison
     static class NPCCollision
     {
         private const int oneBlockStep = 32;
-        private const int marginLeft = oneBlockStep * 1;
+        private const int marginLeft = oneBlockStep * 3;
         private const int marginRight = oneBlockStep * 1;
-        private const int marginTop = oneBlockStep * 1;
+        private const int marginTop = oneBlockStep * 2;
         private const int marginBottom = oneBlockStep * 1;
         public static bool IsTouchingNPC(Rectangle player1, Rectangle player2)
         {
