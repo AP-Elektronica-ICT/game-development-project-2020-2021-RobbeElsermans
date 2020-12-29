@@ -23,22 +23,22 @@ namespace Pigit.Objects.Abstracts
         protected HeroText text;
         protected int beginHearts;
         protected int beginAttackDamage;
+        private int hearts;
+        protected Dictionary<AnimatieTypes, SpriteDefine> sprites;
+        protected SpriteDefine currentSprite;
+        protected AnimatieTypes type;
 
-        public int Points { get; set; }
-        public Rectangle Rectangle { get; set; }
+        public int Points { get; protected set; }
+        public Rectangle Rectangle { get; protected set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
-        public AnimatieTypes Type { get; set; }
-        private int hearts;
         public int Hearts { get { return hearts; } set { hearts = value; if (hearts < 0) hearts = 0; } }
-        public int AttackDamage { get; set; }
-        public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
-        public SpriteDefine CurrentSprite { get; private set; }
-        public bool Dead { get; protected set; }
+        public int AttackDamage { get; private set; }
+        public bool Dead { get; private set; }
         public bool IsHit { get; set; }
         public bool IsAttacking { get; set; }
-        public AttackCommand Attack { get; set; }
+        public AttackCommand Attack { get; private set; }
 
         public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1)
         {
@@ -48,17 +48,17 @@ namespace Pigit.Objects.Abstracts
             Attack = new AttackCommand();
             Hearts = hearts;
             AttackDamage = attackDamage;
-            Sprites = spriteOpbouw;
+            sprites = spriteOpbouw;
             Positie = beginPosition;
             CheckSprites();
         }
         private void CheckType()
         {
-            foreach (var sprites in Sprites)
+            foreach (var sprites in sprites)
             {
-                if (sprites.Key == Type)
+                if (sprites.Key == type)
                 {
-                    CurrentSprite = sprites.Value;
+                    currentSprite = sprites.Value;
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Pigit.Objects.Abstracts
                 AttackDamage = beginAttackDamage * Points /100;
             }
 
-            if (Type == AnimatieTypes.Hit)
+            if (type == AnimatieTypes.Hit)
             {
                 if (!isSetTimer)
                 {
@@ -100,21 +100,21 @@ namespace Pigit.Objects.Abstracts
                 }
             }
 
-            if (Type != AnimatieTypes.Dead)
+            if (type != AnimatieTypes.Dead)
             {
                 Positie += Velocity;
                 RectBuild();
-                CurrentSprite.Update(gameTime);
+                currentSprite.Update(gameTime);
             }
             else
             {
-                if (CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames - 1)
+                if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames - 1)
                 {
                     Dead = true;
                 }
                 else
                 {
-                    CurrentSprite.Update(gameTime);
+                    currentSprite.Update(gameTime);
                 }
             }
 
@@ -129,24 +129,24 @@ namespace Pigit.Objects.Abstracts
         {
             if (Velocity.X < 0 || Velocity.X > 0)
             {
-                Type = AnimatieTypes.Run;
+                type = AnimatieTypes.Run;
             }
             else
             {
-                Type = AnimatieTypes.Idle;
+                type = AnimatieTypes.Idle;
             }
             if (IsAttacking)
             {
-                Type = AnimatieTypes.Attack;
+                type = AnimatieTypes.Attack;
             }
 
             if (Velocity.Y + 0.2f < 0)
             {
-                Type = AnimatieTypes.Jump;
+                type = AnimatieTypes.Jump;
             }
             if (Velocity.Y - 0.2f > 0)
             {
-                Type = AnimatieTypes.Fall;
+                type = AnimatieTypes.Fall;
             }
             CheckAttack();
             CheckType();
@@ -156,17 +156,17 @@ namespace Pigit.Objects.Abstracts
         {
             if (IsHit)
             {
-                Type = AnimatieTypes.Hit;
+                type = AnimatieTypes.Hit;
             }
             if (Hearts <= 0)
             {
-                Type = AnimatieTypes.Dead;
+                type = AnimatieTypes.Dead;
             }
         }
 
         protected virtual void RectBuild()
         {
-            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
+            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, currentSprite.AnimatieL.CurrentFrame.SourceRect.Width, currentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
         }
         public virtual void Draw(SpriteBatch _spriteBatch)
         {
@@ -174,14 +174,14 @@ namespace Pigit.Objects.Abstracts
 
                 if (!Direction)
                 {
-                    tempTexture = CurrentSprite.TextureR;
+                    tempTexture = currentSprite.TextureR;
                 }
                 else
                 {
-                    tempTexture = CurrentSprite.TextureL;
+                    tempTexture = currentSprite.TextureL;
                 }
 
-                _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+                _spriteBatch.Draw(tempTexture, Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
 
                 text.Draw(_spriteBatch);
         }

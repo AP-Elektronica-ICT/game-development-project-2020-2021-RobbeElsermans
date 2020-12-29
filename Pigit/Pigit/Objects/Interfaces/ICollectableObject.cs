@@ -9,7 +9,7 @@ namespace Pigit.Objects.Interfaces
 {
     interface ICollectableObject: IObject, IMoveable
     {
-        public MoveTypes MovementType { get; set; }
+        public MoveTypes MovementType { get; }
         public int Value { get; }
         public bool IsTaken { get; set; }
         public bool IsCollected { get; set; }

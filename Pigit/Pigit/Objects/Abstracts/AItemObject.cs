@@ -13,9 +13,11 @@ namespace Pigit.Objects.Abstracts
 {
     abstract class AItemObject : ICollectableObject
     {
-        public MoveTypes MovementType { get; set; }
-        public AnimatieTypes AnimatieType { get; set; }
+        protected AnimatieTypes animatieType;
+        protected Dictionary<AnimatieTypes, SpriteDefine> sprites;
+        protected SpriteDefine currentSprite;
 
+        public MoveTypes MovementType { get; protected set; }
         public int Value { get; protected set; }
 
         public bool IsCollected { get; set; }
@@ -23,18 +25,14 @@ namespace Pigit.Objects.Abstracts
 
         public CollectableTypes ItemType { get; protected set; }
 
-        public Rectangle Rectangle { get; set; }
-
-        public SpriteDefine CurrentSprite { get; protected set; }
-
-        public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
+        public Rectangle Rectangle { get; protected set; }
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
 
         public AItemObject(Dictionary<AnimatieTypes, SpriteDefine> sprites, CollectableTypes type, Vector2 positie, MoveTypes movement, int value)
         {
             this.MovementType = movement;
-            this.Sprites = sprites;
+            this.sprites = sprites;
             this.Positie = positie;
             this.ItemType = type;
             this.IsCollected = false;
@@ -43,31 +41,31 @@ namespace Pigit.Objects.Abstracts
         }
         private void CheckType()
         {
-            foreach (var sprites in Sprites)
+            foreach (var sprites in sprites)
             {
-                if (sprites.Key == AnimatieType)
+                if (sprites.Key == animatieType)
                 {
-                    CurrentSprite = sprites.Value;
+                    currentSprite = sprites.Value;
                 }
             }
         }
 
         protected virtual void RectBuild()
         {
-            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieR.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieR.CurrentFrame.SourceRect.Height);
+            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, currentSprite.AnimatieR.CurrentFrame.SourceRect.Width, currentSprite.AnimatieR.CurrentFrame.SourceRect.Height);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-                _spriteBatch.Draw(CurrentSprite.TextureR, Positie, CurrentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
+                _spriteBatch.Draw(currentSprite.TextureR, Positie, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
         }
         private void CheckSprites()
         {
-            AnimatieType = AnimatieTypes.Idle;
+            animatieType = AnimatieTypes.Idle;
 
             if (IsCollected)
             {
-                AnimatieType = AnimatieTypes.Hit;
+                animatieType = AnimatieTypes.Hit;
             }
 
             CheckType();
@@ -78,13 +76,13 @@ namespace Pigit.Objects.Abstracts
             CheckSprites();
             RectBuild();
 
-            if (CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames-1 && IsCollected)
+            if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames-1 && IsCollected)
             {
                 IsTaken = true;
             }
             else
             {
-                CurrentSprite.Update(gameTime);
+                currentSprite.Update(gameTime);
             }
 
         }

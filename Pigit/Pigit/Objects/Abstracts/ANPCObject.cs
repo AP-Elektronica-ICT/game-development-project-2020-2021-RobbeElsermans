@@ -21,31 +21,32 @@ namespace Pigit.Objects.Abstracts
         protected APlayerText text;
         protected int beginHearts;
         protected int beginAttackDamage;
+        protected Dictionary<AnimatieTypes, SpriteDefine> sprites;
+        protected SpriteDefine currentSprite;
+        protected AnimatieTypes type;
 
-        public Rectangle Rectangle { get; set; }
+        public Rectangle Rectangle { get; protected set; }
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
-        public AnimatieTypes Type { get; set; }
-        public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
-        public SpriteDefine CurrentSprite { get; protected set; }
+        
         public MoveTypes MovementType { get; set; }
 
         public ANPCObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, MoveTypes moveTypes)
         {
             text = new EnemyText(spriteFonts);
-            Sprites = spriteOpbouw;
+            sprites = spriteOpbouw;
             Positie = beginPosition;
             this.MovementType = moveTypes;
             CheckSprites();
         }
         private void CheckType()
         {
-            foreach (var sprites in Sprites)
+            foreach (var sprites in sprites)
             {
-                if (sprites.Key == Type)
+                if (sprites.Key == type)
                 {
-                    CurrentSprite = sprites.Value;
+                    currentSprite = sprites.Value;
                 }
             }
         }
@@ -56,27 +57,27 @@ namespace Pigit.Objects.Abstracts
 
             Positie += Velocity;
             RectBuild();
-            CurrentSprite.Update(gameTime);
+            currentSprite.Update(gameTime);
         }
 
         protected virtual void CheckSprites()
         {
             if (Velocity.X < 0 || Velocity.X > 0)
             {
-                Type = AnimatieTypes.Run;
+                type = AnimatieTypes.Run;
             }
             else
             {
-                Type = AnimatieTypes.Idle;
+                type = AnimatieTypes.Idle;
             }
 
             if (Velocity.Y + 0.2f < 0)
             {
-                Type = AnimatieTypes.Jump;
+                type = AnimatieTypes.Jump;
             }
             if (Velocity.Y - 0.2f > 0)
             {
-                Type = AnimatieTypes.Fall;
+                type = AnimatieTypes.Fall;
             }
 
             CheckType();
@@ -84,7 +85,7 @@ namespace Pigit.Objects.Abstracts
 
         protected virtual void RectBuild()
         {
-            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
+            Rectangle = new Rectangle((int)Positie.X, (int)Positie.Y, currentSprite.AnimatieL.CurrentFrame.SourceRect.Width, currentSprite.AnimatieL.CurrentFrame.SourceRect.Height);
         }
         public virtual void Draw(SpriteBatch _spriteBatch)
         {
@@ -92,14 +93,14 @@ namespace Pigit.Objects.Abstracts
 
             if (!Direction)
             {
-                tempTexture = CurrentSprite.TextureR;
+                tempTexture = currentSprite.TextureR;
             }
             else
             {
-                tempTexture = CurrentSprite.TextureL;
+                tempTexture = currentSprite.TextureL;
             }
 
-            _spriteBatch.Draw(tempTexture, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            _spriteBatch.Draw(tempTexture, Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
 
             text.Draw(_spriteBatch);
         }

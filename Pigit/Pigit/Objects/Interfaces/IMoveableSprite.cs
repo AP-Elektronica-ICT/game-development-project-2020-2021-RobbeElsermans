@@ -8,6 +8,5 @@ namespace Pigit.Objects.Interfaces
     interface IMoveableSprite
     {
         bool Direction { get; set; }
-        AnimatieTypes Type { get; set; }
     }
 }

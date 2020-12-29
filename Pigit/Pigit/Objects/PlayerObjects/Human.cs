@@ -24,7 +24,7 @@ namespace Pigit.Objects.PlayerObjects
         }
         protected override void RectBuild()
         {
-            Rectangle = new Rectangle((int)Positie.X + 36, (int)Positie.Y + 20, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Width - 45, CurrentSprite.AnimatieL.CurrentFrame.SourceRect.Height - 33);
+            Rectangle = new Rectangle((int)Positie.X + 36, (int)Positie.Y + 20, currentSprite.AnimatieL.CurrentFrame.SourceRect.Width - 45, currentSprite.AnimatieL.CurrentFrame.SourceRect.Height - 33);
         }
         public override void Update(GameTime gameTime)
         {

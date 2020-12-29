@@ -16,14 +16,14 @@ namespace Pigit.Objects.Abstracts
 {
     abstract class AEnemyObject : ANPCObject, IAttacker, IAttackAble
     {
-        private int hearts;
+        protected int hearts;
         public int Hearts { get { return hearts; } set { hearts = value; if (hearts < 0) hearts = 0; } }
-        public int AttackDamage { get; set; }
+        public int AttackDamage { get; protected set; }
 
         public bool Dead { get; protected set; }
         public bool IsHit { get; set; }
         public bool IsAttacking { get; set; }
-        public AttackCommand Attack { get; set; }
+        public AttackCommand Attack { get; protected set; }
 
         public AEnemyObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts, int attackDamage, MoveTypes moveTypes): base(spriteOpbouw, beginPosition,spriteFonts, moveTypes)
         {
@@ -36,21 +36,21 @@ namespace Pigit.Objects.Abstracts
         }
         private void CheckType()
         {
-            foreach (var sprites in Sprites)
+            foreach (var sprites in sprites)
             {
-                if (sprites.Key == Type)
+                if (sprites.Key == type)
                 {
-                    CurrentSprite = sprites.Value;
+                    currentSprite = sprites.Value;
                 }
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            Type = AnimatieTypes.Idle;
+            type = AnimatieTypes.Idle;
             CheckSprites();
 
-            if (Type == AnimatieTypes.Hit)
+            if (type == AnimatieTypes.Hit)
             {
                 if (!isSetTimer)
                 {
@@ -65,21 +65,21 @@ namespace Pigit.Objects.Abstracts
                 }
             }
 
-            if (Type != AnimatieTypes.Dead)
+            if (type != AnimatieTypes.Dead)
             {
                 Positie += Velocity;
                 RectBuild();
-                CurrentSprite.Update(gameTime);
+                currentSprite.Update(gameTime);
             }
             else
             {
-                if (CurrentSprite.AnimatieL.Counter == CurrentSprite.AmountFrames - 1)
+                if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames - 1)
                 {
                     Dead = true;
                 }
                 else
                 {
-                    CurrentSprite.Update(gameTime);
+                    currentSprite.Update(gameTime);
                 }
             }
         }
@@ -88,25 +88,25 @@ namespace Pigit.Objects.Abstracts
         {
             if (Velocity.X < 0 || Velocity.X > 0)
             {
-                Type = AnimatieTypes.Run;
+                type = AnimatieTypes.Run;
             }
             else
             {
-                Type = AnimatieTypes.Idle;
+                type = AnimatieTypes.Idle;
             }
             if (IsAttacking)
             {
-                Type = AnimatieTypes.Attack;
+                type = AnimatieTypes.Attack;
                 IsAttacking = false;
             }
 
             if (Velocity.Y + 0.2f < 0)
             {
-                Type = AnimatieTypes.Jump;
+                type = AnimatieTypes.Jump;
             }
             if (Velocity.Y - 0.2f > 0)
             {
-                Type = AnimatieTypes.Fall;
+                type = AnimatieTypes.Fall;
             }
             CheckAttack();
             CheckType();
@@ -116,11 +116,11 @@ namespace Pigit.Objects.Abstracts
         {
             if (IsHit)
             {
-                Type = AnimatieTypes.Hit;
+                type = AnimatieTypes.Hit;
             }
             if (Hearts <= 0)
             {
-                Type = AnimatieTypes.Dead;
+                type = AnimatieTypes.Dead;
             }
         }
     }

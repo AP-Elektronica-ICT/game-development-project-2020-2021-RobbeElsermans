@@ -11,42 +11,40 @@ namespace Pigit.Objects.Abstracts
 {
     class AStaticObject : IMoveableSprite, IObject
     {
-        public Vector2 Positie { get; set; }
-
-        public SpriteDefine CurrentSprite { get; private set; }
-
-        public Dictionary<AnimatieTypes, SpriteDefine> Sprites { get; set; }
+        protected Vector2 positie;
+        protected Dictionary<AnimatieTypes, SpriteDefine> sprites;
+        protected SpriteDefine currentSprite;
+        protected AnimatieTypes type;
         public bool Direction { get; set; }
-        public AnimatieTypes Type { get; set; }
 
         public AStaticObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition)
         {
-            Sprites = spriteOpbouw;
-            Positie = beginPosition;
+            sprites = spriteOpbouw;
+            positie = beginPosition;
         }
 
         public void Update(GameTime gameTime)
         {
             CheckSprites();
-            CurrentSprite.Update(gameTime);
+            currentSprite.Update(gameTime);
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(CurrentSprite.TextureL, Positie, CurrentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            _spriteBatch.Draw(currentSprite.TextureL, positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
         }
         private void CheckSprites()
         {
-            Type = AnimatieTypes.Idle;
+            type = AnimatieTypes.Idle;
 
             CheckType();
         }
         private void CheckType()
         {
-            foreach (var sprites in Sprites)
+            foreach (var sprites in sprites)
             {
-                if (sprites.Key == Type)
+                if (sprites.Key == type)
                 {
-                    CurrentSprite = sprites.Value;
+                    currentSprite = sprites.Value;
                 }
             }
         }

@@ -54,16 +54,15 @@ namespace Pigit.Map
         private IPlayerObject heroPlayer;
         private List<List<ITile>> worldsTiles;
         private int prevCurrMap = 500;
-
-        Dictionary<TextTypes, SpriteFont> spriteFonts;
+        private List<AEnemyMovement> currMovementEnemy;
+        private int currMap;
+        private Dictionary<TextTypes, SpriteFont> spriteFonts;
+        private List<AStaticObject> currDoors;
 
         public List<ITile> CurrTiles { get; private set; }
         public List<AEnemyObject> CurrEnemys { get; private set; }
-        public List<AEnemyMovement> CurrMovementEnemy { get; private set; }
-        public List<ICollectableObject> CurrCollectable { get; set; }
-        public int CurrMap { get; set; }
+        public List<ICollectableObject> CurrCollectable { get; private set; }
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
-        public List<AStaticObject> CurrDoors { get; set; }
         public bool Play { get; set; }
 
         public Level(ContentManager content, List<IRoomLayout> worlds, IPlayerObject hero, Dictionary<TextTypes, SpriteFont> spriteFonts)
@@ -84,13 +83,13 @@ namespace Pigit.Map
             worldsCollectables = new List<List<ICollectableObject>>();
             worldsMoveCollectables = new List<List<ACollectableMovement>>();
 
-            CurrMovementEnemy = new List<AEnemyMovement>();
+            currMovementEnemy = new List<AEnemyMovement>();
             CurrMovementCollectables = new List<ACollectableMovement>();
 
             CurrEnemys = new List<AEnemyObject>();
             CurrTiles = new List<ITile>();
             CurrCollectable = new List<ICollectableObject>();
-            CurrDoors = new List<AStaticObject>();
+            currDoors = new List<AStaticObject>();
 
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
             ACollectableMovement.HeroPlayer = heroPlayer;
@@ -101,7 +100,7 @@ namespace Pigit.Map
             CheckEnemys();
             CheckCurrMap();
 
-            foreach (var moveCommand in CurrMovementEnemy)
+            foreach (var moveCommand in currMovementEnemy)
             {
                 moveCommand.CheckMovement(gameTime);
             }
@@ -109,7 +108,7 @@ namespace Pigit.Map
             {
                 moveCommand.CheckMovement(gameTime);
             }
-            foreach (var door in CurrDoors)
+            foreach (var door in currDoors)
             {
                 door.Update(gameTime);
             }
@@ -127,7 +126,7 @@ namespace Pigit.Map
             {
                 texture.Draw(spriteBatch);
             }
-            foreach (var door in CurrDoors)
+            foreach (var door in currDoors)
             {
                 door.Draw(spriteBatch);
             }
@@ -167,7 +166,7 @@ namespace Pigit.Map
                     heroPlayer.Points += enemyDeadPoints;
 
                     CurrEnemys.RemoveAt(i);
-                    CurrMovementEnemy.RemoveAt(i);
+                    currMovementEnemy.RemoveAt(i);
                 }
             }
         }
@@ -234,42 +233,42 @@ namespace Pigit.Map
         {
             if (Play)
             {
-                if (CurrMap == 0)
+                if (currMap == 0)
                 {
                     //initial opbouw van mappen
                     DeleteContent();
                     CreateLevels();
 
                     //Start map
-                    CurrMap = 1;
+                    currMap = 1;
                 }
 
-                CurrDoors = worldsDoors[CurrMap];
-                CurrEnemys = worldsEnemys[CurrMap];
-                CurrTiles = worldsTiles[CurrMap];
-                CurrMovementEnemy = worldsMoveEnemys[CurrMap];
+                currDoors = worldsDoors[currMap];
+                CurrEnemys = worldsEnemys[currMap];
+                CurrTiles = worldsTiles[currMap];
+                currMovementEnemy = worldsMoveEnemys[currMap];
 
-                CurrCollectable = worldsCollectables[CurrMap];
-                CurrMovementCollectables = worldsMoveCollectables[CurrMap];
+                CurrCollectable = worldsCollectables[currMap];
+                CurrMovementCollectables = worldsMoveCollectables[currMap];
 
-                if (CurrMap != prevCurrMap)
+                if (currMap != prevCurrMap)
                 {
                     //Plaats speler juist
                     heroPlayer.Velocity = Vector2.Zero;
-                    heroPlayer.Positie = worlds[CurrMap].StartPos;
+                    heroPlayer.Positie = worlds[currMap].StartPos;
                 }
-                if (CurrMap != prevCurrMap && prevCurrMap == 3)
+                if (currMap != prevCurrMap && prevCurrMap == 3)
                 {
                     heroPlayer.Velocity = Vector2.Zero;
-                    heroPlayer.Positie = new Vector2(worlds[CurrMap].Warp2.X - oneBlockStep * 2, worlds[CurrMap].Warp2.Y);
+                    heroPlayer.Positie = new Vector2(worlds[currMap].Warp2.X - oneBlockStep * 2, worlds[currMap].Warp2.Y);
                 }
-                prevCurrMap = CurrMap;
+                prevCurrMap = currMap;
 
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 1) CurrMap = 2;
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 2) CurrMap = 4;
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp2) && CurrMap == 2) CurrMap = 3;
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 3) CurrMap = 2;
-                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[CurrMap].Warp1) && CurrMap == 4)
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[currMap].Warp1) && currMap == 1) currMap = 2;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[currMap].Warp1) && currMap == 2) currMap = 4;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[currMap].Warp2) && currMap == 2) currMap = 3;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[currMap].Warp1) && currMap == 3) currMap = 2;
+                if (WarpCollision.IsAroundWarp(heroPlayer.Positie, worlds[currMap].Warp1) && currMap == 4)
                 {
                     if (CurrEnemys.Count == 0)
                     {
@@ -279,31 +278,31 @@ namespace Pigit.Map
             }
             else
             {
-                if (CurrMap != 0)
+                if (currMap != 0)
                 {
                     //initial opbouw van mappen
                     DeleteContent();
                     CreateLevels();
 
                     //Start map
-                    CurrMap = 0;
+                    currMap = 0;
                 }
 
-                CurrDoors = worldsDoors[CurrMap];
-                CurrEnemys = worldsEnemys[CurrMap];
-                CurrTiles = worldsTiles[CurrMap];
-                CurrMovementEnemy = worldsMoveEnemys[CurrMap];
+                currDoors = worldsDoors[currMap];
+                CurrEnemys = worldsEnemys[currMap];
+                CurrTiles = worldsTiles[currMap];
+                currMovementEnemy = worldsMoveEnemys[currMap];
 
-                CurrCollectable = worldsCollectables[CurrMap];
-                CurrMovementCollectables = worldsMoveCollectables[CurrMap];
+                CurrCollectable = worldsCollectables[currMap];
+                CurrMovementCollectables = worldsMoveCollectables[currMap];
 
-                if (CurrMap != prevCurrMap)
+                if (currMap != prevCurrMap)
                 {
                     //Plaats speler juist
                     heroPlayer.Velocity = Vector2.Zero;
-                    heroPlayer.Positie = worlds[CurrMap].StartPos;
+                    heroPlayer.Positie = worlds[currMap].StartPos;
                 }
-                prevCurrMap = CurrMap;
+                prevCurrMap = currMap;
             }
         }
         private void GenerateLevelContent(ContentManager content)
