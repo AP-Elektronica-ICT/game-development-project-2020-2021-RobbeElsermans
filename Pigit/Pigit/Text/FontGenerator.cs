@@ -8,11 +8,11 @@ using System.Text;
 
 namespace Pigit.Text
 {
-    class TextGenerator
+    class FontGenerator
     {
         public Dictionary<TextTypes, SpriteFont> SpriteFonts { get; private set; }
 
-        public TextGenerator(ContentManager content)
+        public FontGenerator(ContentManager content)
         {
             SpriteFonts = new Dictionary<TextTypes, SpriteFont>();
 

@@ -26,11 +26,6 @@ namespace Pigit.Text.Menus
             }
             if (cursor.CursorIndex == 1)
             {
-                //Help
-                cursor.ResetCursor();
-            }
-            if (cursor.CursorIndex == 2)
-            {
                 //Exit to menu
                 Game1.currGameState = GameLoop.Menu;
                 cursor.ResetCursor();

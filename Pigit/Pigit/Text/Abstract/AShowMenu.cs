@@ -52,12 +52,6 @@ namespace Pigit.Text.Abstract
                 cursor.CursorDown();
             }
 
-            //if (Input.Esc)
-            //{
-            //    Debug.Print("Esc");
-            //    EscapeLoop(gameTime);
-            //}
-
             cursor.Update(gameTime);
         }
 

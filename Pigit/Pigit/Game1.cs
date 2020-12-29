@@ -47,11 +47,11 @@ namespace Pigit
         private AShowMenu pauseMenu;
         private AShowMenu deadMenu;
         private AShowMenu endMenu;
-        private TextGenerator textGenerator;
-        private List<string> startMenuText;
-        private List<string> pauseMenuText;
-        private List<string> deadMenuText;
-        private List<string> endMenuText;
+        private FontGenerator fontGenerator;
+        private List<string> startMenuItems;
+        private List<string> pauseMenuItems;
+        private List<string> deadMenuItems;
+        private List<string> endMenuItems;
 
         private IInputReader KeyBoardReader;
 
@@ -81,24 +81,24 @@ namespace Pigit
             levelsWorld1.Add(new World1Room3Layout());
             levelsWorld1.Add(new World1Room4Layout());
 
-            startMenuText = new List<string>
+            startMenuItems = new List<string>
             {
-                "Pigit", "Play", "Help", "Settings", "Exit Game","->"
+                "Pigit", "Play", "Exit Game","->"
             };
 
-            pauseMenuText = new List<string>
+            pauseMenuItems = new List<string>
             {
-                 "Pause", "Resume", "Help", "Main Menu", "->"
+                 "Pause", "Resume", "Main Menu", "->"
             };
 
-            deadMenuText = new List<string>
+            deadMenuItems = new List<string>
             {
-                 "Dead","Main Menu", "Help", "Exit Game", "->"
+                 "Dead","Main Menu", "Exit Game", "->"
             };
 
-            endMenuText = new List<string>
+            endMenuItems = new List<string>
             {
-                 "End","Main Menu", "Help", "Exit Game", "->"
+                 "End","Main Menu", "Exit Game", "->"
             };
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -110,22 +110,22 @@ namespace Pigit
 
         private void InitializeGameObjects()
         {
-            textGenerator = new TextGenerator(Content);
+            fontGenerator = new FontGenerator(Content);
             opbouwSprites = new SpriteGenerator(Content);
 
-            player = new Human(opbouwSprites.GetSpriteHuman(12), Vector2.Zero, textGenerator.SpriteFonts, heroHearts,heroAttackDamage);
+            player = new Human(opbouwSprites.GetSpriteHuman(12), Vector2.Zero, fontGenerator.SpriteFonts, heroHearts,heroAttackDamage);
 
-            level1 = new Level(Content, levelsWorld1, player, textGenerator.SpriteFonts);
+            level1 = new Level(Content, levelsWorld1, player, fontGenerator.SpriteFonts);
             level1.CreateLevels();
 
             moveHero = new MoveCommandHero(player, level1, KeyBoardReader);
 
             _cameraAnimatie = new CameraAnimatie();
 
-            startMenu = new StartMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(12, 2), startMenuText);
-            pauseMenu = new PauseMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuText);
-            deadMenu = new EndingGameMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuText);
-            endMenu = new EndingGameMenu(textGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count-1].Warp1.X/32)-2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32)-4), endMenuText);
+            startMenu = new StartMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(12, 2), startMenuItems);
+            pauseMenu = new PauseMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuItems);
+            deadMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuItems);
+            endMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count-1].Warp1.X/32)-2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32)-4), endMenuItems);
         }
 
         protected override void Update(GameTime gameTime)
