@@ -12,7 +12,7 @@ using Pigit.Text.Enums;
 using SharpDX.MediaFoundation;
 using System.Collections.Generic;
 
-namespace Pigit.Objects.PlayerObjects
+namespace Pigit.Objects.NPCObjects
 {
     class Pig : AEnemyObject
     {

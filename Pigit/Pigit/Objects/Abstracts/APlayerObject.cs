@@ -28,6 +28,8 @@ namespace Pigit.Objects.Abstracts
         protected SpriteDefine currentSprite;
         protected AnimatieTypes type;
 
+        private bool hasAttacked = false;
+
         public int Points { get; set; }
         public Rectangle Rectangle { get; protected set; }
         public bool Direction { get; set; }
@@ -60,53 +62,19 @@ namespace Pigit.Objects.Abstracts
                 {
                     currentSprite = sprites.Value;
                 }
+                else
+                {
+                    sprites.Value.AnimatieL.Counter = 0;
+                    sprites.Value.AnimatieR.Counter = 0;
+                }
             }
         }
-        //private void Move(Vector2 verplaatsing)
-        //{
-        //    Positie += verplaatsing;
-        //    Positie += Versnelling;
-        //}
-        //private Vector2 limit(Vector2 v, float max)
-        //{
-        //    if (v.Length() > max)
-        //    {
-        //        var ratio = max / v.Length();
-        //        v.X *= ratio;
-        //        v.Y *= ratio;
-        //    }
-        //    return v;
-        //}
+
         public virtual void Update(GameTime gameTime)
         {
             CheckSprites();
-            if (Points > 100)
-            {
-                AttackDamage = beginAttackDamage * Points /100;
-            }
 
-            if (type == AnimatieTypes.Hit)
-            {
-                if (!isSetTimer)
-                {
-                    timer = gameTime.TotalGameTime.TotalSeconds;
-                    isSetTimer = true;
-                }
-
-                if ((gameTime.TotalGameTime.TotalSeconds - timer > 0.5))
-                {
-                    isSetTimer = false;
-                    IsHit = false;
-                }
-            }
-
-            if (type != AnimatieTypes.Dead)
-            {
-                Positie += Velocity;
-                RectBuild();
-                currentSprite.Update(gameTime);
-            }
-            else
+            if (type == AnimatieTypes.Dead)
             {
                 if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames - 1)
                 {
@@ -116,6 +84,40 @@ namespace Pigit.Objects.Abstracts
                 {
                     currentSprite.Update(gameTime);
                 }
+            }
+            else
+            {
+                if (Points > 100)
+                {
+                    AttackDamage = beginAttackDamage * Points / 100;
+                }
+
+                if (type == AnimatieTypes.Hit)
+                {
+                    if (!isSetTimer)
+                    {
+                        timer = gameTime.TotalGameTime.TotalSeconds;
+                        isSetTimer = true;
+                    }
+
+                    if ((gameTime.TotalGameTime.TotalSeconds - timer > 0.5))
+                    {
+                        isSetTimer = false;
+                        IsHit = false;
+                    }
+                }
+                Debug.Print(type + " " + IsAttacking + " " + hasAttacked + " " + currentSprite.AnimatieL.Counter + " " + currentSprite.AmountFrames);
+                if (type ==  AnimatieTypes.Attack)
+                {
+                    if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames - 1)
+                    {
+                        hasAttacked = true;
+                    }
+                }
+
+                Positie += Velocity;
+                RectBuild();
+                currentSprite.Update(gameTime);
             }
 
             if (Dead && Game1.currGameState == GameLoop.Play)
@@ -135,9 +137,15 @@ namespace Pigit.Objects.Abstracts
             {
                 type = AnimatieTypes.Idle;
             }
-            if (IsAttacking)
+
+            if (IsAttacking && !hasAttacked)
             {
                 type = AnimatieTypes.Attack;
+
+            }
+            else if(!IsAttacking && hasAttacked)
+            {
+                hasAttacked = false;
             }
 
             if (Velocity.Y + 0.2f < 0)

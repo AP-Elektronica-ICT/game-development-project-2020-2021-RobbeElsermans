@@ -9,7 +9,7 @@ namespace Pigit
 
         private List<AnimatieFrame> frames;
 
-        public int Counter { get; private set; }
+        public int Counter { get; set; }
 
         private double frameMovement = 0;
 

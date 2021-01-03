@@ -26,6 +26,8 @@ namespace Pigit.Input
         private bool prevEnter;
         private bool prevEsc;
         private bool currEsc;
+        private bool currAttack;
+        private bool prevAttack;
 
         KeyboardState keyboard;
 
@@ -50,11 +52,11 @@ namespace Pigit.Input
             }
             if (keyboard.IsKeyDown(Keys.A))
             {
-                this.Attack = true;
+                Attack = true;
             }
             if (keyboard.IsKeyDown(Keys.Space))
             {
-                this.Jump = true;
+                Jump = true;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
@@ -131,7 +133,6 @@ namespace Pigit.Input
                 Esc = false;
             }
             prevEsc = currEsc;
-
         }
     }
 }

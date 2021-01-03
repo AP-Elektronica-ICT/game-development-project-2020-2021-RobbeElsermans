@@ -20,6 +20,7 @@ using Pigit.Global.Enums;
 using Pigit.TileBuild.Enums;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.StaticObjects;
+using Pigit.Objects.NPCObjects;
 
 namespace Pigit.Map
 {

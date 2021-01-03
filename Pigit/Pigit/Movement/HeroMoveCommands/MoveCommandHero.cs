@@ -29,8 +29,8 @@ namespace Pigit.Movement
         {
             RecastPositions();
 
-            bool attack = false;
-            player.IsAttacking = false;
+            //bool attack = false;
+            //player.IsAttacking = false;
             inputs.ReadInput();
             player.Direction = inputs.Direction;
 
@@ -47,11 +47,13 @@ namespace Pigit.Movement
                     velocity.X += walkingSpeed;
                 }
             }
-
             if (inputs.Attack)
             {
                 player.IsAttacking = true;
-                attack = true;
+            }
+            else
+            {
+                player.IsAttacking = false;
             }
 
             //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
@@ -66,7 +68,7 @@ namespace Pigit.Movement
 
             CheckGravity();
 
-            if (attack)
+            if (player.IsAttacking)
             {
                 player.Attack.Attack(level.CurrEnemys, player, gameTime);
             }
