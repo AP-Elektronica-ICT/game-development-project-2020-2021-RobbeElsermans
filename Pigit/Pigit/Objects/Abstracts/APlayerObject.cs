@@ -13,6 +13,8 @@ using Pigit.Objects.Interfaces;
 using Pigit.Text.PlayerTexts;
 using Pigit.Text.Enums;
 using Pigit.Global.Enums;
+using Pigit.Music;
+using Pigit.Music.Interface;
 
 namespace Pigit.Objects.Abstracts
 {
@@ -106,7 +108,7 @@ namespace Pigit.Objects.Abstracts
                     }
                 }
 
-                if (type ==  AnimatieTypes.Attack)
+                if (type == AnimatieTypes.Attack)
                 {
                     if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames - 1)
                     {
@@ -142,7 +144,7 @@ namespace Pigit.Objects.Abstracts
                 type = AnimatieTypes.Attack;
 
             }
-            else if(!IsAttacking && HasAttacked)
+            else if (!IsAttacking && HasAttacked)
             {
                 HasAttacked = false;
             }
@@ -177,20 +179,22 @@ namespace Pigit.Objects.Abstracts
         }
         public virtual void Draw(SpriteBatch _spriteBatch)
         {
-                Texture2D tempTexture = null;
+            //Texture2D tempTexture = null;
 
-                if (!Direction)
-                {
-                    tempTexture = currentSprite.TextureR;
-                }
-                else
-                {
-                    tempTexture = currentSprite.TextureL;
-                }
+            if (!Direction)
+            {
+                //tempTexture = currentSprite.TextureR;
+                _spriteBatch.Draw(currentSprite.TextureR, Positie, currentSprite.AnimatieR.CurrentFrame.SourceRect, Color.White);
+            }
+            else
+            {
+                //tempTexture = currentSprite.TextureL;
+                _spriteBatch.Draw(currentSprite.TextureL, Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            }
 
-                _spriteBatch.Draw(tempTexture, Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
+            //_spriteBatch.Draw(tempTexture, Positie, currentSprite.AnimatieL.CurrentFrame.SourceRect, Color.White);
 
-                text.Draw(_spriteBatch);
+            text.Draw(_spriteBatch);
         }
 
         public virtual void Reset()

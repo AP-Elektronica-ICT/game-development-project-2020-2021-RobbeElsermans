@@ -1525,6 +1525,42 @@
 /processorParam:TextureFormat=Color
 /build:Human/Run Left (78x58).png
 
+#begin Music/Dungeon - Serpent's Tunnel.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Dungeon - Serpent's Tunnel.ogg
+
+#begin Music/man-getting-hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/man-getting-hit.wav
+
+#begin Music/pig-squeaking-a.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/pig-squeaking-a.wav
+
+#begin Music/Smack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/Smack.wav
+
+#begin Music/Strong Punch.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/Strong Punch.wav
+
+#begin Music/Woosh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/Woosh.wav
+
 #begin Objects/Door/Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor

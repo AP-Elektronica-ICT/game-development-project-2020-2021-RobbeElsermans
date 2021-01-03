@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
+using Pigit.Music.Interface;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
 using Pigit.TileBuild.Enums;
@@ -22,7 +23,9 @@ namespace Pigit.Movement.Abstracts
 
         protected bool hasJumped;
 
-        public AEnemyMovement(AEnemyObject player, Level level, float jumpHeight = 6f, float walkSpeed = 2f)
+        protected IEffectMusic effects;
+
+        public AEnemyMovement(AEnemyObject player, Level level,IEffectMusic effect, float jumpHeight = 6f, float walkSpeed = 2f)
         {
             this.player = player;
             this.level = level;
@@ -30,6 +33,7 @@ namespace Pigit.Movement.Abstracts
             isGround = false;
             this.jumpHeight = jumpHeight;
             this.walkingSpeed = walkSpeed;
+            this.effects = effect;
         }
 
         public abstract void CheckMovement(GameTime gameTime);

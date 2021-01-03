@@ -21,6 +21,7 @@ using Pigit.TileBuild.Enums;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.StaticObjects;
 using Pigit.Objects.NPCObjects;
+using Pigit.Music.Interface;
 
 namespace Pigit.Map
 {
@@ -59,6 +60,7 @@ namespace Pigit.Map
         private int currMap;
         private Dictionary<TextTypes, SpriteFont> spriteFonts;
         private List<AStaticObject> currDoors;
+        private IEffectMusic effectMusic;
 
         public List<ITile> CurrTiles { get; private set; }
         public List<AEnemyObject> CurrEnemys { get; private set; }
@@ -66,8 +68,9 @@ namespace Pigit.Map
         public List<ACollectableMovement> CurrMovementCollectables { get; private set; }
         public bool Play { get; set; }
 
-        public Level(ContentManager content, List<IRoomLayout> worlds, IPlayerObject hero, Dictionary<TextTypes, SpriteFont> spriteFonts)
+        public Level(ContentManager content, List<IRoomLayout> worlds, IPlayerObject hero, Dictionary<TextTypes, SpriteFont> spriteFonts, IEffectMusic effects)
         {
+            this.effectMusic = effects;
             heroPlayer = hero;
             this.worlds = worlds;
             this.content = content;
@@ -197,19 +200,19 @@ namespace Pigit.Map
                     switch (enemy.MovementType)
                     {
                         case MoveTypes.Static:
-                            worldsMoveEnemys[i].Add(new MoveCommandStaticNPC(enemy, this));
+                            worldsMoveEnemys[i].Add(new MoveCommandStaticNPC(enemy, this, effectMusic));
                             break;
                         case MoveTypes.Walk:
-                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic, enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, (int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
                             break;
                         case MoveTypes.Follow:
-                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));
                             break;
                         default:
                             break;

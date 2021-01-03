@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Map;
+using Pigit.Music.Interface;
 using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
@@ -22,7 +23,7 @@ namespace Pigit.Movement.NPCMoveCommands
         private double timer;
         private bool isSetTimer = false;
 
-        public MoveCommandWalkNPC(AEnemyObject player, Level level,float jumpHeight = 4,float walkspeed= 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandWalkNPC(AEnemyObject player, Level level, IEffectMusic effect, float jumpHeight = 4,float walkspeed= 2) : base(player, level,effect ,jumpHeight, walkspeed)
         {
 
         }
@@ -52,7 +53,6 @@ namespace Pigit.Movement.NPCMoveCommands
                     {
                         velocity.X = -1;
                         isGround = false;
-
                     }
                     else
                     {
@@ -63,6 +63,7 @@ namespace Pigit.Movement.NPCMoveCommands
 
                     if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
                     {
+                        effects.PlayJump();
                         isSetTimer = false;
                         velocity.Y = -jumpHeight;
                         hasJumped = true;

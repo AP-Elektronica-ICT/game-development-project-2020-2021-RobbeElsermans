@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Pigit.Collison;
+using Pigit.Music.Interface;
 using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
@@ -14,7 +15,7 @@ namespace Pigit.Attack
         private double timer;
         private bool isSetTimer = false;
 
-        public void Attack(List<AEnemyObject> enemys, IPlayerObject player, GameTime gametime)
+        public void Attack(List<AEnemyObject> enemys, IPlayerObject player, GameTime gametime, IEffectMusic effect)
         {
             SetTimer(gametime);
 
@@ -28,13 +29,14 @@ namespace Pigit.Attack
                         enemy.Hearts -= player.AttackDamage;
                         if (!enemy.IsHit)
                         {
+                            effect.PlayHit();
                             enemy.IsHit = true;
                         }
                     }
                 }
             }
         }
-        public void NPCAttack(IPlayerObject enemy, AEnemyObject player, GameTime gametime)
+        public void NPCAttack(IPlayerObject enemy, AEnemyObject player, GameTime gametime, IEffectMusic effect)
         {
             SetTimer(gametime);
 
@@ -42,11 +44,13 @@ namespace Pigit.Attack
             {
                 if (gametime.TotalGameTime.TotalSeconds - timer > 0.7)
                 {
+                    effect.PlayAttack();
                     isSetTimer = false;
                     enemy.Hearts -= player.AttackDamage;
                     if (!enemy.IsHit)
                     {
                         enemy.IsHit = true;
+                        effect.PlayHit();
                     }
                 }
             }

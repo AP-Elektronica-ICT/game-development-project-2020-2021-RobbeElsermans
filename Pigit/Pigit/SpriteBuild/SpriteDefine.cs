@@ -29,7 +29,7 @@ namespace Pigit.Animatie
 
             for (int i = 0; i < this.size.X * AmountFrames; i += (int)this.size.X)
             {
-                AnimatieR.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)size.X, (int)this.size.Y)));
+                AnimatieR.AddFrame(new AnimatieFrame(new Rectangle(i, 0, (int)this.size.X, (int)this.size.Y)));
             }
             for (int i = Convert.ToInt32(size.X * (AmountFrames - 1)); i >= 0; i -= (int)size.X)
             {

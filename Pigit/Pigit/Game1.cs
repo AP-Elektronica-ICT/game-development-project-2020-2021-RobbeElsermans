@@ -8,6 +8,7 @@ using Pigit.Input.Interfaces;
 using Pigit.Map;
 using Pigit.Map.Interfaces;
 using Pigit.Movement;
+using Pigit.Music;
 using Pigit.Objects;
 using Pigit.Objects.Interfaces;
 using Pigit.Objects.PlayerObjects;
@@ -54,6 +55,9 @@ namespace Pigit
         private List<string> endMenuItems;
 
         private IInputReader KeyBoardReader;
+
+        private MusicGenerator musicGenerator;
+        private GameMusic gameMusic;
 
         public Game1()
         {
@@ -103,24 +107,28 @@ namespace Pigit
                  "End","Main Menu", "Exit Game", "->"
             };
             #endregion
-            #region generate fonts
+            #region generate
             fontGenerator = new FontGenerator(Content);
             generateSprites = new SpriteGenerator(Content);
+            musicGenerator = new MusicGenerator(Content);
             #endregion
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
         {
+            #region initialize game music
+            gameMusic = new GameMusic(musicGenerator);
+            #endregion
             #region initialize Hero
             player = new Human(generateSprites.GetSpriteHuman(12), Vector2.Zero, fontGenerator.SpriteFonts, heroHearts, heroAttackDamage);
             #endregion
             #region initialize level1
-            level1 = new Level(Content, levelsWorld1, player, fontGenerator.SpriteFonts);
+            level1 = new Level(Content, levelsWorld1, player, fontGenerator.SpriteFonts, new EnemyEffects(musicGenerator));
             level1.CreateLevels();
             #endregion
             #region initialize hero movements
-            moveHero = new MoveCommandHero(player, level1, KeyBoardReader);
+            moveHero = new MoveCommandHero(player, level1, KeyBoardReader, new HumanEffect(musicGenerator));
             #endregion
             #region initialize camera animation
             _cameraAnimation = new CameraAnimatie();
@@ -144,7 +152,7 @@ namespace Pigit
             {
                 case GameLoop.Menu:
                     startMenu.Update(gameTime);
-
+                    gameMusic.StopSong();
                     level1.Play = false;
                     level1.Update(gameTime);
 
@@ -155,6 +163,11 @@ namespace Pigit
                 case GameLoop.Play:
                     _cameraAnimation.Follow(player);
 
+                    if (!gameMusic.IsSet)
+                    {
+                        gameMusic.StartSong();
+                    }
+
                     level1.Play = true;
                     level1.Update(gameTime);
 
@@ -164,6 +177,8 @@ namespace Pigit
                     break;
                 case GameLoop.Pause:
                     pauseMenu.Update(gameTime);
+
+                    gameMusic.StopSong();
 
                     break;
                 case GameLoop.Dead:
@@ -181,6 +196,7 @@ namespace Pigit
 
                     break;
                 case GameLoop.Exit:
+                    gameMusic.StopSong();
                     Exit();
                     break;
                 default:

@@ -4,6 +4,8 @@ using Pigit.Animatie;
 using Pigit.Collison;
 using Pigit.Input.Interfaces;
 using Pigit.Map;
+using Pigit.Music;
+using Pigit.Music.Interface;
 using Pigit.Objects;
 using Pigit.Objects.Enums;
 using Pigit.Objects.Interfaces;
@@ -20,7 +22,7 @@ namespace Pigit.Movement
     {
         IInputReader inputs;
 
-        public MoveCommandHero(IPlayerObject player, Level level, IInputReader input) : base(player, level)
+        public MoveCommandHero(IPlayerObject player, Level level, IInputReader input, IEffectMusic effects) : base(player, level, effects)
         {
             inputs = input;
         }
@@ -59,6 +61,7 @@ namespace Pigit.Movement
             //BRON jump werkend krijgen: https://www.youtube.com/watch?v=ZLxIShw-7ac&list=PL667AC2BF84D85779&index=25&t=5s 
             if (inputs.Jump && !hasJumped)
             {
+                effects.PlayJump();
                 velocity.Y = -jumpHeight;
                 hasJumped = true;
                 isGround = false;
@@ -68,9 +71,14 @@ namespace Pigit.Movement
 
             CheckGravity();
 
-            if (player.IsAttacking && !player.HasAttacked)
+            if (player.IsAttacking && !player.HasAttacked && isGround == true)
             {
-                player.Attack.Attack(level.CurrEnemys, player, gameTime);
+                effects.PlayAttack();
+                player.Attack.Attack(level.CurrEnemys, player, gameTime, effects);
+            }
+            else
+            {
+                effects.StopAttack();
             }
 
             player.Positie = positie;

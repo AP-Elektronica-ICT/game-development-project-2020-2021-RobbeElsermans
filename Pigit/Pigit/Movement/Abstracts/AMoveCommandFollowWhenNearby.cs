@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
 using Pigit.Movement.Abstracts;
+using Pigit.Music.Interface;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
 using System;
@@ -15,7 +16,7 @@ namespace Pigit.Movement.NPCMoveCommands
     class AMoveCommandFollowWhenNearby : AEnemyMovement
     {
         public static IMoveable HeroPlayer { get; set; }
-        public AMoveCommandFollowWhenNearby(AEnemyObject player, Level level, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public AMoveCommandFollowWhenNearby(AEnemyObject player, Level level,IEffectMusic effect, float jumpHeight = 4, float walkspeed = 2) : base(player, level, effect, jumpHeight, walkspeed)
         {
         }
 
@@ -41,16 +42,21 @@ namespace Pigit.Movement.NPCMoveCommands
             if (NPCCollision.IsAboveNPC(HeroPlayer.Positie, positie) && !hasJumped)
             {
                 //Jump
+                effects.PlayJump();
                 velocity.Y = -jumpHeight;
                 hasJumped = true;
                 isGround = false;
+            }
+            else
+            {
+                //effects.StopJump();
             }
 
             player.IsAttacking = false;
             if (NPCCollision.IsTouchingNPC(HeroPlayer.Rectangle, player.Rectangle))
             {
                 player.IsAttacking = true;
-                player.Attack.NPCAttack(HeroPlayer as IPlayerObject, player, gameTime);
+                player.Attack.NPCAttack(HeroPlayer as IPlayerObject, player,gameTime, effects);
             }
 
             CheckCollide(4,5);

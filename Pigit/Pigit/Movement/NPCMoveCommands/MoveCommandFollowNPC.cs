@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
+using Pigit.Music.Interface;
 using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
@@ -12,7 +13,7 @@ namespace Pigit.Movement.NPCMoveCommands
 {
     class MoveCommandFollowNPC: AMoveCommandFollowWhenNearby
     {
-        public MoveCommandFollowNPC(AEnemyObject player, Level level,float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandFollowNPC(AEnemyObject player, Level level,IEffectMusic effect,float jumpHeight = 4, float walkspeed = 2) : base(player, level,effect, jumpHeight, walkspeed)
         {
 
         }
@@ -47,6 +48,7 @@ namespace Pigit.Movement.NPCMoveCommands
                     if (HeroPlayer.Positie.Y + 20 < positie.Y && !hasJumped)
                     {
                         //Jump
+                        effects.PlayJump();
                         velocity.Y = -jumpHeight;
                         hasJumped = true;
                         isGround = false;

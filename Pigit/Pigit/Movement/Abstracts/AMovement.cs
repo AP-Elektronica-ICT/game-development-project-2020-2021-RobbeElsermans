@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
+using Pigit.Music;
+using Pigit.Music.Interface;
 using Pigit.Objects;
 using Pigit.Objects.Interfaces;
 using Pigit.TileBuild;
@@ -24,8 +26,9 @@ namespace Pigit.Movement
         protected Vector2 velocity;
 
         protected bool hasJumped;
+        protected IEffectMusic effects;
 
-        public AMovement(IPlayerObject player, Level level, float jumpHeight = 6f, float walkSpeed = 2f)
+        public AMovement(IPlayerObject player, Level level,IEffectMusic effects, float jumpHeight = 6f, float walkSpeed = 2f)
         {
             this.player = player;
             this.level = level;
@@ -33,6 +36,7 @@ namespace Pigit.Movement
             isGround = false;
             this.jumpHeight = jumpHeight;
             this.walkingSpeed = walkSpeed;
+            this.effects = effects;
         }
 
         public abstract void CheckMovement(GameTime gameTime);

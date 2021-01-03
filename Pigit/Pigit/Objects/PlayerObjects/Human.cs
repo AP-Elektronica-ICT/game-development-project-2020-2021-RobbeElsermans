@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
 using Pigit.Global.Enums;
+using Pigit.Music;
 using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.SpriteBuild;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Pigit.Collison;
 using Pigit.Map;
+using Pigit.Music.Interface;
 using Pigit.Objects;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
@@ -12,7 +13,7 @@ using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {
-    class MoveCommandGuardNPC: AMoveCommandFollowWhenNearby
+    class MoveCommandGuardNPC : AMoveCommandFollowWhenNearby
     {
         private bool righting = false;
         private double timer1;
@@ -31,13 +32,13 @@ namespace Pigit.Movement.NPCMoveCommands
 
         private bool hasFollow = false;
 
-        public MoveCommandGuardNPC(AEnemyObject player, Level level,double walkTime = 2.0, double stopTime = 3.0, float jumpHeight = 4, float walkspeed = 2) : base(player, level, jumpHeight, walkspeed)
+        public MoveCommandGuardNPC(AEnemyObject player, Level level, IEffectMusic effect, double walkTime = 2.0, double stopTime = 3.0, float jumpHeight = 4, float walkspeed = 2) : base(player, level, effect, jumpHeight, walkspeed)
         {
             this.walkTime = walkTime;
             this.stopTime = stopTime;
             time = true;
         }
-        public MoveCommandGuardNPC(AEnemyObject player, Level level, int minX, int maxX, double  stopTime = 3.0) : base(player, level, 4, 2)
+        public MoveCommandGuardNPC(AEnemyObject player, Level level, IEffectMusic effect, int minX, int maxX, double stopTime = 3.0) : base(player, level, effect, 4, 2)
         {
             this.minX = minX;
             this.maxX = maxX;
@@ -78,12 +79,12 @@ namespace Pigit.Movement.NPCMoveCommands
                         if (player.Direction)
                         {
                             velocity.X = -1;
-                          
+
                         }
                         else
                         {
                             velocity.X = 1;
-                          
+
                         }
                         if ((gameTime.TotalGameTime.TotalSeconds - timer1 > walkTime))
                         {
@@ -149,7 +150,7 @@ namespace Pigit.Movement.NPCMoveCommands
                         }
                     }
                     #endregion
-                    this.CheckCollide(5,5);
+                    this.CheckCollide(5, 5);
 
                     CheckGravity();
 
