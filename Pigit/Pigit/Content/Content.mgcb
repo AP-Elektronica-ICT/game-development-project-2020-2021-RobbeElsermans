@@ -1525,6 +1525,12 @@
 /processorParam:TextureFormat=Color
 /build:Human/Run Left (78x58).png
 
+#begin Music/dead-silence.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/dead-silence.mp3
+
 #begin Music/Dungeon - Serpent's Tunnel.ogg
 /importer:OggImporter
 /processor:SongProcessor
@@ -1554,6 +1560,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Music/Strong Punch.wav
+
+#begin Music/success-resolution-video-game-fanfare-sound-effect-with-drum-roll.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/success-resolution-video-game-fanfare-sound-effect-with-drum-roll.mp3
 
 #begin Music/Woosh.wav
 /importer:WavImporter

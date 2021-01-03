@@ -10,24 +10,66 @@ namespace Pigit.Music
     class GameMusic
     {
         private MusicGenerator musicGenerator;
-        public bool IsSet { get; private set; } = false;
+        public bool IsSetIngame { get; private set; } = false;
+        public bool IsSetDeadSong { get; private set; } = false;
+        public bool IsSetVictorySong { get; private set; } = false;
 
         public GameMusic(MusicGenerator musicGenerator)
         {
             this.musicGenerator = musicGenerator;
         }
 
-        public void StartSong()
+        public void StartIngameSong()
         {
-            MediaPlayer.Play(musicGenerator.GameMusic);
-            MediaPlayer.IsRepeating = true;
-            IsSet = true;
+            if (!IsSetIngame)
+            {
+                MediaPlayer.Play(musicGenerator.IngameMusic);
+                MediaPlayer.IsRepeating = true;
+                IsSetIngame = true;
+            }
         }
 
-        public void StopSong()
+        public void StopIngameSong()
+        {
+            //MediaPlayer.Stop();
+            IsSetIngame = false;
+        }
+
+        public void StartDeadSong()
+        {
+            if (!IsSetDeadSong)
+            {
+                MediaPlayer.Play(musicGenerator.DeadMusic);
+                MediaPlayer.IsRepeating = false;
+                IsSetDeadSong = true;
+            }
+        }
+        public void StopDeadSong()
+        {
+            //MediaPlayer.Stop();
+            IsSetDeadSong = false;
+        }
+
+        public void StartVictorySong()
+        {
+            if (!IsSetVictorySong)
+            {
+                MediaPlayer.Play(musicGenerator.VictoryMusic);
+                MediaPlayer.IsRepeating = false;
+                IsSetVictorySong = true;
+            }
+        }
+        public void StopVictorySong()
+        {
+            //MediaPlayer.Stop();
+            IsSetVictorySong = false;
+        }
+        public void StopAllSongs()
         {
             MediaPlayer.Stop();
-            IsSet = false;
+            IsSetDeadSong = false;
+            IsSetIngame = false;
+            IsSetVictorySong = false;
         }
     }
 }

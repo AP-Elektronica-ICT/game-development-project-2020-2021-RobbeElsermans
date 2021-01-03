@@ -30,7 +30,7 @@ namespace Pigit
         private const float maxZoom = 1.5f;
         private const float noZoom = 1f;
         private const int heroHearts = 100;
-        private const int heroAttackDamage = 2;
+        private const int heroAttackDamage = 100;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -152,7 +152,7 @@ namespace Pigit
             {
                 case GameLoop.Menu:
                     startMenu.Update(gameTime);
-                    gameMusic.StopSong();
+                    gameMusic.StopAllSongs();
                     level1.Play = false;
                     level1.Update(gameTime);
 
@@ -162,11 +162,8 @@ namespace Pigit
                     break;
                 case GameLoop.Play:
                     _cameraAnimation.Follow(player);
+                    gameMusic.StartIngameSong();
 
-                    if (!gameMusic.IsSet)
-                    {
-                        gameMusic.StartSong();
-                    }
 
                     level1.Play = true;
                     level1.Update(gameTime);
@@ -177,16 +174,20 @@ namespace Pigit
                     break;
                 case GameLoop.Pause:
                     pauseMenu.Update(gameTime);
-
-                    gameMusic.StopSong();
+                    gameMusic.StopAllSongs();
 
                     break;
                 case GameLoop.Dead:
                     deadMenu.Update(gameTime);
-
+                    gameMusic.StopIngameSong();
+                    gameMusic.StopVictorySong();
+                    gameMusic.StartDeadSong();
                     break;
                 case GameLoop.End:
                     endMenu.Update(gameTime);
+                    gameMusic.StopIngameSong();
+                    gameMusic.StopDeadSong();
+                    gameMusic.StartVictorySong();
                     _cameraAnimation.Follow(player);
                     level1.Play = true;
                     level1.Update(gameTime);
@@ -196,7 +197,7 @@ namespace Pigit
 
                     break;
                 case GameLoop.Exit:
-                    gameMusic.StopSong();
+                    gameMusic.StopAllSongs();
                     Exit();
                     break;
                 default:
