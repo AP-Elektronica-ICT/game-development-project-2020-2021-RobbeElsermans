@@ -2,7 +2,7 @@
 
 namespace Pigit
 {
-    internal class AnimatieFrame
+    class AnimatieFrame
     {
         public Rectangle SourceRect { get; set; }
 
