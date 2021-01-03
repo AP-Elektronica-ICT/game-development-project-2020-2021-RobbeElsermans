@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Objects.Abstracts
 {

@@ -1,15 +1,12 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Xna.Framework.Media;
+using Pigit.Music.Generator;
 
 namespace Pigit.Music
 {
     class GameMusic
     {
         private MusicGenerator musicGenerator;
+
         public bool IsSetIngame { get; private set; } = false;
         public bool IsSetDeadSong { get; private set; } = false;
         public bool IsSetVictorySong { get; private set; } = false;

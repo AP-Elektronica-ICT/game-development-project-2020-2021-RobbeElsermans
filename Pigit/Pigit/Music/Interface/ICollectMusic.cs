@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.Music.Interface
+﻿namespace Pigit.Music.Interface
 {
     interface ICollectMusic
     {

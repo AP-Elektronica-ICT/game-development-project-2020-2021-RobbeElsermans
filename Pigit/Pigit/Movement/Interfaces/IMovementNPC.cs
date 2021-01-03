@@ -1,6 +1,6 @@
-﻿using Pigit.Movement;
+﻿using Pigit.Movement.Enums;
 
-namespace Pigit
+namespace Pigit.Movement.Interfaces
 {
     interface IMovementNPC
     {

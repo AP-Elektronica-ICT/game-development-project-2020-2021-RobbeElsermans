@@ -1,20 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
-using Pigit.Attack;
-using Pigit.Movement;
+using Pigit.Movement.Enums;
+using Pigit.Movement.Interfaces;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
 using Pigit.Text.Abstract;
 using Pigit.Text.Enums;
 using Pigit.Text.PlayerTexts;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Objects.Abstracts
 {
-    abstract class ANPCObject: IEnemyObject
+    abstract class ANPCObject: IObject, IMoveable, IMoveableSprite, IMovementNPC
     {
         protected double timer;
         protected bool isSetTimer;

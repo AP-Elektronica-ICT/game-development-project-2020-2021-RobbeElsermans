@@ -1,19 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Pigit.Animatie;
-using Pigit.Collison;
+using Pigit.Collision;
 using Pigit.Map;
+using Pigit.Movement.Abstracts;
+using Pigit.Movement.Interfaces;
 using Pigit.Music.Interface;
-using Pigit.Objects;
 using Pigit.Objects.Abstracts;
-using Pigit.Objects.Interfaces;
-using Pigit.SpriteBuild.Enums;
-using Pigit.TileBuild;
 using Pigit.TileBuild.Enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {

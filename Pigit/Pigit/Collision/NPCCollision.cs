@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Pigit.Objects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pigit.Collison
+namespace Pigit.Collision
 {
     static class NPCCollision
     {

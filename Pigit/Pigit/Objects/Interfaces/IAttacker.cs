@@ -1,7 +1,4 @@
 ﻿using Pigit.Attack;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Objects.Interfaces
 {

@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pigit.Input.Interfaces;
 using Pigit.Text.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Pigit.Text
+namespace Pigit.Text.Generator
 {
     class FontGenerator
     {

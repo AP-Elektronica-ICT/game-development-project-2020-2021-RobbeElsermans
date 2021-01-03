@@ -1,17 +1,11 @@
-﻿
-using Microsoft.Xna.Framework;
-using Pigit.Collison;
+﻿using Microsoft.Xna.Framework;
+using Pigit.Collision;
 using Pigit.Map;
-using Pigit.Movement.Abstracts;
 using Pigit.Music.Interface;
 using Pigit.Objects.Abstracts;
 using Pigit.Objects.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace Pigit.Movement.NPCMoveCommands
+namespace Pigit.Movement.Abstracts
 {
     class AMoveCommandFollowWhenNearby : AEnemyMovement
     {

@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pigit.Global.Enums;
-using Pigit.Objects;
 using Pigit.Objects.Interfaces;
-using SharpDX.Direct3D9;
 
-namespace Pigit
+namespace Pigit.Animatie
 {
     class CameraAnimatie
     {

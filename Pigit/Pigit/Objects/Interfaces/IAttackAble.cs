@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.Objects.Interfaces
+﻿namespace Pigit.Objects.Interfaces
 {
     interface IAttackAble
     {

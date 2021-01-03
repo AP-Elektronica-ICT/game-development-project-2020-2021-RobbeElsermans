@@ -1,9 +1,7 @@
-﻿using Pigit.Music.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Pigit.Music.Generator;
+using Pigit.Music.Interface;
 
-namespace Pigit.Music
+namespace Pigit.Music.Abstracts
 {
     class HumanEffect: IEffectMusic, ICollectMusic
     {

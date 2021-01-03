@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Pigit.Map.Interfaces;
-using Pigit.Objects.Abstracts;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Map
 {

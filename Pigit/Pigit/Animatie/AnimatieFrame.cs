@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Pigit
+namespace Pigit.Animatie
 {
     class AnimatieFrame
     {

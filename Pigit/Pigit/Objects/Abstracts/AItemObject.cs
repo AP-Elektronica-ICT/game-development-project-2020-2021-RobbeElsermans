@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Animatie;
-using Pigit.Movement;
+using Pigit.Movement.Enums;
 using Pigit.Objects.Enums;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Objects.Abstracts
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.Global.Enums
+﻿namespace Pigit.Global.Enums
 {
     public enum GameLoop
     {

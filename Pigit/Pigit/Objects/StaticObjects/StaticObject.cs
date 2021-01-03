@@ -2,9 +2,7 @@
 using Pigit.Animatie;
 using Pigit.Objects.Abstracts;
 using Pigit.SpriteBuild.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Objects.StaticObjects
 {

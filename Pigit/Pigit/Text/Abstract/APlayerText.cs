@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pigit.Text.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Text.Abstract
 {

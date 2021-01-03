@@ -1,15 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
-using Pigit.Movement;
-using Pigit.Objects;
+using Pigit.Movement.Enums;
 using Pigit.Objects.Abstracts;
-using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
 using Pigit.Text.Enums;
-using SharpDX.MediaFoundation;
 using System.Collections.Generic;
 
 namespace Pigit.Objects.NPCObjects

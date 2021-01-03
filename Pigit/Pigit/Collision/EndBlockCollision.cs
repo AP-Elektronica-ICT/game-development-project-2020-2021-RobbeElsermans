@@ -1,11 +1,6 @@
-﻿using Pigit.Objects;
-using Pigit.TileBuild;
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 
-namespace Pigit.Collison
+namespace Pigit.Collision
 {
     static class EndBlockCollision
     {

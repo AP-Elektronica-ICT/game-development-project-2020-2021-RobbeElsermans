@@ -1,11 +1,8 @@
-﻿
-
-using Microsoft.Xna.Framework;
-using Pigit.Collison;
+﻿using Microsoft.Xna.Framework;
+using Pigit.Collision;
 using Pigit.Map;
 using Pigit.Music.Interface;
 using Pigit.Objects.Abstracts;
-using Pigit.Objects.Interfaces;
 using Pigit.TileBuild.Enums;
 
 namespace Pigit.Movement.Abstracts

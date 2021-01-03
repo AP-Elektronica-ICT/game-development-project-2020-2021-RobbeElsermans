@@ -1,22 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Pigit.Animatie;
-using Pigit.Collison;
+using Pigit.Collision;
 using Pigit.Input.Interfaces;
 using Pigit.Map;
-using Pigit.Music;
+using Pigit.Movement.Abstracts;
 using Pigit.Music.Interface;
-using Pigit.Objects;
 using Pigit.Objects.Enums;
 using Pigit.Objects.Interfaces;
-using Pigit.SpriteBuild.Enums;
-using Pigit.TileBuild;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace Pigit.Movement
+namespace Pigit.Movement.HeroMoveCommands
 {
     class MoveCommandHero : AMovement
     {

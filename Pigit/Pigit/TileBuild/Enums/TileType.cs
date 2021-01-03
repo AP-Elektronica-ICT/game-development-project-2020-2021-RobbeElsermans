@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.TileBuild.Enums
+﻿namespace Pigit.TileBuild.Enums
 {
     enum TileType
     {

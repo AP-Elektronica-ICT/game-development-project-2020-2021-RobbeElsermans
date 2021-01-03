@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Pigit.Collison;
+using Pigit.Collision;
 using Pigit.Map;
-using Pigit.Music;
 using Pigit.Music.Interface;
-using Pigit.Objects;
 using Pigit.Objects.Interfaces;
-using Pigit.TileBuild;
 using Pigit.TileBuild.Enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace Pigit.Movement
+namespace Pigit.Movement.Abstracts
 {
     abstract class AMovement
     {

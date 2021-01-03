@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Pigit.Collison;
+using Pigit.Collision;
 using Pigit.Map;
+using Pigit.Movement.Abstracts;
+using Pigit.Movement.Interfaces;
 using Pigit.Music.Interface;
-using Pigit.Objects;
 using Pigit.Objects.Abstracts;
-using Pigit.Objects.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Movement.NPCMoveCommands
 {

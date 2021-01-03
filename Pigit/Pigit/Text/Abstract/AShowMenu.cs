@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pigit.Global.Enums;
 using Pigit.Input.Interfaces;
 using Pigit.Text.Enums;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace Pigit.Text.Abstract
 {

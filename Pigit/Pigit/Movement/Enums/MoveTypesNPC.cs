@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Pigit.Movement.Enums
 
-namespace Pigit.Movement
 {
     enum MoveTypes
     {

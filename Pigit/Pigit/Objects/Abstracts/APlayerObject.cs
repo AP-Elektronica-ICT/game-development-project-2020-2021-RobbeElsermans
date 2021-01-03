@@ -1,20 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
-using System;
 using System.Collections.Generic;
-using System.Text;
-
 using Pigit.SpriteBuild.Enums;
-using System.Diagnostics;
 using Pigit.Attack;
 using Pigit.Objects.Interfaces;
 using Pigit.Text.PlayerTexts;
 using Pigit.Text.Enums;
 using Pigit.Global.Enums;
-using Pigit.Music;
-using Pigit.Music.Interface;
 
 namespace Pigit.Objects.Abstracts
 {

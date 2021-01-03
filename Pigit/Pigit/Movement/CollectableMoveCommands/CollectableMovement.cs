@@ -2,9 +2,6 @@
 using Pigit.Map;
 using Pigit.Movement.Abstracts;
 using Pigit.Objects.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Movement.CollectableMoveCommands
 {

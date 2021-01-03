@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Pigit.SpriteBuild.Enums;
 
 namespace Pigit.Objects.Interfaces
 {

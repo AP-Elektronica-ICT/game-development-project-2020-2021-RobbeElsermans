@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.Input.Interfaces
+﻿namespace Pigit.Input.Interfaces
 {
     interface IInputMenu
     {

@@ -1,20 +1,11 @@
 ﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Pigit.Animatie;
-using Pigit.Global.Enums;
-using Pigit.Music;
-using Pigit.Objects;
 using Pigit.Objects.Abstracts;
-using Pigit.SpriteBuild;
 using Pigit.SpriteBuild.Enums;
 using Pigit.Text.Enums;
-using Pigit.Text.PlayerTexts;
-using SharpDX.MediaFoundation;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Pigit.Objects.PlayerObjects
 {

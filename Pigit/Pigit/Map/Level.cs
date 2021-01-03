@@ -1,20 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pigit.SpriteBuild;
 using Pigit.TileBuild;
 using System.Collections.Generic;
 using Pigit.SpriteBuild.Enums;
 using Pigit.Movement.NPCMoveCommands;
-using Pigit.Movement;
 using Pigit.Objects.Interfaces;
-using Pigit.Objects.PlayerObjects;
 using Pigit.Map.Interfaces;
 using Pigit.Objects.Enums;
 using Pigit.Objects.CollectableObjects;
 using Pigit.Movement.CollectableMoveCommands;
 using Pigit.Movement.Abstracts;
-using Pigit.Collison;
+using Pigit.Collision;
 using Pigit.Text.Enums;
 using Pigit.Global.Enums;
 using Pigit.TileBuild.Enums;
@@ -23,6 +20,10 @@ using Pigit.Objects.StaticObjects;
 using Pigit.Objects.NPCObjects;
 using Pigit.Music.Interface;
 using Pigit.Global;
+using Pigit.TileBuild.Generator;
+using Pigit.SpriteBuild.Generator;
+using Pigit.TileBuild.Interface;
+using Pigit.Movement.Enums;
 
 namespace Pigit.Map
 {

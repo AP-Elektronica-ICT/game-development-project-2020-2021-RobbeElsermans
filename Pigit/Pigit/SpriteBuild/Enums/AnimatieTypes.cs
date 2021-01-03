@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.SpriteBuild.Enums
+﻿namespace Pigit.SpriteBuild.Enums
 {
     public enum AnimatieTypes
     {

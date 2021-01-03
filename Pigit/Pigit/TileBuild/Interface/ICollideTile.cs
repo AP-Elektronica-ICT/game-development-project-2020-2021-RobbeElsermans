@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Pigit.TileBuild.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pigit.TileBuild
+namespace Pigit.TileBuild.Interface
 {
     interface ICollideTile
     {

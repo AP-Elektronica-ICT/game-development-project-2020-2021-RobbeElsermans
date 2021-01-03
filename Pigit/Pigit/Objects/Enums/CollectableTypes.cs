@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pigit.Objects.Enums
+﻿namespace Pigit.Objects.Enums
 {
     enum CollectableTypes
     {

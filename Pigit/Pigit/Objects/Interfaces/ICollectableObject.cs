@@ -1,9 +1,5 @@
-﻿using Pigit.Movement;
+﻿using Pigit.Movement.Enums;
 using Pigit.Objects.Enums;
-using Pigit.SpriteBuild.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pigit.Objects.Interfaces
 {
