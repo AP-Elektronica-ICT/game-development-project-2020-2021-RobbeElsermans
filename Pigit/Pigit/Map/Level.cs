@@ -22,6 +22,7 @@ using Pigit.Objects.Abstracts;
 using Pigit.Objects.StaticObjects;
 using Pigit.Objects.NPCObjects;
 using Pigit.Music.Interface;
+using Pigit.Global;
 
 namespace Pigit.Map
 {
@@ -37,8 +38,16 @@ namespace Pigit.Map
 
         private const float enemyWalkSpeed = 2f;
         private const float enemyJumpHeight = 4f;
-        private const float enemyStopTime = 4f;
-        private const float enemyWalkTime = 2f;
+        //private float enemyStopTime = 4f;
+        //private float enemyWalkTime = 2f;
+        //private float enemytimeOnJump = 5f;
+        private const int enemyStopTimeMin = 3;
+        private const int enemyStopTimeMax = 5;
+        private const int enemyWalkTimeMin = 1;
+        private const int enemyWalkTimeMax = 3;
+        private const int enemytimeOnJumpMin = 4;
+        private const int enemytimeOnJumpMax = 8;
+
 
         private const int enemyDeadPoints = 20;
 
@@ -90,8 +99,8 @@ namespace Pigit.Map
             CurrTiles = new List<ITile>();
             CurrCollectable = new List<ICollectableObject>();
             currDoors = new List<AStaticObject>();
-            #endregion
 
+            #endregion
             AMoveCommandFollowWhenNearby.HeroPlayer = heroPlayer;
             ACollectableMovement.HeroPlayer = heroPlayer;
         }
@@ -203,13 +212,13 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandStaticNPC(enemy, this, effectMusic));
                             break;
                         case MoveTypes.Walk:
-                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed,timeOnJump:Randomizer.GetRandomFloat(enemytimeOnJumpMin, enemytimeOnJumpMax)));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic, enemyWalkTime, enemyStopTime, enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic, walkTime:Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax),stopTime:Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, enemyStopTime));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep,stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
                             break;
                         case MoveTypes.Follow:
                             worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));

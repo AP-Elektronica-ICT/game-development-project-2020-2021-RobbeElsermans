@@ -29,8 +29,8 @@ namespace Pigit
 
         private const float maxZoom = 1.5f;
         private const float noZoom = 1f;
-        private const int heroHearts = 100;
-        private const int heroAttackDamage = 100;
+        private const int heroHearts = 120;
+        private const int heroAttackDamage = 2;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;

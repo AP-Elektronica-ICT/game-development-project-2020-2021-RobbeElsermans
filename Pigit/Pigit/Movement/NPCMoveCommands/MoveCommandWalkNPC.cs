@@ -22,10 +22,11 @@ namespace Pigit.Movement.NPCMoveCommands
         private bool righting = false;
         private double timer;
         private bool isSetTimer = false;
+        private float timeOnJump;
 
-        public MoveCommandWalkNPC(AEnemyObject player, Level level, IEffectMusic effect, float jumpHeight = 4,float walkspeed= 2) : base(player, level,effect ,jumpHeight, walkspeed)
+        public MoveCommandWalkNPC(AEnemyObject player, Level level, IEffectMusic effect, float jumpHeight = 4,float walkspeed= 2, float timeOnJump = 5) : base(player, level,effect ,jumpHeight, walkspeed)
         {
-
+            this.timeOnJump = timeOnJump;
         }
         public override void CheckMovement(GameTime gameTime)
         {
@@ -61,7 +62,7 @@ namespace Pigit.Movement.NPCMoveCommands
 
                     }
 
-                    if ((gameTime.TotalGameTime.TotalSeconds - timer > 5) && !hasJumped)
+                    if ((gameTime.TotalGameTime.TotalSeconds - timer > timeOnJump) && !hasJumped)
                     {
                         effects.PlayJump();
                         isSetTimer = false;
