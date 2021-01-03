@@ -26,8 +26,6 @@ namespace Pigit.Input
         private bool prevEnter;
         private bool prevEsc;
         private bool currEsc;
-        private bool currAttack;
-        private bool prevAttack;
 
         KeyboardState keyboard;
 
