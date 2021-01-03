@@ -95,15 +95,17 @@ namespace Pigit.Movement
                 if (ItemCollision.IsTouchingItem(player.Rectangle, item.Rectangle) && !item.IsCollected)
                 {
                     item.IsCollected = true;
-
+                    ICollectMusic temp = effects as ICollectMusic;
                     switch (item.ItemType)
                     {
                         case CollectableTypes.BigHeart:
                         case CollectableTypes.SmallHeart:
+                            temp.PlayHeartCollect();
                             player.Hearts += item.Value;
                             break;
                         case CollectableTypes.BigDiamond:
                         case CollectableTypes.SmallDiamond:
+                            temp.PlayDiamondCollect();
                             player.Points += item.Value;
                             //Score verhogen.
                             break;

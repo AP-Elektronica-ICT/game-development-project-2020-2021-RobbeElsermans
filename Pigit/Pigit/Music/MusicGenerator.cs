@@ -14,6 +14,8 @@ namespace Pigit.Music
         public SoundEffect FightEffectEnemy { get; private set; }
         public SoundEffect HitEffectHuman { get; private set; }
         public SoundEffect HitEffectEnemy { get; private set; }
+        public SoundEffect CollectDiamond { get; private set; }
+        public SoundEffect CollectHeart { get; private set; }
 
         public Song IngameMusic { get; private set; }
         public Song DeadMusic { get; private set; }
@@ -28,6 +30,9 @@ namespace Pigit.Music
             FightEffectEnemy = content.Load<SoundEffect>(@"Music\Smack");
             HitEffectHuman = content.Load<SoundEffect>(@"Music\man-getting-hit");
             HitEffectEnemy = content.Load<SoundEffect>(@"Music\pig-squeaking-a");
+            CollectDiamond = content.Load<SoundEffect>(@"Music\collectcoin");
+            CollectHeart = content.Load<SoundEffect>(@"Music\collectlive");
+
             IngameMusic = content.Load<Song>(@"Music\Dungeon - Serpent's Tunnel");
             DeadMusic = content.Load<Song>(@"Music\dead-silence");
             VictoryMusic = content.Load<Song>(@"Music\success-resolution-video-game-fanfare-sound-effect-with-drum-roll");

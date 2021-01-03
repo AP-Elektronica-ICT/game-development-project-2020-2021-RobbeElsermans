@@ -1525,6 +1525,18 @@
 /processorParam:TextureFormat=Color
 /build:Human/Run Left (78x58).png
 
+#begin Music/collectcoin.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/collectcoin.wav
+
+#begin Music/collectlive.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/collectlive.wav
+
 #begin Music/dead-silence.mp3
 /importer:Mp3Importer
 /processor:SongProcessor

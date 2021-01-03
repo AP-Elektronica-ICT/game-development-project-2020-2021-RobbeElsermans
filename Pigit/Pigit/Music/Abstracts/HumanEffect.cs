@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pigit.Music
 {
-    class HumanEffect: IEffectMusic
+    class HumanEffect: IEffectMusic, ICollectMusic
     {
         private MusicGenerator musicGenerator;
 
@@ -36,6 +36,16 @@ namespace Pigit.Music
         public void PlayHit()
         {
                 musicGenerator.HitEffectEnemy.Play();
+        }
+
+        public void PlayDiamondCollect()
+        {
+            musicGenerator.CollectDiamond.Play();
+        }
+
+        public void PlayHeartCollect()
+        {
+            musicGenerator.CollectHeart.Play();
         }
     }
 }

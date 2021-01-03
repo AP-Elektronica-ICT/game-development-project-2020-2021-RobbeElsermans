@@ -10,5 +10,6 @@ namespace Pigit.Music.Interface
         public void StopAttack();
         public void PlayJump();
         public void PlayHit();
+        
     }
 }
