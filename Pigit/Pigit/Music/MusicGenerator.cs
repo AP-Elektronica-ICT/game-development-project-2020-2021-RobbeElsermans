@@ -9,6 +9,8 @@ namespace Pigit.Music
 {
     class MusicGenerator
     {
+        //BRON: https://www.youtube.com/watch?v=inJK28LdGbI
+
         public SoundEffect JumpEffect { get; private set; }
         public SoundEffect FightEffectHuman { get; private set; }
         public SoundEffect FightEffectEnemy { get; private set; }
