@@ -28,8 +28,6 @@ namespace Pigit.Objects.Abstracts
         protected SpriteDefine currentSprite;
         protected AnimatieTypes type;
 
-        private bool hasAttacked = false;
-
         public int Points { get; set; }
         public Rectangle Rectangle { get; protected set; }
         public bool Direction { get; set; }
@@ -40,6 +38,7 @@ namespace Pigit.Objects.Abstracts
         public bool Dead { get; private set; }
         public bool IsHit { get; set; }
         public bool IsAttacking { get; set; }
+        public bool HasAttacked { get; private set; }
         public AttackCommand Attack { get; private set; }
 
         public APlayerObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts = 10, int attackDamage = 1)
@@ -106,12 +105,12 @@ namespace Pigit.Objects.Abstracts
                         IsHit = false;
                     }
                 }
-                Debug.Print(type + " " + IsAttacking + " " + hasAttacked + " " + currentSprite.AnimatieL.Counter + " " + currentSprite.AmountFrames);
+
                 if (type ==  AnimatieTypes.Attack)
                 {
                     if (currentSprite.AnimatieL.Counter == currentSprite.AmountFrames - 1)
                     {
-                        hasAttacked = true;
+                        HasAttacked = true;
                     }
                 }
 
@@ -138,17 +137,17 @@ namespace Pigit.Objects.Abstracts
                 type = AnimatieTypes.Idle;
             }
 
-            if (IsAttacking && !hasAttacked)
+            if (IsAttacking && !HasAttacked)
             {
                 type = AnimatieTypes.Attack;
 
             }
-            else if(!IsAttacking && hasAttacked)
+            else if(!IsAttacking && HasAttacked)
             {
-                hasAttacked = false;
+                HasAttacked = false;
             }
 
-            if (Velocity.Y + 0.2f < 0)
+            if (Velocity.Y < 0)
             {
                 type = AnimatieTypes.Jump;
             }

@@ -68,7 +68,7 @@ namespace Pigit.Movement
 
             CheckGravity();
 
-            if (player.IsAttacking)
+            if (player.IsAttacking && !player.HasAttacked)
             {
                 player.Attack.Attack(level.CurrEnemys, player, gameTime);
             }
