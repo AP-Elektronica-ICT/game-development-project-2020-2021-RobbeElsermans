@@ -372,8 +372,6 @@ namespace Pigit.Map
                                 if (a != 0) worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
                                 else worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
                                 break;
-                            case PigTypes.Boss:
-                                break;
                             default:
                                 break;
                         }

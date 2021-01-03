@@ -11,7 +11,7 @@ namespace Pigit.SpriteBuild.Generator
     {
         private Dictionary<AnimatieTypes, SpriteDefine> human;
         private Dictionary<AnimatieTypes, SpriteDefine> pig;
-        private Dictionary<AnimatieTypes, SpriteDefine> kingPig;
+        //private Dictionary<AnimatieTypes, SpriteDefine> kingPig;
         private Dictionary<AnimatieTypes, SpriteDefine> bigHeart;
         private Dictionary<AnimatieTypes, SpriteDefine> bigDiamond;
         private Dictionary<AnimatieTypes, SpriteDefine> smallHeart;
