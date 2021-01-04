@@ -54,7 +54,7 @@ namespace Pigit
         private List<string> deadMenuItems;
         private List<string> endMenuItems;
 
-        private IInputReader KeyBoardReader;
+        private IInputReader keyBoardReader;
 
         private MusicGenerator musicGenerator;
         private GameMusic gameMusic;
@@ -76,7 +76,7 @@ namespace Pigit
 
         protected override void LoadContent()
         {
-            KeyBoardReader = new KeyBoardReader();
+            keyBoardReader = new KeyBoardReader();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             #region add worlds to level1
             levelsWorld1 = new List<IRoomLayout>();
@@ -128,16 +128,16 @@ namespace Pigit
             level1.CreateLevels();
             #endregion
             #region initialize hero movements
-            moveHero = new MoveCommandHero(player, level1, KeyBoardReader, new HumanEffect(musicGenerator));
+            moveHero = new MoveCommandHero(player, level1, keyBoardReader, new HumanEffect(musicGenerator));
             #endregion
             #region initialize camera animation
-            _cameraAnimation = new CameraAnimatie();
+            _cameraAnimation = new CameraAnimatie((IInputSecredKeys)keyBoardReader);
             #endregion
             #region initialize menus
-            startMenu = new StartMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(12, 2), startMenuItems);
-            pauseMenu = new PauseMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), pauseMenuItems);
-            deadMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2(2, 2), deadMenuItems);
-            endMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)KeyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count - 1].Warp1.X / 32) - 2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32) - 4), endMenuItems);
+            startMenu = new StartMenu(fontGenerator.SpriteFonts, (IInputMenu)keyBoardReader, new Vector2(12, 2), startMenuItems);
+            pauseMenu = new PauseMenu(fontGenerator.SpriteFonts, (IInputMenu)keyBoardReader, new Vector2(2, 2), pauseMenuItems);
+            deadMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)keyBoardReader, new Vector2(2, 2), deadMenuItems);
+            endMenu = new EndingGameMenu(fontGenerator.SpriteFonts, (IInputMenu)keyBoardReader, new Vector2((levelsWorld1[levelsWorld1.Count - 1].Warp1.X / 32) - 2, (levelsWorld1[levelsWorld1.Count - 1].Warp1.Y / 32) - 4), endMenuItems);
             #endregion
             #region initialize gameloop
             currGameState = GameLoop.Menu;
@@ -146,7 +146,7 @@ namespace Pigit
 
         protected override void Update(GameTime gameTime)
         {
-            CheckInputs(KeyBoardReader as IInputMenu);
+            CheckInputs(keyBoardReader as IInputMenu);
 
             switch (currGameState)
             {

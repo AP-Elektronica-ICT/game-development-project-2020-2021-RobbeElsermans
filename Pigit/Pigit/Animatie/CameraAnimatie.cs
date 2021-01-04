@@ -1,11 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Pigit.Input;
+using Pigit.Input.Interfaces;
 using Pigit.Objects.Interfaces;
 
 namespace Pigit.Animatie
 {
     class CameraAnimatie
     {
+        private IInputSecredKeys keyBoardReader;
         public Matrix Transform { get; private set; }
         public float Zoom
         {
@@ -20,6 +23,11 @@ namespace Pigit.Animatie
         public float Rotation { get; set; }
 
         private float zoom = 1;
+
+        public CameraAnimatie(IInputSecredKeys keyBoard)
+        {
+            keyBoardReader = keyBoard;
+        }
         public void Follow(IMoveable target)
         {
             Matrix offset =
@@ -33,40 +41,28 @@ namespace Pigit.Animatie
                     -target.Rectangle.X - (target.Rectangle.Width / 2),
                     -target.Rectangle.Y - (target.Rectangle.Height / 2),
                     0);
-            //var scalingFactor = Vector3.One;
-            //if (Game1.currGameState == GameLoop.Play)
-            //{
-            //    if (zoom <= 1.5)
-            //    {
-            //        float x = 1f;
-            //        zoom += x * 0.005f;
-            //    }
-            //}
-            //else
-            //{
-            //    zoom = 1f;                
-            //}
             var scalingFactor = new Vector3(Zoom, Zoom, 1);
 
             var scale =
                 Matrix.CreateScale(scalingFactor);
 
 
-            if (Keyboard.GetState().IsKeyDown(Keys.I))
+            if (keyBoardReader.RotateLeft)
             {
                 Rotation += 0.005f;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.K))
+            else if (keyBoardReader.RotateRight)
             {
                 Rotation -= 0.005f;
+            }
+            else if (keyBoardReader.ResetRotation)
+            {
+                Rotation = 0f;
             }
 
             Matrix rotation = Matrix.CreateRotationZ(Rotation);
 
-            //Center van de sprite
-            //Transform = centerSprite * offset;
             Transform = ((centerSprite * rotation) * scale) * offset;
-            //Transform = ((centerSprite * scale) * offset);
         }
     }
 }

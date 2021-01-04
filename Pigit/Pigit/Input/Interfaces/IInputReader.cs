@@ -2,10 +2,10 @@
 {
     public interface IInputReader
     {
-        public bool Move { get; set; }
-        public bool Direction { get; set; }
-        public bool Attack { get; set; }
-        public bool Jump { get; set; }
+        public bool Move { get; }
+        public bool Direction { get; }
+        public bool Attack { get; }
+        public bool Jump { get; }
         void ReadInput();
     }
 

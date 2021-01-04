@@ -3,16 +3,19 @@ using Pigit.Input.Interfaces;
 
 namespace Pigit.Input
 {
-    public class KeyBoardReader : IInputReader, IInputMenu
+    public class KeyBoardReader : IInputReader, IInputMenu, IInputSecredKeys
     {
-        public bool Move { get; set; } = false;
-        public bool Direction { get; set; } = false;
-        public bool Attack { get; set; } = false;
-        public bool Jump { get; set ; }
-        public bool Enter { get; set; }
-        public bool Up { get; set; }
-        public bool Down { get; set; }
-        public bool Esc { get; set; }
+        public bool Move { get; private set; } = false;
+        public bool Direction { get; private set; } = false;
+        public bool Attack { get; private set; } = false;
+        public bool Jump { get; private set ; }
+        public bool Enter { get; private set; }
+        public bool Up { get; private set; }
+        public bool Down { get; private set; }
+        public bool Esc { get; private set; }
+        public bool RotateLeft { get; private set; }
+        public bool RotateRight { get; private set; }
+        public bool ResetRotation { get ; private set; }
 
         private bool currUp;
         private bool prevUp;
@@ -30,6 +33,9 @@ namespace Pigit.Input
             Move = false;
             Attack = false;
             Jump = false;
+            RotateLeft = false;
+            RotateRight = false;
+            ResetRotation = false;
 
 
             keyboard = Keyboard.GetState();
@@ -53,7 +59,7 @@ namespace Pigit.Input
                 Jump = true;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (keyboard.IsKeyDown(Keys.Up))
             {
                 currUp = true;
             }
@@ -61,7 +67,7 @@ namespace Pigit.Input
             {
                 currUp = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            if (keyboard.IsKeyDown(Keys.Down))
             {
                 currDown = true;
             }
@@ -69,7 +75,7 @@ namespace Pigit.Input
             {
                 currDown = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (keyboard.IsKeyDown(Keys.Enter))
             {
                 currEnter = true;
             }
@@ -78,7 +84,7 @@ namespace Pigit.Input
                 currEnter = false;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (keyboard.IsKeyDown(Keys.Escape))
             {
                 currEsc = true;
             }
@@ -86,6 +92,20 @@ namespace Pigit.Input
             {
                 currEsc = false;
             }
+
+            if (keyboard.IsKeyDown(Keys.J))
+            {
+                RotateRight = true;
+            }
+            if (keyboard.IsKeyDown(Keys.K))
+            {
+                RotateLeft = true;
+            }
+            if (keyboard.IsKeyDown(Keys.O))
+            {
+                ResetRotation = true;
+            }
+
 
             if (currEnter && !prevEnter)
             {

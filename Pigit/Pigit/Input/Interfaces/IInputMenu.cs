@@ -1,11 +1,11 @@
 ﻿namespace Pigit.Input.Interfaces
 {
-    interface IInputMenu
+    public interface IInputMenu
     {
-        public bool Enter { get; set; }
-        public bool Up { get; set; }
-        public bool Down { get; set; }
-        public bool Esc { get; set; }
+        public bool Enter { get; }
+        public bool Up { get; }
+        public bool Down { get; }
+        public bool Esc { get; }
         void ReadInput();
 
     }
