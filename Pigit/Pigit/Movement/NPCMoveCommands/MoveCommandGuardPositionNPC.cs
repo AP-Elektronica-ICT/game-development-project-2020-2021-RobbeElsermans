@@ -2,7 +2,6 @@
 using Pigit.Collision;
 using Pigit.Map;
 using Pigit.Movement.Abstracts;
-using Pigit.Movement.Interfaces;
 using Pigit.Music.Interface;
 using Pigit.Objects.Abstracts;
 using Pigit.TileBuild.Enums;

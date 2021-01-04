@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pigit.Animatie;
 using Pigit.Movement.Enums;
 using Pigit.Objects.Abstracts;
 using Pigit.SpriteBuild.Enums;
