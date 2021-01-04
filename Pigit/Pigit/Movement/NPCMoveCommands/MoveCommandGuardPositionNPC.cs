@@ -11,19 +11,14 @@ namespace Pigit.Movement.NPCMoveCommands
     class MoveCommandGuardPositionNPC : AMoveCommandFollowWhenNearby
     {
         private bool righting = false;
-        private double timer1;
-        private double timer2;
-        private bool isSetTimer1 = false;
-        private bool isSetTimer2 = false;
 
-        private double walkTime = 1;
-        private double stopTime = 3;
+        private double timer;
+        private bool isSetTimer = false;
+
+        private double stopTime;
 
         private float minX;
         private float maxX;
-
-        private bool time = false;
-        private bool position = false;
 
         private bool hasFollow = false;
 
@@ -32,7 +27,7 @@ namespace Pigit.Movement.NPCMoveCommands
             this.minX = minX;
             this.maxX = maxX;
             this.stopTime = stopTime;
-            position = true;
+
         }
         public override void CheckMovement(GameTime gameTime)
         {
@@ -53,39 +48,23 @@ namespace Pigit.Movement.NPCMoveCommands
 
 
                 #region Met Plaats Guard
-                if (position)
+
+                if (positie.X <= minX || positie.X >= maxX)
                 {
-                    if (positie.X <= minX || positie.X >= maxX)
+                    velocity.X = 0;
+
+                    if (!isSetTimer)
                     {
-                        velocity.X = 0;
-
-                        if (!isSetTimer2)
-                        {
-                            timer2 = gameTime.TotalGameTime.TotalSeconds;
-                            isSetTimer2 = true;
-                        }
-
-                        if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
-                        {
-                            isSetTimer2 = false;
-                            isSetTimer1 = false;
-                            righting = !righting;
-                            if (righting)
-                            {
-                                velocity.X = -1;
-                            }
-                            else
-                            {
-                                velocity.X = 1;
-                            }
-
-                        }
+                        timer = gameTime.TotalGameTime.TotalSeconds;
+                        isSetTimer = true;
                     }
-                    else
-                    {
-                        player.Direction = righting;
 
-                        if (player.Direction)
+                    if ((gameTime.TotalGameTime.TotalSeconds - timer > stopTime))
+                    {
+                        isSetTimer = false;
+                        isSetTimer = false;
+                        righting = !righting;
+                        if (righting)
                         {
                             velocity.X = -1;
                         }
@@ -95,6 +74,20 @@ namespace Pigit.Movement.NPCMoveCommands
                         }
                     }
                 }
+                else
+                {
+                    player.Direction = righting;
+
+                    if (player.Direction)
+                    {
+                        velocity.X = -1;
+                    }
+                    else
+                    {
+                        velocity.X = 1;
+                    }
+                }
+
                 #endregion
                 this.CheckCollide(5, 5);
 

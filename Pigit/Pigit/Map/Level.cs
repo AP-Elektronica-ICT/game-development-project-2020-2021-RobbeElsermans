@@ -126,7 +126,7 @@ namespace Pigit.Map
         {
             InitializeTiles(content);
 
-            GenerateLevelContent(content);
+            GenerateLevelContent();
             GenerateMovement();
         }
 
@@ -209,13 +209,13 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandStaticNPC(enemy, this, effectMusic));
                             break;
                         case MoveTypes.Walk:
-                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed,timeOnJump:Randomizer.GetRandomFloat(enemytimeOnJumpMin, enemytimeOnJumpMax)));
+                            worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed, timeOnJump: Randomizer.GetRandomFloat(enemytimeOnJumpMin, enemytimeOnJumpMax)));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardTimeNPC(enemy, this, effectMusic, walkTime:Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax),stopTime:Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardTimeNPC(enemy, this, effectMusic, walkTime: Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax), stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardPositionNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep,stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardPositionNPC(enemy, this, effectMusic, (int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep, stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
                             break;
                         case MoveTypes.Follow:
                             worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));
@@ -321,9 +321,18 @@ namespace Pigit.Map
                 prevCurrMap = currMap;
             }
         }
-        private void GenerateLevelContent(ContentManager content)
+        private void GenerateLevelContent()
         {
-            foreach (var map in worlds)
+            //foreach (var map in worlds)
+            //{
+            //    worldsTiles.Add(new List<ITile>());
+            //    worldsEnemys.Add(new List<AEnemyObject>());
+            //    worldsMoveEnemys.Add(new List<AEnemyMovement>());
+            //    worldsCollectables.Add(new List<ICollectableObject>());
+            //    worldsMoveCollectables.Add(new List<ACollectableMovement>());
+            //    worldsDoors.Add(new List<AStaticObject>());
+            //}
+            for (int i = 0; i < worlds.Count; i++)
             {
                 worldsTiles.Add(new List<ITile>());
                 worldsEnemys.Add(new List<AEnemyObject>());
@@ -371,7 +380,7 @@ namespace Pigit.Map
 
                         if ((worlds[a].Collectable[x, y]) != 0)
                         {
-                            worldsCollectables[a].Add(new Item((CollectableTypes)(worlds[a].Collectable[x, y]),opbouwSprites, (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static));
+                            worldsCollectables[a].Add(new Item((CollectableTypes)(worlds[a].Collectable[x, y]), opbouwSprites, (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static));
                         }
                     }
                 }

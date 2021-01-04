@@ -19,19 +19,12 @@ namespace Pigit.Movement.NPCMoveCommands
         private double walkTime = 1;
         private double stopTime = 3;
 
-        private float minX;
-        private float maxX;
-
-        private bool time = false;
-        private bool position = false;
-
         private bool hasFollow = false;
 
         public MoveCommandGuardTimeNPC(AEnemyObject player, Level level, IEffectMusic effect, double walkTime = 2.0, double stopTime = 3.0, float jumpHeight = 4, float walkspeed = 2) : base(player, level, effect, jumpHeight, walkspeed)
         {
             this.walkTime = walkTime;
             this.stopTime = stopTime;
-            time = true;
         }
         public override void CheckMovement(GameTime gameTime)
         {
@@ -46,52 +39,46 @@ namespace Pigit.Movement.NPCMoveCommands
             {
                 if (hasFollow)
                 {
-                    minX = positie.X - 32f;
-                    maxX = positie.X + 32f;
                     hasFollow = false;
                 }
 
                 #region met Tijd Guard
-                if (time)
+                if (!isSetTimer1)
                 {
-                    if (!isSetTimer1)
+                    timer1 = gameTime.TotalGameTime.TotalSeconds;
+                    isSetTimer1 = true;
+                }
+
+                player.Direction = righting;
+
+                if (player.Direction)
+                {
+                    velocity.X = -1;
+
+                }
+                else
+                {
+                    velocity.X = 1;
+
+                }
+                if ((gameTime.TotalGameTime.TotalSeconds - timer1 > walkTime))
+                {
+                    velocity.X = 0;
+
+                    if (!isSetTimer2)
                     {
-                        timer1 = gameTime.TotalGameTime.TotalSeconds;
-                        isSetTimer1 = true;
+                        timer2 = gameTime.TotalGameTime.TotalSeconds;
+                        isSetTimer2 = true;
                     }
 
-                    player.Direction = righting;
-
-                    if (player.Direction)
+                    if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
                     {
-                        velocity.X = -1;
-
-                    }
-                    else
-                    {
-                        velocity.X = 1;
-
-                    }
-                    if ((gameTime.TotalGameTime.TotalSeconds - timer1 > walkTime))
-                    {
-                        velocity.X = 0;
-
-                        if (!isSetTimer2)
-                        {
-                            timer2 = gameTime.TotalGameTime.TotalSeconds;
-                            isSetTimer2 = true;
-                        }
-
-                        if ((gameTime.TotalGameTime.TotalSeconds - timer2 > stopTime))
-                        {
-                            isSetTimer2 = false;
-                            isSetTimer1 = false;
-                            righting = !righting;
-                        }
+                        isSetTimer2 = false;
+                        isSetTimer1 = false;
+                        righting = !righting;
                     }
                 }
                 #endregion
-
 
                 this.CheckCollide(5, 5);
 
@@ -103,8 +90,6 @@ namespace Pigit.Movement.NPCMoveCommands
 
                 player.Update(gameTime);
             }
-
-
         }
         protected override void CheckCollide(int offsetHeight1, int offsetHeight2)
         {

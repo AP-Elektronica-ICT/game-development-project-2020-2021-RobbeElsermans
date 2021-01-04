@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Pigit.Objects.Abstracts
 {
-    abstract class ANPCObject: IObject, IMoveable, IMoveableSprite, IMovementNPC
+    abstract class ANPCObject : IObject, IMoveable, IMoveableSprite, IMovementNPC
     {
         protected double timer;
         protected bool isSetTimer;
@@ -28,7 +28,7 @@ namespace Pigit.Objects.Abstracts
         public bool Direction { get; set; }
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
-        
+
         public MoveTypes MovementType { get; set; }
 
         public ANPCObject(PigTypes pigType, SpriteGenerator sprites, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, MoveTypes moveTypes)
@@ -95,7 +95,7 @@ namespace Pigit.Objects.Abstracts
         }
         public virtual void Draw(SpriteBatch _spriteBatch)
         {
-            Texture2D tempTexture = null;
+            Texture2D tempTexture;
 
             if (!Direction)
             {
