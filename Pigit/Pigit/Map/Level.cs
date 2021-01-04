@@ -29,11 +29,6 @@ namespace Pigit.Map
 {
     class Level
     {
-        private const int bigHeartValue = 7;
-        private const int smallgHeartValue = 2;
-        private const int bigDiamondValue = 15;
-        private const int smallgDiamondValue = 10;
-
         private const int enemyBaseAttackDamage = 1;
         private const int enemyBaseHearts = 10;
 
@@ -373,22 +368,26 @@ namespace Pigit.Map
                             else worldsEnemys[a].Add(new Pig((PigTypes)(worlds[a].Enemys[x, y] / 10), opbouwSprites, new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
                         }
 
-                        switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
+                        //switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
+                        //{
+                        //    case CollectableTypes.BigHeart:
+                        //        worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigHeartValue));
+                        //        break;
+                        //    case CollectableTypes.BigDiamond:
+                        //        worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigDiamondValue));
+                        //        break;
+                        //    case CollectableTypes.SmallHeart:
+                        //        worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgHeartValue));
+                        //        break;
+                        //    case CollectableTypes.SmallDiamond:
+                        //        worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgDiamondValue));
+                        //        break;
+                        //    default:
+                        //        break;
+                        //}
+                        if ((worlds[a].Collectable[x, y]) != 0)
                         {
-                            case CollectableTypes.BigHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigHeartValue));
-                                break;
-                            case CollectableTypes.BigDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigDiamondValue));
-                                break;
-                            case CollectableTypes.SmallHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgHeartValue));
-                                break;
-                            case CollectableTypes.SmallDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgDiamondValue));
-                                break;
-                            default:
-                                break;
+                            worldsCollectables[a].Add(new Item((CollectableTypes)(worlds[a].Collectable[x, y]),opbouwSprites, (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static));
                         }
                     }
                 }

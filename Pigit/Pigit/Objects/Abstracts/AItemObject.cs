@@ -5,6 +5,7 @@ using Pigit.Movement.Enums;
 using Pigit.Objects.Enums;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
+using Pigit.SpriteBuild.Generator;
 using System.Collections.Generic;
 
 namespace Pigit.Objects.Abstracts
@@ -27,14 +28,36 @@ namespace Pigit.Objects.Abstracts
         public Vector2 Positie { get; set; }
         public Vector2 Velocity { get; set; }
 
-        public AItemObject(Dictionary<AnimatieTypes, SpriteDefine> sprites, CollectableTypes type, Vector2 positie, MoveTypes movement, int value)
+        public AItemObject(CollectableTypes collectableType, SpriteGenerator sprites, CollectableTypes type, Vector2 positie, MoveTypes movement)
         {
             this.MovementType = movement;
-            this.sprites = sprites;
+
+            switch (collectableType)
+            {
+                case CollectableTypes.BigHeart:
+                    this.sprites = sprites.GetSpriteBigHeart(6);
+                    this.Value = (int)CollectableValues.BigHeart;
+                    break;
+                case CollectableTypes.BigDiamond:
+                    this.sprites = sprites.GetSpriteBigDiamond(6);
+                    this.Value = (int)CollectableValues.BigDiamond;
+                    break;
+                case CollectableTypes.SmallHeart:
+                    this.sprites = sprites.GetSpriteSmallHeart(6);
+                    this.Value = (int)CollectableValues.SmallgHeart;
+                    break;
+                case CollectableTypes.SmallDiamond:
+                    this.sprites = sprites.GetSpriteSmallDiamond(6);
+                    this.Value = (int)CollectableValues.SmallgDiamond;
+                    break;
+                default:
+                    this.sprites = sprites.GetSpriteSmallHeart(6);
+                    this.Value = (int)CollectableValues.SmallgHeart;
+                    break;
+            }
             this.Positie = positie;
             this.ItemType = type;
             this.IsCollected = false;
-            this.Value = value;
             CheckSprites();
         }
         private void CheckType()
