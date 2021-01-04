@@ -211,10 +211,10 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed,timeOnJump:Randomizer.GetRandomFloat(enemytimeOnJumpMin, enemytimeOnJumpMax)));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic, walkTime:Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax),stopTime:Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardTimeNPC(enemy, this, effectMusic, walkTime:Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax),stopTime:Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep,stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardPositionNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep,stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
                             break;
                         case MoveTypes.Follow:
                             worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));
