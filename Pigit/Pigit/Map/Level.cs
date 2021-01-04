@@ -30,11 +30,6 @@ namespace Pigit.Map
 {
     class Level
     {
-        private const int bigHeartValue = 7;
-        private const int smallgHeartValue = 2;
-        private const int bigDiamondValue = 15;
-        private const int smallgDiamondValue = 10;
-
         private const int enemyBaseAttackDamage = 1;
         private const int enemyBaseHearts = 10;
 
@@ -217,10 +212,10 @@ namespace Pigit.Map
                             worldsMoveEnemys[i].Add(new MoveCommandWalkNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed,timeOnJump:Randomizer.GetRandomFloat(enemytimeOnJumpMin, enemytimeOnJumpMax)));
                             break;
                         case MoveTypes.GuardTime:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic, walkTime:Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax),stopTime:Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardTimeNPC(enemy, this, effectMusic, walkTime:Randomizer.GetRandomFloat(enemyWalkTimeMin, enemyWalkTimeMax),stopTime:Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax), enemyJumpHeight, enemyWalkSpeed));
                             break;
                         case MoveTypes.GuardPosition:
-                            worldsMoveEnemys[i].Add(new MoveCommandGuardNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep,stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
+                            worldsMoveEnemys[i].Add(new MoveCommandGuardPositionNPC(enemy, this, effectMusic,(int)enemy.Positie.X - oneBlockStep, (int)enemy.Positie.X + oneBlockStep,stopTime: Randomizer.GetRandomFloat(enemyStopTimeMin, enemyStopTimeMax)));
                             break;
                         case MoveTypes.Follow:
                             worldsMoveEnemys[i].Add(new MoveCommandFollowNPC(enemy, this, effectMusic, enemyJumpHeight, enemyWalkSpeed));
@@ -368,39 +363,15 @@ namespace Pigit.Map
                             if (i == worlds[a].PlatformTiles[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.PlatformTile));
                         }
 
-                        //PigTypes playerselection = (PigTypes)(worlds[a].Enemys[x, y] / 10);
-                        //var type = Type.GetType("Pigit.Objects.NPCObjects." + playerselection.ToString(), throwOnError: false);
-                        //if (type != null)
-                        //{
-                        //    if (a != 0) worldsEnemys[a].Add((AEnemyObject)Activator.CreateInstance(type, opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
-                        //    else worldsEnemys[a].Add((AEnemyObject)Activator.CreateInstance(type, opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
-                        //}
-                        if (a != 0 && (worlds[a].Enemys[x, y] / 10) != 0)
+                        if ((worlds[a].Enemys[x, y] / 10) != 0)
                         {
-
-                        }
-                        else if (a == 0 && (worlds[a].Enemys[x, y] / 10) != 0)
-                        {
-
+                            if (a != 0) worldsEnemys[a].Add(new Enemy((PigTypes)(worlds[a].Enemys[x, y] / 10), opbouwSprites, new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
+                            else worldsEnemys[a].Add(new Enemy((PigTypes)(worlds[a].Enemys[x, y] / 10), opbouwSprites, new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
                         }
 
-
-                        switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
+                        if ((worlds[a].Collectable[x, y]) != 0)
                         {
-                            case CollectableTypes.BigHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigHeartValue));
-                                break;
-                            case CollectableTypes.BigDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteBigDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, bigDiamondValue));
-                                break;
-                            case CollectableTypes.SmallHeart:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallHeart(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgHeartValue));
-                                break;
-                            case CollectableTypes.SmallDiamond:
-                                worldsCollectables[a].Add(new Item(opbouwSprites.GetSpriteSmallDiamond(6), (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static, smallgDiamondValue));
-                                break;
-                            default:
-                                break;
+                            worldsCollectables[a].Add(new Item((CollectableTypes)(worlds[a].Collectable[x, y]),opbouwSprites, (CollectableTypes)(worlds[a].Collectable[x, y]), new Vector2(y * oneBlockStep, x * oneBlockStep), MoveTypes.Static));
                         }
                     }
                 }
