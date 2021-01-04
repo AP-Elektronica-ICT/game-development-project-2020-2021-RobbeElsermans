@@ -367,23 +367,23 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].PlatformTiles[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.PlatformTile));
                         }
-                        //switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))
-                        //{
-                        //    case PigTypes.Pig:
-                        //        if (a != 0) worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
-                        //        else worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
-                        //        break;
-                        //    default:
-                        //        break;
-                        //}
 
-                        PigTypes playerselection = (PigTypes)(worlds[a].Enemys[x, y] / 10);
-                        var type = Type.GetType("Pigit.Objects.NPCObjects." + playerselection.ToString(), throwOnError: false);
-                        if (type != null)
+                        //PigTypes playerselection = (PigTypes)(worlds[a].Enemys[x, y] / 10);
+                        //var type = Type.GetType("Pigit.Objects.NPCObjects." + playerselection.ToString(), throwOnError: false);
+                        //if (type != null)
+                        //{
+                        //    if (a != 0) worldsEnemys[a].Add((AEnemyObject)Activator.CreateInstance(type, opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
+                        //    else worldsEnemys[a].Add((AEnemyObject)Activator.CreateInstance(type, opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
+                        //}
+                        if (a != 0 && (worlds[a].Enemys[x, y] / 10) != 0)
                         {
-                            if (a != 0) worldsEnemys[a].Add((AEnemyObject)Activator.CreateInstance(type, opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
-                            else worldsEnemys[a].Add((AEnemyObject)Activator.CreateInstance(type, opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
+
                         }
+                        else if (a == 0 && (worlds[a].Enemys[x, y] / 10) != 0)
+                        {
+
+                        }
+
 
                         switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
                         {
