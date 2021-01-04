@@ -5,6 +5,7 @@ using Pigit.Movement.Enums;
 using Pigit.Movement.Interfaces;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
+using Pigit.SpriteBuild.Generator;
 using Pigit.Text.Abstract;
 using Pigit.Text.Enums;
 using Pigit.Text.PlayerTexts;
@@ -30,15 +31,22 @@ namespace Pigit.Objects.Abstracts
         
         public MoveTypes MovementType { get; set; }
 
-        public ANPCObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, MoveTypes moveTypes)
+        public ANPCObject(PigTypes pigType, SpriteGenerator sprites, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, MoveTypes moveTypes)
         {
             text = new EnemyText(spriteFonts);
-            sprites = spriteOpbouw;
+            switch (pigType)
+            {
+                case PigTypes.Standard:
+                    this.sprites = sprites.GetSpritePig(12);
+                    break;
+                default:
+                    break;
+            }
             Positie = beginPosition;
             this.MovementType = moveTypes;
             CheckSprites();
         }
-        private void CheckType()
+        protected void CheckType()
         {
             foreach (var sprites in sprites)
             {

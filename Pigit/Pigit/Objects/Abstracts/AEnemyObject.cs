@@ -5,6 +5,7 @@ using Pigit.Attack;
 using Pigit.Movement.Enums;
 using Pigit.Objects.Interfaces;
 using Pigit.SpriteBuild.Enums;
+using Pigit.SpriteBuild.Generator;
 using Pigit.Text.Enums;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace Pigit.Objects.Abstracts
         public bool IsAttacking { get; set; }
         public AttackCommand Attack { get; protected set; }
 
-        public AEnemyObject(Dictionary<AnimatieTypes, SpriteDefine> spriteOpbouw, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts, int attackDamage, MoveTypes moveTypes): base(spriteOpbouw, beginPosition,spriteFonts, moveTypes)
+        public AEnemyObject(PigTypes pigType, SpriteGenerator sprites, Vector2 beginPosition, Dictionary<TextTypes, SpriteFont> spriteFonts, int hearts, int attackDamage, MoveTypes moveTypes): base(pigType,sprites, beginPosition,spriteFonts, moveTypes)
         {
             beginHearts = hearts;
             beginAttackDamage = attackDamage;
@@ -29,16 +30,6 @@ namespace Pigit.Objects.Abstracts
             Hearts = hearts;
             AttackDamage = attackDamage;
             CheckSprites();
-        }
-        private void CheckType()
-        {
-            foreach (var sprites in sprites)
-            {
-                if (sprites.Key == type)
-                {
-                    currentSprite = sprites.Value;
-                }
-            }
         }
 
         public override void Update(GameTime gameTime)
@@ -105,7 +96,7 @@ namespace Pigit.Objects.Abstracts
                 type = AnimatieTypes.Fall;
             }
             CheckAttack();
-            CheckType();
+            base.CheckType();
         }
 
         private void CheckAttack()

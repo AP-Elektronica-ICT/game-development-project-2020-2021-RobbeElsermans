@@ -366,15 +366,13 @@ namespace Pigit.Map
                         {
                             if (i == worlds[a].PlatformTiles[x, y]) worldsTiles[a].Add(new TileDefine(blockOpbouw.PLatformTiles[i - 1], new Vector2(y * oneBlockStep, x * oneBlockStep), TileType.PlatformTile));
                         }
-                        switch ((PigTypes)(worlds[a].Enemys[x, y] / 10))
+
+                        if ((worlds[a].Enemys[x, y] / 10) != 0)
                         {
-                            case PigTypes.Standard:
-                                if (a != 0) worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
-                                else worldsEnemys[a].Add(new Pig(opbouwSprites.GetSpritePig(12), new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
-                                break;
-                            default:
-                                break;
+                            if (a != 0) worldsEnemys[a].Add(new Pig((PigTypes)(worlds[a].Enemys[x, y] / 10), opbouwSprites, new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a - 1), enemyBaseAttackDamage + enemyBaseAttackDamage * (a - 1)));
+                            else worldsEnemys[a].Add(new Pig((PigTypes)(worlds[a].Enemys[x, y] / 10), opbouwSprites, new Vector2(y * oneBlockStep, x * oneBlockStep), (MoveTypes)(worlds[a].Enemys[x, y] % 10), spriteFonts, enemyBaseHearts + enemyBaseHearts * (a), enemyBaseAttackDamage + enemyBaseAttackDamage * (a)));
                         }
+
                         switch ((CollectableTypes)(worlds[a].Collectable[x, y]))
                         {
                             case CollectableTypes.BigHeart:
