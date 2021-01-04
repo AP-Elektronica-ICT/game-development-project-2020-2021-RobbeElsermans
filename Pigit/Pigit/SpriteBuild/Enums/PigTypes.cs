@@ -2,7 +2,7 @@
 {
     enum PigTypes
     {
-        Standard = 1
+        Pig = 1
         //Boss
     }
 }
