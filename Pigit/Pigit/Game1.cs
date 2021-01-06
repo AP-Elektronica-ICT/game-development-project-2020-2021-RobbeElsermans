@@ -164,7 +164,6 @@ namespace Pigit
                     _cameraAnimation.Follow(player);
                     gameMusic.StartIngameSong();
 
-
                     level1.Play = true;
                     level1.Update(gameTime);
 

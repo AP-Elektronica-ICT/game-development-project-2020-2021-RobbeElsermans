@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Pigit.Input;
 using Pigit.Input.Interfaces;
 using Pigit.Objects.Interfaces;
 
